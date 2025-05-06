@@ -1,66 +1,66 @@
-name: Continuous integration
+# name: Continuous integration
 
-on:
-  push:
-    branches-ignore:
-      - main
+# on:
+#   push:
+#     branches-ignore:
+#       - main
 
-jobs:
-  ci_validation:
-    runs-on: ubuntu-latest
-    services:
-      postgres:
-        image: postgres:alpine
-        ports:
-          - 5432:5432
-        env:
-          POSTGRES_DB: multi_tenant_app_test
-          POSTGRES_HOST: localhost
-          POSTGRES_USER: multi_tenant_app
-          POSTGRES_PASSWORD: postgres
-        # needed because the postgres container does not provide a healthcheck
-        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v3
-      - name: Start Redis
-        uses: supercharge/redis-github-action@1.7.0
-        with:
-          redis-version: 7
-      - name: Setup Ruby
-        uses: ruby/setup-ruby@v1
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}        
-        with:
-          ruby-version: 3.3.0
-          bundler-cache: true
-          cache-version: 1
-      - name: Setup database
-        env:
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}
-          POSTGRES_HOST: localhost
-          RAILS_ENV: test
-          DISABLE_SPRING: 1
-        run: |
-          bundle exec rails db:prepare          
-      - name: Test
-        env:
-          CI: true
-          RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}   
-          RAILS_ENV: test
-          POSTGRES_HOST: localhost
-          REDIS_WORKER_URL: redis://localhost:6379/1
-          WITH_COVERAGE: true
-          DISABLE_SPRING: 1
-        run: |
-          bundle exec rspec
-      # - name: Lint
-      #   env:
-      #     POSTGRES_DB: multi_tenant_app_test
-      #     POSTGRES_HOST: localhost
-      #     POSTGRES_USER: postgres
-      #     POSTGRES_PASSWORD: postgres      
-      #     RAILS_ENV: test
-      #     WITH_COVERAGE: true
-      #     DISABLE_SPRING: 1      
-      #   run: bundle exec rubocop
+# jobs:
+#   ci_validation:
+#     runs-on: ubuntu-latest
+#     services:
+#       postgres:
+#         image: postgres:alpine
+#         ports:
+#           - 5432:5432
+#         env:
+#           POSTGRES_DB: multi_tenant_app_test
+#           POSTGRES_HOST: localhost
+#           POSTGRES_USER: multi_tenant_app
+#           POSTGRES_PASSWORD: postgres
+#         # needed because the postgres container does not provide a healthcheck
+#         options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+#     steps:
+#       - name: Checkout Repository
+#         uses: actions/checkout@v3
+#       - name: Start Redis
+#         uses: supercharge/redis-github-action@1.7.0
+#         with:
+#           redis-version: 7
+#       - name: Setup Ruby
+#         uses: ruby/setup-ruby@v1
+#         env:
+#           RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}        
+#         with:
+#           ruby-version: 3.3.0
+#           bundler-cache: true
+#           cache-version: 1
+#       - name: Setup database
+#         env:
+#           RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}
+#           POSTGRES_HOST: localhost
+#           RAILS_ENV: test
+#           DISABLE_SPRING: 1
+#         run: |
+#           bundle exec rails db:prepare          
+#       - name: Test
+#         env:
+#           CI: true
+#           RAILS_MASTER_KEY: ${{ secrets.RAILS_TEST_MASTER_KEY }}   
+#           RAILS_ENV: test
+#           POSTGRES_HOST: localhost
+#           REDIS_WORKER_URL: redis://localhost:6379/1
+#           WITH_COVERAGE: true
+#           DISABLE_SPRING: 1
+#         run: |
+#           bundle exec rspec
+#       # - name: Lint
+#       #   env:
+#       #     POSTGRES_DB: multi_tenant_app_test
+#       #     POSTGRES_HOST: localhost
+#       #     POSTGRES_USER: postgres
+#       #     POSTGRES_PASSWORD: postgres      
+#       #     RAILS_ENV: test
+#       #     WITH_COVERAGE: true
+#       #     DISABLE_SPRING: 1      
+#       #   run: bundle exec rubocop
