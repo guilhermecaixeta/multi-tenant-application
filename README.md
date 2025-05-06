@@ -1,64 +1,76 @@
 # Multi-Tenant Application
+## Table of Contents
 
-This is a study project in order to deploy it properly you should consider use [Secure Infrastructure Repo](https://github.com/guilhermecaixeta/secure-infrastructure).
-This repo fully support the deploy of this application using CI/CD from github if properly configured.
-Feel free to try and to *submit suggestions*!
+1. [Introduction](#introduction)
+2. [App Description](#app-description)
+  - [Supported Modules](#supported-modules)
+3. [Running Locally](#running-locally)
+  - [Before Starting](#before-starting)
+  - [Requirements](#requirements)
+  - [Secrets](#secrets)
+  - [Setup](#setup)
+  - [Running the Application](#running-the-application)
+4. [Deployment](#deployment)
+5. [Next Goals](#next-goals)
+6. [Summary](#summary)
 
-# App Description
+---
 
-It's a web application built in rails 7 with Turbo and Stimulus, using as admin template [core-ui](https://coreui.io/bootstrap/docs/getting-started/introduction/) and [core-ui admin template](https://coreui.io/bootstrap/docs/templates/admin-dashboard/) and importmap as js package manager.
+## Introduction
 
-This application is a modular application that aims simplifies the stock and sales management for small business, it's composed by several projects (some of them still being implemented). Created to support many small business in one app, making usage of multi-tenant to manage all of them as well as giving a fine grain control for each business managers and operators to controls their own business from a single point access.
+This is a study project. To deploy it properly, consider using the [Secure Infrastructure Repo](https://github.com/guilhermecaixeta/secure-infrastructure). This repository fully supports deploying this application using CI/CD from GitHub when properly configured. Feel free to try it out and *submit suggestions*!
 
-Each business has their own schema where the private data is persisted without affect the overall database and giving more security and reducing the unwanted access from other business. All the organizations and users are managed by the same schema, as well as same authorization system.
+## App Description
 
-The current surpported modules are:
-- Backoffice (Responsible to manage the application and the tenants)
-  - Application Management (not visible for orgs)
-    - Roles
-    - Permissions (readonly)
-  - Catalogs Management
-    - Catalog Categories
-    - Products
-    - Services (WIP)
+This is a web application built with Rails 7, Turbo, and Stimulus. It uses [CoreUI](https://coreui.io/bootstrap/docs/getting-started/introduction/) as the admin template and [CoreUI Admin Template](https://coreui.io/bootstrap/docs/templates/admin-dashboard/) for the dashboard. The application leverages Importmap as the JavaScript package manager.
+
+The application is modular and simplifies stock and sales management for small businesses. It supports multiple tenants, allowing several businesses to operate within a single app. Each business has its own schema for private data, ensuring security and preventing unauthorized access between tenants. Organizations and users are managed in a shared schema, along with a unified authorization system.
+
+### Supported Modules
+
+- **Backoffice** (Manages the application and tenants)
+  - Application Management (not visible to organizations)
+   - Roles
+   - Permissions (read-only)
+  - Catalog Management
+   - Catalog Categories
+   - Products
+   - Services (WIP)
   - Organization Management
   - Sales Management
-    - Product Sales
-    - Service Sales (WIP)
+   - Product Sales
+   - Service Sales (WIP)
   - Stock Management
-    - Entries
-    - Outputs (WIP)
-    - Stocks
-  - Users Settings (not visible for orgs)
+   - Entries
+   - Outputs (WIP)
+   - Stocks
+  - User Settings (not visible to organizations)
 
-## Running locally
+## Running Locally
 
-This application was designed and developed to make usage of devcontainers and vscode, so it's highly recommended to use this setup since there is a default setup support with many useful features.
+This application is designed for use with Dev Containers and VS Code. It is highly recommended to use this setup, as it includes a default configuration with many useful features.
 
-### Before start
+### Before Starting
 
-Always use unix-style endigns, so if you're running the project in a Windows machine run the command [^1]
-
-[^1]: https://rubystyle.guide/#crlf
+Always use Unix-style line endings. If you're running the project on a Windows machine, configure Git with the following command:
 
 ```shell
 git config --global core.autocrlf true
 ```
 
-> ⚠️ It is required that all files inside `.devcontainers` folder should has the EOL in LF format instead of CRLF otherwise unix based machine cannot run them.
+> ⚠️ All files in the `.devcontainers` folder must use LF line endings. CRLF endings will prevent Unix-based machines from running them.
 
 ### Requirements
 
-- Docker\Podman
-- VSCode (Recommended)´
-- VsCode extension for Devcontainers
+- Docker or Podman
+- VS Code (Recommended)
+- VS Code Dev Containers extension
 
-> ⚠️ Reopen the vscode once it finishes, this will fix the extension warnings modals or you can also just restart them.
+> ⚠️ After installing the extension, reopen VS Code to resolve any warnings or restart the extension manually.
 
 ### Secrets
 
-The secrets here a default and same  for all environments.
-
+The secrets are default and shared across all environments.
 
 Secrets structure:
 
@@ -71,9 +83,9 @@ devise:
   email_from: <default-mail-from/>  
 redis:
   cache:
-    url: <redis-cache-url/>
+   url: <redis-cache-url/>
   worker:
-    url: <redis-worker-url/>
+   url: <redis-worker-url/>
 postgres:
   host: postgres
   user: <your-db-user/>
@@ -83,27 +95,46 @@ postgres:
 
 ### Setup
 
-In order to run the application locally you need to run the command before:
+To set up the application locally, run the following command:
 
 ```shell
 rails dev:setup
 ```
 
-It will create the databases in case they does not exists as well as setup all the data needed and users.
+This command creates the necessary databases (if they don't already exist) and sets up all required data and users. Once completed, you can run all tests.
 
-Once this command finishes you should be able to run all tests.
+### Running the Application
 
-### Running Application
+To run the application, select the debug profile (`Ctrl + Shift + D`) and choose `[RDBG] Foreman Rails`. You can then access the application in your browser at port *3000*.
 
-To run the application you first need to select the debug profile (ctrl + shif + D) select `[RDBG] Foreman Rails` you should be able to access the application from browser on port *3000*
+To retrieve user passwords, check the Mailcatcher interface at `http://localhost:1080`. If you cannot find the welcome emails, you can always recover the password.
 
-To know which password to use for the users:
+Example users:
+- `admin.master@acme.com`
+- `operator.default@acme.com`
 
-- admin.master@acme.com
-- operator.default@acme.com
-
-You should access the url :`http://localhost:1080`, this url is from Mailcatcher should be used to visualize the emails sent from the app, also in case of you cannot see the Welcome emails you can always recover the password.
-
-## Deploy
+## Deployment
 
 [WIP]
+
+## Next Goals
+
+To enhance this project, the following goals are planned:
+
+- Complete the refactor to move validations from models to appropriate modules.
+- Add support for missing fields in user and organization models.
+- Finalize the output feature.
+- Complete support for service-related features.
+- Add CMS support (e.g., Spina or Strapi).
+- Implement an order feature for products.
+- Add a scheduling feature for services.
+- Upgrade to the latest versions of Ruby and Rails.
+- Increase test coverage.
+
+---
+
+## Summary
+
+This project is a modular, multi-tenant Rails application designed to simplify stock and sales management for small businesses. It ensures data security through tenant-specific schemas and provides a unified management system for organizations and users. The application supports various modules, including catalog, sales, and stock management, with ongoing development to expand its features.
+
+> **Tags:** `#Rails7` `#MultiTenant` `#DevContainers` `#SmallBusinessManagement` `#CoreUI`
