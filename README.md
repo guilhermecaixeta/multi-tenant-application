@@ -48,7 +48,8 @@ git config --global core.autocrlf true
 ### Requirements
 
 - Docker\Podman
-- VSCode (Recommended)
+- VSCode (Recommended)´
+- VsCode extension for Devcontainers
 
 > ⚠️ Reopen the vscode once it finishes, this will fix the extension warnings modals or you can also just restart them.
 
