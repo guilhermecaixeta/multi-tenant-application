@@ -1,0 +1,16 @@
+<div class="container-fluid px-4">
+  <nav aria-label="breadcrumb">
+    <ol class="breadcrumb my-0">
+      <% controller_path.split('/').each do |single| %>
+        <li class="breadcrumb-item <%= controller_name == single && action_name == 'index' ? 'active' : '' %>">
+          <%= link_to single.titleize, root_path %>
+        </li>
+      <% end %>
+      <% if action_name != "index" %>
+        <li class="breadcrumb-item active">
+          <%= link_to action_name.titleize, url_for(controller: controller_name, action: action_name) %>
+        </li>
+      <% end %>
+    </ol>
+  </nav>
+</div>

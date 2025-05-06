@@ -1,0 +1,28 @@
+.callout {
+  // scss-docs-start callout-css-vars
+  --cui-callout-padding-x: #{$callout-padding-x};
+  --cui-callout-padding-y: #{$callout-padding-y};
+  --cui-callout-margin-x: #{$callout-margin-x};
+  --cui-callout-margin-y: #{$callout-margin-y};
+  --cui-callout-border-width: #{$callout-border-width};
+  --cui-callout-border-color: #{$callout-border-color};
+  --cui-callout-border-left-width: #{$callout-border-left-width};
+  --cui-callout-border-radius: #{$callout-border-radius};
+  // scss-docs-end callout-css-vars
+
+  padding: var(--cui-callout-padding-y) var(--cui-callout-padding-x);
+  margin: var(--cui-callout-margin-y) var(--cui-callout-margin-x);
+  border: var(--cui-callout-border-width) solid var(--cui-callout-border-color);
+  @include ltr-rtl("border-left-width", var(--cui-callout-border-left-width));
+  @include ltr-rtl("border-left-color", var(--cui-callout-border-left-color));
+  @include border-radius(var(--cui-callout-border-radius));
+}
+
+// scss-docs-start callout-modifiers
+// Generate contextual modifier classes for colorizing the collor.
+@each $state, $value in $callout-variants {
+  .callout-#{$state} {
+    --cui-callout-border-left-color: #{$value};
+  }
+}
+// scss-docs-end callout-modifiers

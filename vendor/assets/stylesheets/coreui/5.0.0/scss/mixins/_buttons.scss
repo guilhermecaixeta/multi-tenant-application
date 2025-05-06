@@ -1,0 +1,99 @@
+// Button variants
+//
+// Easily pump out default styles, as well as :hover, :focus, :active,
+// and disabled options for all buttons
+
+// scss-docs-start btn-variant-mixin
+@mixin button-variant($variant) {
+  $background: map-get($variant, "bg");
+  $border-color: map-get($variant, "border-color");
+  $color: map-get($variant, "color");
+  $hover-background: map-get($variant, "hover-bg");
+  $hover-border-color: map-get($variant, "hover-border-color");
+  $hover-color: map-get($variant, "hover-color");
+  $active-background: map-get($variant, "active-bg");
+  $active-border-color: map-get($variant, "active-border-color");
+  $active-color: map-get($variant, "active-color");
+  $disabled-background: map-get($variant, "disabled-bg");
+  $disabled-border-color: map-get($variant, "disabled-border-color");
+  $disabled-color: map-get($variant, "disabled-color");
+  $shadow: map-get($variant, "shadow");
+
+  --cui-btn-color: #{$color};
+  --cui-btn-bg: #{$background};
+  --cui-btn-border-color: #{$border-color};
+  --cui-btn-hover-color: #{$hover-color};
+  --cui-btn-hover-bg: #{$hover-background};
+  --cui-btn-hover-border-color: #{$hover-border-color};
+  --cui-btn-focus-shadow-rgb: #{to-rgb(mix($color, $border-color, 15%))};
+  --cui-btn-active-color: #{$active-color};
+  --cui-btn-active-bg: #{$active-background};
+  --cui-btn-active-border-color: #{$active-border-color};
+  --cui-btn-active-shadow: #{$btn-active-box-shadow};
+  --cui-btn-disabled-color: #{$disabled-color};
+  --cui-btn-disabled-bg: #{$disabled-background};
+  --cui-btn-disabled-border-color: #{$disabled-border-color};
+}
+// scss-docs-end btn-variant-mixin
+
+// scss-docs-start btn-outline-variant-mixin
+@mixin button-outline-variant($variant) {
+  $color: map-get($variant, "color");
+  $hover-background: map-get($variant, "hover-bg");
+  $hover-border-color: map-get($variant, "hover-border-color");
+  $hover-color: map-get($variant, "hover-color");
+  $active-background: map-get($variant, "active-bg");
+  $active-border-color: map-get($variant, "active-border-color");
+  $active-color: map-get($variant, "active-color");
+  $disabled-color: map-get($variant, "disabled-color");
+  $shadow: map-get($variant, "shadow");
+
+  --cui-btn-color: #{$color};
+  --cui-btn-border-color: #{$color};
+  --cui-btn-hover-color: #{$hover-color};
+  --cui-btn-hover-bg: #{$active-background};
+  --cui-btn-hover-border-color: #{$active-border-color};
+  --cui-btn-focus-shadow-rgb: #{to-rgb($color)};
+  --cui-btn-active-color: #{$active-color};
+  --cui-btn-active-bg: #{$active-background};
+  --cui-btn-active-border-color: #{$active-border-color};
+  --cui-btn-active-shadow: #{$btn-active-box-shadow};
+  --cui-btn-disabled-color: #{$color};
+  --cui-btn-disabled-bg: transparent;
+  --cui-gradient: none;
+}
+// scss-docs-end btn-outline-variant-mixin
+
+// scss-docs-start btn-ghost-variant-mixin
+@mixin button-ghost-variant($variant) {
+  $color: map-get($variant, "color");
+  $hover-background: map-get($variant, "hover-bg");
+  $hover-border-color: map-get($variant, "hover-border-color");
+  $hover-color: map-get($variant, "hover-color");
+  $active-background: map-get($variant, "active-bg");
+  $active-border-color: map-get($variant, "active-border-color");
+  $active-color: map-get($variant, "active-color");
+  $disabled-color: map-get($variant, "disabled-color");
+  $shadow: map-get($variant, "shadow");
+
+  --cui-btn-color: #{$color};
+  --cui-btn-hover-bg: #{$hover-background};
+  --cui-btn-hover-border-color: #{$hover-border-color};
+  --cui-btn-hover-color: #{$hover-color};
+  --cui-btn-active-bg: #{$active-background};
+  --cui-btn-active-border-color: #{$active-border-color};
+  --cui-btn-active-color: #{$active-color};
+  --cui-btn-disabled-color: #{$disabled-color};
+  --cui-btn-shadow: #{$shadow};
+}
+// scss-docs-end btn-ghost-variant-mixin
+
+// Button sizes
+// scss-docs-start btn-size-mixin
+@mixin button-size($padding-y, $padding-x, $font-size, $border-radius) {
+  --cui-btn-padding-y: #{$padding-y};
+  --cui-btn-padding-x: #{$padding-x};
+  @include rfs($font-size, --cui-btn-font-size);
+  --cui-btn-border-radius: #{$border-radius};
+}
+// scss-docs-end btn-size-mixin

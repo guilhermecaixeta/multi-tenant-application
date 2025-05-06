@@ -1,0 +1,68 @@
+//
+// Base styles
+//
+
+.alert {
+  // scss-docs-start alert-css-vars
+  --cui-alert-bg: transparent;
+  --cui-alert-padding-x: #{$alert-padding-x};
+  --cui-alert-padding-y: #{$alert-padding-y};
+  --cui-alert-margin-bottom: #{$alert-margin-bottom};
+  --cui-alert-color: inherit;
+  --cui-alert-border-color: transparent;
+  --cui-alert-border: #{$alert-border-width} solid var(--cui-alert-border-color);
+  --cui-alert-border-radius: #{$alert-border-radius};
+  --cui-alert-link-color: inherit;
+  // scss-docs-end alert-css-vars
+
+  position: relative;
+  padding: var(--cui-alert-padding-y) var(--cui-alert-padding-x);
+  margin-bottom: var(--cui-alert-margin-bottom);
+  color: var(--cui-alert-color);
+  background-color: var(--cui-alert-bg);
+  border: var(--cui-alert-border);
+  @include border-radius(var(--cui-alert-border-radius));
+}
+
+// Headings for larger alerts
+.alert-heading {
+  // Specified to prevent conflicts of changing $headings-color
+  color: inherit;
+}
+
+// Provide class for links that match alerts
+.alert-link {
+  font-weight: $alert-link-font-weight;
+  color: var(--cui-alert-link-color);
+}
+
+
+// Dismissible alerts
+//
+// Expand the right padding and account for the close button's positioning.
+
+.alert-dismissible {
+  @include ltr-rtl("padding-right", $alert-dismissible-padding-r);
+
+  // Adjust close link position
+  .btn-close {
+    position: absolute;
+    top: 0;
+    @include ltr-rtl("right", 0);
+    z-index: $stretched-link-z-index + 1;
+    padding: $alert-padding-y * 1.25 $alert-padding-x;
+  }
+}
+
+
+// scss-docs-start alert-modifiers
+// Generate contextual modifier classes for colorizing the alert.
+@each $state in map-keys($theme-colors) {
+  .alert-#{$state} {
+    --cui-alert-color: var(--cui-#{$state}-text-emphasis);
+    --cui-alert-bg: var(--cui-#{$state}-bg-subtle);
+    --cui-alert-border-color: var(--cui-#{$state}-border-subtle);
+    --cui-alert-link-color: var(--cui-#{$state}-text-emphasis);
+  }
+}
+// scss-docs-end alert-modifiers

@@ -1,0 +1,83 @@
+<section class="container-fluid about py-5">
+  <div class="container">
+    <% unless categories.blank? %>
+      <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+        <h2 class="text-primary font-secondary">
+          <%= t 'site.products.title' %>
+        </h2>
+        <h1 class="display-4 text-uppercase">
+          <%= t 'site.products.subtitle' %>
+        </h1>
+      </div>
+      <div class="tab-class text-center">
+        <ul class="nav nav-pills d-inline-flex justify-content-center bg-dark text-uppercase border-inner p-4 mb-5">
+          <% categories.each_with_index do |item, index| %>
+            <li class="nav-item">
+              <% if (index.zero? && category.blank?) || (category.present? && item.title.parameterize.casecmp?(category)) %>
+                <a class="nav-link text-white active" data-bs-toggle="pill" href="#tab-<%= index %>">
+                  <%= item.title %>
+                </a>
+              <% else %>
+                <a class="nav-link text-white" data-bs-toggle="pill" href="#tab-<%= index %>">
+                  <%= item.title %>
+                </a>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+        <% categories.each_with_index do |item, index| %>
+          <div class="tab-content">
+            <% if (index.zero? && category.blank?) || (category.present? && item.title.parameterize.casecmp?(category)) %>
+              <div id="tab-<%= index %>" class="tab-pane fade show p-0 active">
+              <% else %>
+                <div id="tab-<%= index %>" class="tab-pane fade p-0">
+                <% end %>
+                <div class="row g-3">
+                  <% if !item.catalogs.blank? %>
+                    <% for catalog in item.catalogs %>
+                      <div class="col-lg-6">
+                        <div class="d-flex h-100">
+                          <div class="flex-shrink-0">
+                            <% if catalog.picture.attached? %>
+                              <%= image_tag catalog.picture.variant(resize_to_limit: [85, 150]),
+                                            class: 'img-fluid',
+                                            style: 'object-fit: fill' %>
+                            <% else %>
+                              <%= image_tag item.default_picture.variant(resize_to_limit: [85, 150]),
+                                            class: 'img-fluid',
+                                            style: 'object-fit: fill' %>
+                            <% end %>
+                            <h4 class="bg-dark text-primary p-2 m-0">
+                              <%= catalog.price.price.format %>
+                            </h4>
+                          </div>
+                          <div class="d-flex flex-column justify-content-center text-start bg-secondary border-inner px-4">
+                            <h5 class="text-uppercase">
+                              <%= catalog.name %>
+                            </h5>
+                            <span>
+                              <%= catalog.description %>
+                            </span>
+                          </div>
+                        </div>
+                      </div>
+                    <% end %>
+                  <% end %>
+                </div>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      </div>
+    <% else %>
+      <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+        <h2 class="text-primary font-secondary">
+          <%= t 'site.products.title' %>
+        </h2>
+        <h1 class="display-4 text-uppercase">
+          <%= t 'site.products.wip' %>
+        </h1>
+      </div>
+    <% end %>
+  </div>
+</section>

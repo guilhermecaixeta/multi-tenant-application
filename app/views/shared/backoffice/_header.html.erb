@@ -1,0 +1,101 @@
+<header class="header header-sticky p-0 mb-4" data-controller="header">
+  <div class="container-fluid border-bottom px-4">
+    <div class="float-start">
+      <% if current_user.active? %>
+        <button class="header-toggler"
+            type="button"
+            aria-expanded="true"
+            aria-controls="sidebar"
+            data-controller="sidebar"
+            data-action="click->sidebar#toggle"
+          style="margin-inline-start: -14px;">
+          <svg class="icon icon-lg">
+            <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-menu"></use>
+          </svg>
+        </button>
+      <% end %>
+    </div>
+    <div class="float-end">
+      <ul class="header-nav">
+        <li class="nav-item py-1">
+          <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
+        </li>
+        <li class="nav-item dropdown">
+          <button class="btn btn-link nav-link py-2 px-2 d-flex align-items-center" type="button" aria-expanded="false" data-coreui-toggle="dropdown">
+            <svg class="icon icon-lg theme-icon-active">
+              <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-contrast"></use>
+            </svg>
+          </button>
+          <ul class="dropdown-menu dropdown-menu-end" style="--cui-dropdown-min-width: 8rem;">
+            <li>
+              <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="light">
+                <svg class="icon icon-lg me-3">
+                  <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-sun"></use>
+                </svg>Light
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item d-flex align-items-center" type="button" data-coreui-theme-value="dark">
+                <svg class="icon icon-lg me-3">
+                  <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-moon"></use>
+                </svg>Dark
+              </button>
+            </li>
+            <li>
+              <button class="dropdown-item d-flex align-items-center active" type="button" data-coreui-theme-value="auto">
+                <svg class="icon icon-lg me-3">
+                  <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-contrast"></use>
+                </svg>Auto
+              </button>
+            </li>
+          </ul>
+        </li>
+        <li class="nav-item py-1">
+          <div class="vr h-100 mx-2 text-body text-opacity-75"></div>
+        </li>
+        <li class="nav-item dropdown">
+          <a class="nav-link py-0 pe-0" data-coreui-toggle="dropdown" href="#" role="button" aria-haspopup="true" aria-expanded="false">
+            <div class="avatar avatar-md">
+              <% if current_user.profile && current_user.profile.avatar.attached? %>
+                <%= image_tag current_user.profile.avatar, class: 'avatar-img', alt: current_user.email %>
+              <% else %>
+                <%= image_tag 'no_defined_image.jpg', class: 'avatar-img', alt: current_user.email %>
+              <% end %>
+            </div>
+          </a>
+          <div class="dropdown-menu dropdown-menu-end pt-0">
+            <% if current_user.active? %>
+              <div class="dropdown-header bg-body-tertiary text-body-secondary fw-semibold my-2">
+                <div class="fw-semibold">
+                  <%= t 'backoffice.sections.settings' %>
+                </div>
+              </div>
+              <%= link_to edit_profile_backoffice_user_settings_users_path, class: 'dropdown-item' do %>
+                <svg class="icon me-2">
+                  <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-user"></use>
+                </svg>
+                <%= t 'backoffice.button_profile' %>
+              <% end %>
+              <%= link_to edit_security_backoffice_user_settings_users_path, class: 'dropdown-item' do %>
+                <svg class="icon me-2">
+                  <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-settings"></use>
+                </svg>
+                <%= t 'backoffice.sections.security' %>
+              <% end %>
+            <% end %>
+            <div class="dropdown-divider"></div>
+            <%= link_to destroy_user_session_path, data: { 'turbo-method': :delete }, class: 'dropdown-item' do %>
+              <svg class="icon me-2">
+                <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-account-logout"></use>
+              </svg>
+              <%= t 'devise.buttons.logout' %>
+            <% end %>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <% if current_user.active? %>
+    <%= render partial: 'shared/backoffice/breadcrumb' %>
+  <% end %>
+</header>

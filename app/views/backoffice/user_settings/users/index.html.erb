@@ -1,0 +1,43 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary text-center">
+  </th>
+  <th class="bg-body-secondary">
+    <%= User.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= User.human_attribute_name 'email' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= t 'backoffice.user.last_access' %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true do |obj| %>
+  <td class="text-center">
+    <div class="avatar avatar-md mb-2 mt-2">
+      <% if obj.profile && obj.profile.avatar.attached? %>
+        <%= image_tag obj.profile.avatar.variant(resize_to_limit: [100, 100], format: :jpeg), class: 'avatar-img', alt: obj.email %>
+      <% else %>
+        <%= image_tag 'no_defined_image.jpg', class: 'avatar-img', alt: obj.email %>
+      <% end %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.profile_name %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.email %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <% if obj.last_sign_in_at.nil? %>
+        -
+      <% else %>
+        <%= I18n.l(obj.last_sign_in_at) %>
+      <% end %>
+    </div>
+  </td>
+<% end %>

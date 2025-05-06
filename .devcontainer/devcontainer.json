@@ -1,0 +1,53 @@
+{
+  "name": "Multi-Tenant Application",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "app",
+  "workspaceFolder": "/app",
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "mjmlio.vscode-mjml",
+        "spmeesseman.vscode-taskexplorer",
+        "cweijan.vscode-database-client2",
+        "cweijan.dbclient-jdbc",
+        "sorbet.sorbet-vscode-extension",
+        "Shopify.ruby-extensions-pack",
+        "KoichiSasada.vscode-rdbg",
+        "aliariff.vscode-erb-beautify",
+        "castwide.solargraph",
+        "bung87.vscode-gemfile",
+        "hridoy.rails-snippets",
+        "aki77.rails-routes",
+        "aki77.rails-db-schema",
+        "aki77.rails-partial",
+        "aki77.rails-i18n",
+        "rubocop.vscode-rubocop",
+        "lokalise.i18n-ally",
+        "miguel-savignano.ruby-symbols",
+        "elliotlarson.ruby-around-the-block",
+        "connorshea.vscode-ruby-test-adapter",
+        "ldrner.rspec-snippets-vscode",
+        "karunamurti.rspec-snippets",
+        "Fooo.ruby-spec-runner",
+        "mhutchie.git-graph",
+        "BIGModelingTools.erdiagram",
+        "GitHub.vscode-pull-request-github",
+        "GitHub.remotehub",
+        "github.vscode-github-actions",
+        "shaharkazaz.git-merger",
+        "donjayamanne.githistory",
+        "codezombiech.gitignore",
+        "redhat.vscode-xml",
+        "mikestead.dotenv",
+        "rebornix.Ruby"
+      ]
+    }
+  },
+  "remoteUser": "root",
+  "containerUser": "vscode",
+  "forwardPorts": [
+    3000,
+    5432
+  ],
+  "postCreateCommand": "chmod +x /app/.devcontainer/post-create.sh && /app/.devcontainer/post-create.sh"
+}

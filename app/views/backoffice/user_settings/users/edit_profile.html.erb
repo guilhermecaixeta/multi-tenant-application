@@ -1,0 +1,6 @@
+<%= render 'shared/backoffice/default_form', custom_method: :put, custom_form_url: update_profile_backoffice_user_settings_users_path do |f| %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <%= render 'backoffice/user_settings/users/profile_form',
+               form: f %>
+  </div>
+<% end %>

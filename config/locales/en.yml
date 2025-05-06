@@ -1,0 +1,8 @@
+en:
+  i18n:
+    inflections:
+      gender:
+        f: "f"
+        m: "m"
+        n: "n"
+        default: n

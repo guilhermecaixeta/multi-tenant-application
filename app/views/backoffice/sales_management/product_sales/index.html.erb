@@ -1,0 +1,44 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary">
+    <%= Product.model_name.human(count: 2) %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Sale.human_attribute_name :revenue %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Sale.human_attribute_name :loss %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Sale.human_attribute_name :expenses %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Sale.human_attribute_name :profit %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true do |obj| %>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.product_names %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.sale.revenue.format %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.sale.loss.format %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.sale.total_expenses.format %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.sale.profit.format %>
+    </div>
+  </td>
+<% end %>

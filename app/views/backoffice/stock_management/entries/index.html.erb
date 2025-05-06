@@ -1,0 +1,44 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary">
+    <%= Stock.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Entry.human_attribute_name 'total_items' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Entry.human_attribute_name 'quantity_available' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Entry.human_attribute_name 'validity' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Entry.human_attribute_name 'total_price' %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true do |obj| %>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.name %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.total_items %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= "#{obj.quantity_available.quantity_converted} #{obj.quantity_available.base_unit}" %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= I18n.l(obj.validity, format: :long) %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= humanized_money_with_symbol obj.total_price %>
+    </div>
+  </td>
+<% end %>

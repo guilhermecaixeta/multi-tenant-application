@@ -1,0 +1,49 @@
+<!-- Header Start -->
+<mj-section>
+  <mj-column width="100%">
+    <% if @user.organizations? && @user.principal_organization.logo.attached? %>
+      <mj-image width="100px" border-radius="5%" src='<%= url_for(@user.principal_organization.logo) %>'></mj-image>
+    <% else %>
+      <mj-image width="100px" border-radius="5%" src='<%= image_url('business-manager.png') %>'></mj-image>
+    <% end %>
+  </mj-column>
+</mj-section>
+<!-- Header End -->
+<!-- Body Start -->
+<mj-section width="60%" background-color="#fafafafa" border-radius="5%">
+  <mj-column alt="card-header" width="100%">
+    <mj-text font-style="italic" align="left" font-size="20px" font-family="Helvetica Neue" color="#626262">
+      <mj-raw>
+        <% unless content_for?(:card_header) %>
+          <%= t('email.global.greetings', name: @user.profile.full_name) %>
+        <% else %>
+          <%= yield :card_header %>
+        <% end %>
+      </mj-raw>
+    </mj-text>
+  </mj-column>
+  <mj-column alt="card-body" width="100%">
+    <%= yield :card_body %>
+  </mj-column>
+  <mj-column alt="card-footer" width="100%">
+    <mj-divider border-width="1px" border-color="lightgrey" />
+    <%= yield :card_footer %>
+  </mj-column>
+</mj-section>
+<!-- Body End -->
+<!-- Footer Start -->
+<mj-section>
+  <mj-column width="100%">
+    <mj-text font-family="Pacifico" align="center" font-size="20px" color="#626262">
+      <mj-raw>
+        <%= @company_name %>
+      </mj-raw>
+    </mj-text>
+    <mj-text font-family="Helvetica" align="center" color="#626262">
+      <mj-raw>
+        Luziânia, Goiás.
+      </mj-raw>
+    </mj-text>
+  </mj-column>
+</mj-section>
+<!-- Footer End -->

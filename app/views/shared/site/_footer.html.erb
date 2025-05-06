@@ -1,0 +1,125 @@
+<footer>
+  <section class="container-fluid bg-img text-secondary" style="margin-top: 90px">
+    <div class="container">
+      <div class="row gx-5">
+        <div class="col-lg-4 col-md-6 mb-lg-n5">
+          <div class="d-flex flex-column align-items-center justify-content-center text-center h-100 bg-primary border-inner p-4">
+            <a href="#" class="navbar-brand">
+              <h1 class="m-0 text-uppercase text-white">
+                <i class="fa fa-birthday-cake fs-1 text-dark me-3"></i>
+                <% if current_organization %>
+                  <%= current_organization.name %>
+                <% end %>
+              </h1>
+            </a>
+            <p class="mt-3">
+              <% if current_organization.organization_profile %>
+                <%= current_organization.organization_profile.slogan %>
+              <% end %>
+            </p>
+          </div>
+        </div>
+        <div class="col-lg-8 col-md-6">
+          <div class="row gx-5">
+            <div class="col-lg-4 col-md-12 pt-5 mb-5">
+              <h4 class="text-primary text-uppercase mb-4">
+                <%= t 'site.footer.get_in_touch' %>
+              </h4>
+              <div class="d-flex mb-2">
+                <i class="bi bi-instagram text-primary me-2"></i>
+                <p class="mb-0">
+                  <a href="https://www.instagram.com/cidadoceria/" target="_blank" rel="noopener noreferrer">
+                    @cidadoceria
+                  </a>
+                </p>
+              </div>
+              <div class="d-flex mb-2">
+                <i class="bi bi-whatsapp text-primary me-2"></i>
+                <p class="mb-0">
+                  <a href="tel:+5561983197690">
+                    (61) 98319-7690
+                  </a>
+                </p>
+              </div>
+              <div class="d-flex mt-4">
+                <a class="btn btn-lg btn-primary btn-lg-square border-inner rounded-0 me-2" href="https://wa.me/+5561983197690" target="_blank" rel="noopener noreferrer">
+                  <i class="fab fa-whatsapp fw-normal"></i>
+                </a>
+              </div>
+            </div>
+            <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+              <h4 class="text-primary text-uppercase mb-4">
+                <%= t 'site.footer.quick_links' %>
+              </h4>
+              <div class="d-flex flex-column justify-content-start">
+                <%= link_to root_path, class: 'text-secondary mb-2' do %>
+                  <i class="bi bi-arrow-right text-primary me-2"></i>
+                  <%= t 'site.navbar.menu_item_home' %>
+                <% end %>
+                <% if Rails.configuration.x.feature_flag.about[:enabled] %>
+                <%= link_to about_index_path, class: 'text-secondary mb-2' do %>
+                    <i class="bi bi-arrow-right text-primary me-2"></i>
+                    <%= t 'site.navbar.menu_item_about' %>
+                  <% end %>
+                <% end %>
+                <% if Rails.configuration.x.feature_flag.product[:enabled] %>
+                  <%= link_to menu_index_path, class: 'text-secondary mb-2' do %>
+                    <i class="bi bi-arrow-right text-primary me-2"></i>
+                    <%= t 'site.navbar.menu_item_service' %>
+                  <% end %>
+                <% end %>
+                <% if Rails.configuration.x.feature_flag.team[:enabled] %>
+                  <a class="text-secondary mb-2" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>
+                    <%= t 'site.navbar.menu_item_team' %>
+                  </a>
+                <% end %>
+                <% if Rails.configuration.x.feature_flag.contact[:enabled] %>
+                  <a class="text-secondary" href="#"><i class="bi bi-arrow-right text-primary me-2"></i>
+                    <%= t 'site.navbar.menu_item_contacts' %>
+                  </a>
+                <% end %>
+              </div>
+            </div>
+            <% if Rails.configuration.x.feature_flag.feed[:enabled] %>
+              <div class="col-lg-4 col-md-12 pt-0 pt-lg-5 mb-5">
+                <h4 class="text-primary text-uppercase mb-4">
+                  <%= t 'site.footer.newsletter' %>
+                </h4>
+                <p>
+                  <%= t 'site.footer.newsletter_text' %>
+                </p>
+                <form action="">
+                  <div class="input-group">
+                    <input type="text" class="form-control border-white p-3" placeholder="Your Email" autocomplete="false">
+                    <button class="btn btn-primary">
+                      <%= t 'site.footer.sign_up' %>
+                    </button>
+                  </div>
+                </form>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  <div class="container-fluid text-secondary py-4" style="background: #111111;">
+    <div class="container text-center">
+      <p class="mb-0">&copy;
+        <a class="text-white border-bottom" href="#">
+          <% if current_organization %>
+            <%= current_organization.name %>.
+          <% end %>
+        </a>
+        <%= t('site.footer.all_rights_reserved') %>.
+        <div class="d-none">
+          <!--/*** This template is free as long as you keep the footer author’s credit link/attribution link/backlink.
+            If you'd like to use the template without the footer author’s credit link/attribution link/backlink,
+            you can purchase the Credit Removal License from "https://htmlcodex.com/credit-removal". Thank you for your support. ***/-->
+          Designed by <a class="text-white border-bottom" href="https://htmlcodex.com">HTML Codex</a></p>
+        <br>
+        Distributed By: <a class="border-bottom" href="https://themewagon.com" target="_blank">ThemeWagon</a>
+      </div>
+    </div>
+  </div>
+</footer>

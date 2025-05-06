@@ -1,0 +1,23 @@
+<%= form.fields_for :access_control do |nested_form| %>
+<%= nested_form.hidden_field :id, value: nested_form&.object&.id %>
+  <div class="col-12 mb-3 mt-3">
+    <%= nested_form.check_box :active,
+                              class: 'form-check-input',
+                              disabled: !current_user.admin? %>
+    <%= nested_form.label :active %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :active_from,
+                          class: 'form-label' %>
+    <%= nested_form.date_field :active_from,
+                               class: 'form-control',
+                               data: { 'coreui-locale': I18n.locale, 'coreui-toggle': 'date-picker' } %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :active_until,
+                          class: 'form-label' %>
+    <%= nested_form.date_field :active_until,
+                               class: 'form-control',
+                               data: { 'coreui-locale': I18n.locale, 'coreui-toggle': 'date-picker' } %>
+  </div>
+<% end %>

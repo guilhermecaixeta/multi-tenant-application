@@ -1,0 +1,119 @@
+// Base class
+.tooltip {
+  // scss-docs-start tooltip-css-vars
+  --cui-tooltip-zindex: #{$zindex-tooltip};
+  --cui-tooltip-max-width: #{$tooltip-max-width};
+  --cui-tooltip-padding-x: #{$tooltip-padding-x};
+  --cui-tooltip-padding-y: #{$tooltip-padding-y};
+  --cui-tooltip-margin: #{$tooltip-margin};
+  @include rfs($tooltip-font-size, --cui-tooltip-font-size);
+  --cui-tooltip-color: #{$tooltip-color};
+  --cui-tooltip-bg: #{$tooltip-bg};
+  --cui-tooltip-border-radius: #{$tooltip-border-radius};
+  --cui-tooltip-opacity: #{$tooltip-opacity};
+  --cui-tooltip-arrow-width: #{$tooltip-arrow-width};
+  --cui-tooltip-arrow-height: #{$tooltip-arrow-height};
+  // scss-docs-end tooltip-css-vars
+
+  z-index: var(--cui-tooltip-zindex);
+  display: block;
+  margin: var(--cui-tooltip-margin);
+  @include deprecate("`$tooltip-margin`", "v4", "v4.x", true);
+  // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+  // So reset our font and text properties to avoid inheriting weird values.
+  @include reset-text();
+  @include font-size(var(--cui-tooltip-font-size));
+  // Allow breaking very long words so they don't overflow the tooltip's bounds
+  word-wrap: break-word;
+  opacity: 0;
+
+  &.show { opacity: var(--cui-tooltip-opacity); }
+
+  .tooltip-arrow {
+    display: block;
+    width: var(--cui-tooltip-arrow-width);
+    height: var(--cui-tooltip-arrow-height);
+
+    &::before {
+      position: absolute;
+      content: "";
+      border-color: transparent;
+      border-style: solid;
+    }
+  }
+}
+
+.bs-tooltip-top .tooltip-arrow {
+  bottom: calc(-1 * var(--cui-tooltip-arrow-height)); // stylelint-disable-line function-disallowed-list
+
+  &::before {
+    top: -1px;
+    border-width: var(--cui-tooltip-arrow-height) calc(var(--cui-tooltip-arrow-width) * .5) 0; // stylelint-disable-line function-disallowed-list
+    border-top-color: var(--cui-tooltip-bg);
+  }
+}
+
+/* rtl:begin:ignore */
+.bs-tooltip-end .tooltip-arrow {
+  left: calc(-1 * var(--cui-tooltip-arrow-height)); // stylelint-disable-line function-disallowed-list
+  width: var(--cui-tooltip-arrow-height);
+  height: var(--cui-tooltip-arrow-width);
+
+  &::before {
+    right: -1px;
+    border-width: calc(var(--cui-tooltip-arrow-width) * .5) var(--cui-tooltip-arrow-height) calc(var(--cui-tooltip-arrow-width) * .5) 0; // stylelint-disable-line function-disallowed-list
+    border-right-color: var(--cui-tooltip-bg);
+  }
+}
+
+/* rtl:end:ignore */
+
+.bs-tooltip-bottom .tooltip-arrow {
+  top: calc(-1 * var(--cui-tooltip-arrow-height)); // stylelint-disable-line function-disallowed-list
+
+  &::before {
+    bottom: -1px;
+    border-width: 0 calc(var(--cui-tooltip-arrow-width) * .5) var(--cui-tooltip-arrow-height); // stylelint-disable-line function-disallowed-list
+    border-bottom-color: var(--cui-tooltip-bg);
+  }
+}
+
+/* rtl:begin:ignore */
+.bs-tooltip-start .tooltip-arrow {
+  right: calc(-1 * var(--cui-tooltip-arrow-height)); // stylelint-disable-line function-disallowed-list
+  width: var(--cui-tooltip-arrow-height);
+  height: var(--cui-tooltip-arrow-width);
+
+  &::before {
+    left: -1px;
+    border-width: calc(var(--cui-tooltip-arrow-width) * .5) 0 calc(var(--cui-tooltip-arrow-width) * .5) var(--cui-tooltip-arrow-height); // stylelint-disable-line function-disallowed-list
+    border-left-color: var(--cui-tooltip-bg);
+  }
+}
+
+/* rtl:end:ignore */
+
+.bs-tooltip-auto {
+  &[data-popper-placement^="top"] {
+    @extend .bs-tooltip-top;
+  }
+  &[data-popper-placement^="right"] {
+    @extend .bs-tooltip-end;
+  }
+  &[data-popper-placement^="bottom"] {
+    @extend .bs-tooltip-bottom;
+  }
+  &[data-popper-placement^="left"] {
+    @extend .bs-tooltip-start;
+  }
+}
+
+// Wrapper for the tooltip content
+.tooltip-inner {
+  max-width: var(--cui-tooltip-max-width);
+  padding: var(--cui-tooltip-padding-y) var(--cui-tooltip-padding-x);
+  color: var(--cui-tooltip-color);
+  text-align: center;
+  background-color: var(--cui-tooltip-bg);
+  @include border-radius(var(--cui-tooltip-border-radius));
+}

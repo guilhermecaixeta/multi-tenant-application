@@ -1,0 +1,23 @@
+<%= form.fields_for :profile_attributes, @object.profile do |nested_form| %>
+  <%= nested_form.hidden_field :id, value: @object&.profile&.id %>
+  <%= render 'shared/backoffice/components/forms/attachment',
+             f: nested_form,
+             attachment_for: :avatar,
+             attachment: @object.profile.avatar %>
+  <div class="col-12">
+    <%= nested_form.label :first_name, class: 'form-label' %>
+    <%= nested_form.text_field :first_name, class: 'form-control' %>
+  </div>
+  <div class="col-12">
+    <%= nested_form.label :last_name, class: 'form-label' %>
+    <%= nested_form.text_field :last_name, class: 'form-control' %>
+  </div>
+  <div class="col-12">
+    <%= nested_form.label :middle_name, class: 'form-label' %>
+    <%= nested_form.text_field :middle_name, class: 'form-control' %>
+  </div>
+  <div class="col-12">
+    <%= nested_form.label :birthdate, class: 'form-label' %>
+    <%= nested_form.date_field :birthdate, class: 'form-control', data: { 'coreui-locale': I18n.locale, 'coreui-toggle': 'date-picker' } %>
+  </div>
+<% end %>

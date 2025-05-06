@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang='<%= I18n.locale %>'>
+  <head>
+    <% if current_organization && current_organization.logo.attached? %>
+      <%= favicon_link_tag url_for(current_organization.logo.variant(resize_to_fill: [50, 50]).processed) %>
+    <% else %>
+      <%= favicon_link_tag 'no_defined_image.jpg' %>
+    <% end %>
+    <meta charset="utf-8">
+    <!-- Google Web Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="author" content="Guilherme Caixeta">
+    <%= display_meta_tags %>
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'site', 'data-turbo-track': 'reload' %>
+    <%= javascript_importmap_tags 'site' %>
+  </head>
+  <body>
+    <!-- Topbar Start -->
+    <%= render 'shared/site/topbar' %>
+    <!-- Topbar End -->
+    <!-- Navbar Start -->
+    <%= render 'shared/site/navbar', categories: @categories %>
+    <!-- Navbar End -->
+    <% unless content_for?(:breadcrumb) %>
+      <%= render 'shared/site/breadcrumb' %>
+    <% end %>
+    <main>
+      <%= yield %>
+    </main>
+    <!-- Footer Start -->
+    <%= render 'shared/site/footer' %>
+    <!-- Footer End -->
+    <!-- Back to Top Start -->
+    <a href="#" class="btn btn-primary border-inner py-3 fs-4 back-to-top">
+      <i class="bi bi-arrow-up"></i>
+    </a>
+    <!-- Back to Top End -->
+  </body>
+</html>

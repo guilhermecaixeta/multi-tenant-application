@@ -1,0 +1,69 @@
+<!-- Contact Start -->
+<div class="container-fluid contact position-relative px-5" style="margin-top: 90px;">
+  <div class="container">
+    <div class="row g-5 mb-5">
+      <div class="col-lg-4 col-md-6">
+        <div class="bg-primary border-inner text-center text-white p-5">
+          <i class="bi bi-geo-alt fs-1 text-white"></i>
+          <h6 class="text-uppercase my-2">
+            <%= t('site.contacts.where_find_us') %>
+          </h6>
+          <span>
+            <%= t('site.organization_place') %>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="bg-primary border-inner text-center text-white p-5">
+          <i class="bi bi-instagram fs-1 text-white"></i>
+          <h6 class="text-uppercase my-2">
+            <%= t('site.topbar.contact_instagram') %>
+          </h6>
+          <span>
+            <a class="text-white" href="https://www.instagram.com/cidadoceria/" target="_blank" rel="noopener noreferrer">
+              @cidadoceria
+            </a>
+          </span>
+        </div>
+      </div>
+      <div class="col-lg-4 col-md-6">
+        <div class="bg-primary border-inner text-center text-white p-5">
+          <i class="bi bi-whatsapp fs-1 text-white"></i>
+          <h6 class="text-uppercase my-2">
+            <%= t('site.topbar.contact_phone') %>
+          </h6>
+          <span>
+            <a class="text-white" href="https://wa.me/+552136092569">
+              (61) 98319-7690
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+    <% if Rails.configuration.x.feature_flag.contact[:send_message][:enabled] %>
+      <div class="row justify-content-center">
+        <div class="col-lg-6">
+          <form>
+            <div class="row g-3">
+              <div class="col-sm-6">
+                <input type="text" class="form-control bg-light border-0 px-4" autocomplete="off" placeholder="Your Name" style="height: 55px;">
+              </div>
+              <div class="col-sm-6">
+                <input type="email" class="form-control bg-light border-0 px-4" autocomplete="off" placeholder="Your Email" style="height: 55px;">
+              </div>
+              <div class="col-sm-12">
+                <input type="text" class="form-control bg-light border-0 px-4" autocomplete="off" placeholder="Subject" style="height: 55px;">
+              </div>
+              <div class="col-sm-12">
+                <textarea class="form-control bg-light border-0 px-4 py-3" rows="4" placeholder="Message"></textarea>
+              </div>
+              <div class="col-sm-12">
+                <button class="btn btn-primary border-inner w-100 py-3" type="submit">Send Message</button>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>

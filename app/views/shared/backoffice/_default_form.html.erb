@@ -1,0 +1,30 @@
+<% use_multiple = false if local_assigns[:use_multiple].nil? %>
+<% stimulus_controller = '' if local_assigns[:stimulus_controller].nil? %>
+<% custom_form_url = false if local_assigns[:custom_form_url].nil? %>
+<section data-controller='<%= stimulus_controller %>'>
+  <% unless custom_form_url %>
+    <%= form_with(model: form_model(@object), multiple: use_multiple) do |f| %>
+      <div class="row g-3 mb-3">
+        <%= yield f %>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-1 mb-1">
+        <%= link_to :back, class: 'btn btn-secondary' do %>
+          <%= t 'backoffice.button_back' %>
+        <% end %>
+        <%= f.submit t('backoffice.button_save'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  <% else %>
+    <%= form_with(model: form_model(@object), url: custom_form_url, multiple: use_multiple) do |f| %>
+      <div class="row g-3 mb-3">
+        <%= yield f %>
+      </div>
+      <div class="d-flex align-items-center justify-content-between mt-1 mb-1">
+        <%= link_to :back, class: 'btn btn-secondary' do %>
+          <%= t 'backoffice.button_back' %>
+        <% end %>
+        <%= f.submit t('backoffice.button_save'), class: 'btn btn-primary' %>
+      </div>
+    <% end %>
+  <% end %>
+</section>

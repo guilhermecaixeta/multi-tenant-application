@@ -1,0 +1,20 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary">
+    <%= Role.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Permission.model_name.human(count: 2) %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index' do |obj| %>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.name %>
+    </div>
+  </td>
+  <td>
+    <div class="text-wrap">
+      <%= "#{obj.permissions.map(&:scope).join(', ')[0..50]}..." %>
+    </div>
+  </td>
+<% end %>

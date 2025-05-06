@@ -1,0 +1,48 @@
+// Base class
+//
+// Requires one of the contextual, color modifier classes for `color` and
+// `background-color`.
+
+.badge {
+  // scss-docs-start badge-css-vars
+  --cui-badge-padding-x: #{$badge-padding-x};
+  --cui-badge-padding-y: #{$badge-padding-y};
+  @include rfs($badge-font-size, --cui-badge-font-size);
+  --cui-badge-font-weight: #{$badge-font-weight};
+  --cui-badge-color: #{$badge-color};
+  --cui-badge-border-radius: #{$badge-border-radius};
+  // scss-docs-end badge-css-vars
+
+  display: inline-block;
+  padding: var(--cui-badge-padding-y) var(--cui-badge-padding-x);
+  @include font-size(var(--cui-badge-font-size));
+  font-weight: var(--cui-badge-font-weight);
+  line-height: 1;
+  color: var(--cui-badge-color);
+  text-align: center;
+  white-space: nowrap;
+  vertical-align: baseline;
+  border-radius: var(--cui-badge-border-radius, 0); // stylelint-disable-line property-disallowed-list
+  @include gradient-bg();
+
+  // Empty badges collapse automatically
+  &:empty {
+    display: none;
+  }
+}
+
+// Quick fix for badges in buttons
+.btn .badge {
+  position: relative;
+  top: -1px;
+}
+
+//
+// Badge Sizes
+//
+
+.badge-sm {
+  --cui-badge-padding-x: #{$badge-padding-x-sm};
+  --cui-badge-padding-y: #{$badge-padding-y-sm};
+  @include font-size($badge-font-size-sm);
+}

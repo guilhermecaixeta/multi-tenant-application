@@ -1,0 +1,2 @@
+web: rdbg --command --open=vscode --stop-at-load -- bundle exec bin/rails server -b 0.0.0.0
+worker: rdbg --command --open=vscode --stop-at-load -- bundle exec sidekiq

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang='<%= I18n.locale %>'>
+  <head>
+    <%= yield :head %>
+    <%= render partial: '/shared/favicon' %>
+    <%= display_meta_tags site: Rails.configuration.x.application.name %>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, shrink-to-fit=no">
+    <meta name="author" content="Guilherme Caixeta">
+    <meta name="keyword" content="Management,Product,Dashboard">
+    <meta name="msapplication-TileColor" content="#ffffff">
+    <meta name="msapplication-TileImage" content="assets/favicon/ms-icon-144x144.png">
+    <meta name="theme-color" content="#ffffff">
+    <%= csrf_meta_tags %>
+    <%= csp_meta_tag %>
+    <%= stylesheet_link_tag 'backoffice', 'data-turbo-track': 'reload' %>
+    <%= javascript_importmap_tags 'backoffice' %>
+  </head>
+  <body>
+    <% if current_user.active? %>
+      <%= render partial: 'shared/backoffice/sidebar' %>
+    <% end %>
+    <div class="wrapper d-flex flex-column min-vh-100">
+      <%= render partial: 'shared/backoffice/header' %>
+      <main class="body flex-grow-1 container px-3 mb-3">
+        <%= render partial: 'shared/backoffice/alerts' %>
+        <%= yield %>
+      </main>
+      <%= render partial: 'shared/backoffice/footer' %>
+    </div>
+  </body>
+</html>

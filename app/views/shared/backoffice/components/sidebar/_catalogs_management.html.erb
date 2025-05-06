@@ -1,0 +1,27 @@
+<% can_read_product = policy_for(current_user, Backoffice::CatalogsManagement::ProductsController).can_access?('index') %>
+<% can_read_catalog_category = policy_for(current_user, Backoffice::CatalogsManagement::CatalogCategoriesController).can_access?('index') %>
+<% if can_read_product %>
+  <li class="nav-title">
+    <%= t 'backoffice.sections.catalogs_management' %>
+  </li>
+  <% if can_read_product %>
+    <li class="nav-item">
+      <%= link_to backoffice_catalogs_management_products_path, class: 'nav-link' do %>
+        <svg class="nav-icon">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-notes"></use>
+        </svg>
+        <%= Product.model_name.human(count: 2) %>
+      <% end %>
+    </li>
+  <% end %>
+  <% if can_read_catalog_category %>
+    <li class="nav-item">
+      <%= link_to backoffice_catalogs_management_catalog_categories_path, class: 'nav-link' do %>
+        <svg class="nav-icon">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-tag"></use>
+        </svg>
+        <%= CatalogCategory.model_name.human(count: 2) %>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

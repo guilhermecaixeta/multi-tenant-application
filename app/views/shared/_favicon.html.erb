@@ -1,0 +1,5 @@
+<% if current_user && current_organization && current_organization.logo.attached? %>
+  <%= favicon_link_tag url_for(current_organization.logo.representation(resize_to_limit: [50, 50])) %>
+<% else %>
+  <%= favicon_link_tag asset_path('/assets/favicon/business-manager.ico') %>
+<% end %>

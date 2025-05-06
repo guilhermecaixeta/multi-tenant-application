@@ -1,0 +1,14 @@
+<%= render 'shared/backoffice/default_form', custom_form_url: update_backoffice_organization_management_organization_profiles_path do |f| %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <%= f.hidden_field :id, value: @object.id %>
+    <%= f.hidden_field :organization_id, value: @object.organization_id %>
+    <div class="col-12">
+      <%= f.label :slogan, class: 'form-label' %>
+      <%= f.text_field :slogan, class: 'form-control' %>
+    </div>
+    <div class="col-sm-12 col-md-12 col-lg-12">
+      <%= f.label :about, class: 'form-label' %>
+      <%= f.rich_text_area :about, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>

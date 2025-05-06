@@ -1,0 +1,14 @@
+<% can_read_sale = policy_for(current_user, Backoffice::SalesManagement::ProductSalesController).can_access?('index') %>
+<% if can_read_sale %>
+  <li class="nav-title">
+    <%= t 'backoffice.sections.sales' %>
+  </li>
+  <li class="nav-item">
+    <%= link_to backoffice_sales_management_product_sales_path, class: 'nav-link' do %>
+      <svg class="nav-icon">
+        <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-money"></use>
+      </svg>
+      <%= Sale.model_name.human(count: 2) %>
+    <% end %>
+  </li>
+<% end %>

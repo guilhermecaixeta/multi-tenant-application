@@ -1,0 +1,30 @@
+<div class="container-fluid bg-primary py-5 mb-5 hero-header">
+  <div class="container py-5">
+    <div class="row justify-content-start">
+      <div class="col-lg-8 text-center text-lg-start">
+        <h1 class="font-secondary text-primary mb-4">
+          <%= t('site.hero.primary_text') %>
+        </h1>
+        <h1 class="display-1 text-uppercase text-white mb-4"><%= current_organization.name %></h1>
+        <h1 class="text-uppercase text-white">
+          <%= t('site.hero.slogan') %>
+        </h1>
+        <div class="d-flex align-items-center justify-content-center justify-content-lg-start pt-5">
+          <%= link_to t('site.hero.read_more'), about_index_path, class: 'btn btn-primary border-inner py-3 px-5 me-5' %>
+          <% if Rails.configuration.x.feature_flag.video_modal[:enabled] %>
+            <button type="button"
+                                class="btn-play"
+                                data-bs-toggle="modal"
+                                data-src="https://www.youtube.com/embed/DWRcNpR6Kdc"
+                                data-bs-target="#videoModal">
+              <span></span>
+            </button>
+            <h5 class="font-weight-normal text-white m-0 ms-4 d-none d-sm-block">
+              <%= t('site.hero.play_video') %>
+            </h5>
+          <% end %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

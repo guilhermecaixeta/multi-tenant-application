@@ -1,0 +1,30 @@
+<section class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-group d-block d-md-flex row">
+        <div class="card col-md-7 p-4 mb-0">
+          <div class="card-body">
+            <h1>
+              <%= t 'devise.passwords.forgot_password' %>
+            </h1>
+            <%= form_for(resource, as: resource_name, url: password_path(resource_name), html: { method: :post }) do |f| %>
+              <div class="input-group mb-3">
+                <%= f.email_field :email, class: 'form-control', placeholder: t('devise.passwords.recovering_email'), type: 'email', autofocus: 'autofocus' %>
+              </div>
+              <div class="row">
+                <div class="col-6">
+                  <%= f.submit t('devise.passwords.send_recover_instructions'), class: 'btn btn-primary px-4' %>
+                </div>
+                <div class="col-6 text-end">
+                  <%= link_to sign_in_path, class: 'btn btn-link px-0' do %>
+                    <%= t('devise.sessions.login') %>
+                  <% end %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

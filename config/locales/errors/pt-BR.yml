@@ -1,0 +1,43 @@
+pt-BR:
+  errors:
+    messages:
+      can_not_be_attached: "Não é permitido anexar itens ao texto"
+      missing_item: "Um ou mais items não foram encontrados"
+      units_not_found: "Nenhuma unidade foi encontrada para o item de estoque selecionado"
+      not_found:
+        title: "Oops. Parece perdido."
+        message: "A página que está procurando não foi encontrada."
+      unauthorized: 
+        title: "Hummm, acho que não deveria estar aqui."
+        message: "Seu usuário está inativo ou não possui permissões necessárias, entre em contato com o responsável para mais informações."
+      internal_server_error:
+        title: "Em todos esses nesta indútria vital essa é a primeira vez que isso acontece!"
+        message: "A página que está procurando não está disponível no momento."
+      domain_errors:
+        force_password_change: "Antes de seguir é necessário atualizar sua senha!"
+        missing_klass: "Tipo de classe não encontrado"
+        missing_params: "Params não pode ser nulo ou vazio"
+      array_min_size: "a lista deve conter no minímo %{count} item(s)"
+      self_destroy: "não pode deletar a si mesmo"
+      can_not_be_deleted: "%{attribute} não pode ser removido, %{reason}"
+      stock_insuficient_quantity: "balanço insuficiente"
+      reasons:
+        has_items: "o item está vinculado há um ou mais produtos"
+        has_sales: "possui vendas vinculadas"
+        has_entries: "o item possui entradas"
+        has_users: "o item está sendo usado por usuários"
+        role_admin: "o atual cargo é um administrador"
+      password:  
+        invalid: "senha inválida"        
+        password_strength: "não atende aos requisitos (Minímo 1 caracter maiúsculo, 1 minúsculo, número e caracter especial)"        
+        equals_last_password: "não pode ser igual a última senha"
+        unmatched: "senhas não correspondem"
+        weak: "senha muito fraca"
+      already_confirmed: "já foi confirmado, por favor tenter entrar novamente"
+      confirmation_period_expired: "precisa ser confirmando dentro do perído de %{period}, por favor solicite uma nova confirmação"
+      expired: "está expirado, por favor solicite um novo"
+      not_found: "não encontrado"
+      not_locked: "não está bloqueado"
+      not_saved:
+        one: "1 error proibiu %{resource} de ser salve:"
+        other: "%{count} erros proibiram o %{resource} de ser salvo:"

@@ -1,0 +1,53 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary text-center">
+  </th>
+  <th class="bg-body-secondary">
+    <%= Organization.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Organization.human_attribute_name 'tenant_name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= AccessControl.human_attribute_name 'active' %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true, use_custom_actions: true do |obj| %>
+  <% if obj.kind_of? Organization %>
+    <td class="text-center">
+      <div class="avatar avatar-md mb-2 mt-2">
+        <% if obj&.logo&.attached? %>
+          <%= image_tag obj.logo, class: 'avatar-img', alt: obj.name %>
+        <% else %>
+          <%= image_tag 'no_defined_image.jpg', class: 'avatar-img', alt: obj.name %>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.name %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.tenant_name %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.active? ? 'Sim' : 'Não' %>
+      </div>
+    </td>
+  <% else %>
+    <% if session[:organization_id].nil? || obj[:options][:item_id].to_i != session[:organization_id].to_i %>
+      <%= link_to t('backoffice.button_select'),
+                  select_backoffice_organization_management_organization_path(obj[:options][:item_id]),
+                  data: { 'turbo-method': :post },
+                  class: 'dropdown-item' %>
+                  <% else %>
+      <%= link_to t('backoffice.button_unselect'),
+                  unselect_backoffice_organization_management_organizations_path,
+                  data: { 'turbo-method': :delete },
+                  class: 'dropdown-item' %>
+    <% end %>
+  <% end %>
+<% end %>

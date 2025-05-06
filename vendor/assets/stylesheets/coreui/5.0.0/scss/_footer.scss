@@ -1,0 +1,35 @@
+.footer {
+  // scss-docs-start footer-css-vars
+  --cui-footer-min-height: #{$footer-min-height};
+  --cui-footer-padding-x: #{$footer-padding-x};
+  --cui-footer-padding-y: #{$footer-padding-y};
+  --cui-footer-color: #{$footer-color};
+  --cui-footer-bg: #{$footer-bg};
+  --cui-footer-border-color: #{$footer-border-color};
+  --cui-footer-border: #{$footer-border-width} solid var(--cui-footer-border-color);
+  // scss-docs-end footer-css-vars
+
+  display: flex;
+  flex-wrap: wrap; // allow us to do the line break for collapsing content
+  align-items: center;
+  justify-content: space-between;
+  min-height: var(--cui-footer-min-height);
+  padding: var(--cui-footer-padding-y) var(--cui-footer-padding-x);
+  color: var(--cui-footer-color);
+  background: var(--cui-footer-bg);
+  border-top: var(--cui-footer-border);
+}
+
+.footer-fixed {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  z-index: $zindex-fixed;
+}
+
+.footer-sticky {
+  position: sticky;
+  bottom: 0;
+  z-index: $zindex-fixed;
+}

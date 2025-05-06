@@ -1,0 +1,40 @@
+pt-BR:
+  backoffice:
+    version: Versão
+    button_profile: Perfil
+    button_all: Todos
+    button_new: Novo
+    button_edit: Editar
+    button_select: Selecionar
+    button_unselect: Desmarcar
+    button_recalculate: Recalcular
+    button_delete: Deletar
+    button_back: Voltar
+    button_save: Salvar
+    message_created: "%{model_name} @{f:criada|m,n:criado} com sucesso!"
+    message_updated: "%{model_name} @{f:atualizada|m,n:atualizado} com sucesso!"
+    message_deleted: "%{model_name} @{f:excluída|m,n:excluído} com sucesso!"
+    message_recalculated: "%{model_name} recalculado com sucesso!"
+    form:
+      email_placeholder: nao-responda@seu-dominio.com
+      selection_prompt: "Selecione um item"
+      weight_volume: "Peso(Kg/g) ou Volume(Lt/ml)"
+    sections:
+      stock: Gerenciamento de Estoque
+      stock_in: Entradas
+      stock_out: Saídas
+      sales: Gerencimento de Vendas
+      catalogs_management: Gerenciamento de Produtos\Serviços
+      organization_management: Gerenciamento das Organizações
+      backoffice: Controle
+      settings: Configurações
+      security: Segurança
+    product:
+      price_update_warn: "Os valores base são atualizados de acordo com o preço das últimas entradas disponíveis."
+      price_value_warn: "Caso não seja informado nenhum valor positivo, o 'Preço Sugerido' será utilizado como valor padrão."
+    organization:
+      selected: 'Organização selecionada com sucesso'
+      unselected: 'Organização desmarcada com sucesso'
+      not_found: 'Organização não encontrada'
+    user:
+      last_access: "Último acesso"

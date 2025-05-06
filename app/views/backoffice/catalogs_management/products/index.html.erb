@@ -1,0 +1,79 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary text-center">
+  </th>
+  <th class="bg-body-secondary">
+    <%= Catalog.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Product.human_attribute_name 'measure' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Product.human_attribute_name 'total_items' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Price.human_attribute_name('category.unit_cost') %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Price.human_attribute_name('category.suggested') %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Catalog.human_attribute_name('profit_rate') %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true, use_custom_actions: true do |obj| %>
+  <% if obj.kind_of? Product %>
+    <td class="text-center">
+      <div class="avatar avatar-md mb-2 mt-2">
+        <% if obj.catalog.picture && obj.catalog.picture.attached? %>
+          <%= image_tag obj.catalog.picture.variant(resize_to_limit: [100, 100], format: :jpeg), class: 'avatar-img', alt: obj.catalog.name %>
+        <% else %>
+          <%= image_tag 'missing_image.png', class: 'avatar-img', alt: 'unknown' %>
+        <% end %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.catalog.name %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= "#{obj.measures_quantity} #{obj.measures_base_unit}" %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.total_items %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.cost_price.price.format %>
+        <button type="button"
+              class="btn btn-ghost-info"
+              data-coreui-toggle="tooltip"
+              data-coreui-html="true"
+              title="<%= t 'backoffice.product.price_update_warn' %>">
+          <svg class="icon">
+            <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-info"></use>
+          </svg>
+        </button>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.suggested_price.price.format %>
+      </div>
+    </td>
+    <td>
+      <div class="text-nowrap">
+        <%= obj.catalog.profit_rate %>%
+      </div>
+    </td>
+  <% else %>
+    <%= link_to t('backoffice.button_recalculate'),
+                recalculate_prices_backoffice_catalogs_management_product_path(obj[:options][:item_id]),
+                data: { 'turbo-method': :post },
+                class: 'dropdown-item' %>
+  <% end %>
+<% end %>

@@ -1,0 +1,99 @@
+<%= render 'shared/backoffice/default_form',
+           stimulus_controller: 'calculator drop-downs',
+           custom_form_url: if action_name == 'new' || action_name == 'create'
+                              backoffice_catalogs_management_products_path
+                            else
+                              backoffice_catalogs_management_product_path(@object)
+                            end do |f| %>
+  <%= f.hidden_field :catalogable_id, value: @object.catalogable_id %>
+  <%= f.hidden_field :catalogable_type, value: @object.catalogable_type %>
+  <%= hidden_field_tag 'ddlurl', select_units_by_stock_id_backoffice_support_unit_path, data: { 'drop-downs-target': 'ddlUrlUpdate' } %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <%= render 'shared/backoffice/components/forms/attachment',
+               f:,
+               attachment: @object.picture,
+               attachment_field_size: 'col-6 offset-3' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= f.label :name, class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <%= f.fields_for :catalogable do |nested_form| %>
+    <%= render 'shared/backoffice/components/forms/measure_form', form: nested_form %>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <%= nested_form.label :total_items, class: 'form-label' %>
+      <%= nested_form.number_field :total_items,
+                                   class: 'form-control',
+                                   data: {
+                                     'calculator-target': 'totalItemsElement',
+                                     action: 'change->calculator#calculatePrices'
+                                   } %>
+    </div>
+  <% end %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= f.label :profit_rate, class: 'form-label' %>
+    <div class="input-group">
+      <%= f.number_field :profit_rate,
+                         class: 'form-control',
+                         data: {
+                           'calculator-target': 'profitRateElement',
+                           action: 'change->calculator#calculatePrices'
+                         } %>
+      <div class="input-group-text">%</div>
+    </div>
+  </div>
+  <% content_for :title do %>
+    <%= Item.model_name.human(count: 2) %>
+  <% end %>
+  <% content_for :form do %>
+    <%= render 'backoffice/catalogs_management/items/form',
+               form: f %>
+  <% end %>
+  <%= render 'shared/backoffice/components/forms/nested',
+             nested_path: new_backoffice_catalogs_management_item_path(f.field_id(:items)),
+             nested_symbol: :items,
+             form: f %>
+  <% content_for :add_ons do %>
+    <button type="button"
+          class="btn btn-ghost-info"
+          data-coreui-toggle="tooltip"
+          data-coreui-html="true"
+          title="<%= t 'backoffice.product.price_value_warn' %>">
+      <svg class="icon">
+        <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-info"></use>
+      </svg>
+    </button>
+  <% end %>
+  <%= render 'shared/backoffice/components/forms/price_form',
+             form: f,
+             field_for: :price,
+             use_addon: true %>
+  <%= f.fields_for :catalogable do |nested_form| %>
+    <%= render 'shared/backoffice/components/forms/price_form',
+               form: nested_form,
+               field_for: :cost_price,
+               readonly: true,
+               field_data: { 'calculator-target': 'basePriceElement' } %>
+    <%= render 'shared/backoffice/components/forms/price_form',
+               form: nested_form,
+               field_for: :suggested_price,
+               readonly: true,
+               field_data: { 'calculator-target': 'suggestedPriceElement' } %>
+  <% end %>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <%= f.label :show, class: 'form-label' %>
+    <%= f.check_box :show, class: 'form-check' %>
+  </div>
+  <div class="col-12">
+    <%= f.label :catalog_categories %>
+    <%= f.collection_check_boxes(:catalog_category_ids, catalog_categories_for_selection, :id, :title)  do |b| %>
+      <div class="form-check">
+        <%= b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input') + b.text } %>
+      </div>
+    <% end %>
+  </div>
+  <div class="col-sm-12 col-md-12 col-lg-12">
+    <%= f.label :description, class: 'form-label' %>
+    <%= f.rich_text_area :description, class: 'form-control' %>
+  </div>
+<% end %>

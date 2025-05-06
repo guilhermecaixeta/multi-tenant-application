@@ -1,0 +1,121 @@
+name: Continuous Delivery
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  Deploy:
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    runs-on: ubuntu-latest
+    permissions: write-all
+
+    env:
+      DOCKER_BUILDKIT: 1
+      RAILS_ENV: production
+      FIRST_RUN: ${{ secrets.KAMAL_FIRST_RUN }} # change only when rebuild the environment from scratch
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Docker Buildx
+        id: buildx
+        uses: docker/setup-buildx-action@v2
+
+      - name: Login to Docker Hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.KAMAL_REGISTRY_USER }}
+          password: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+
+      - name: Set Tag
+        id: tag
+        run: |
+          echo "tag=$(git rev-parse "$GITHUB_SHA")" >> $GITHUB_OUTPUT
+      
+      - name: Build image
+        uses: docker/build-push-action@v5
+        with:
+          context: .
+          builder: ${{ steps.buildx.outputs.name }}
+          push: true        
+          labels: |
+            "service=business-manager"
+          tags: |
+            "${{ secrets.KAMAL_REGISTRY_USER }}/business-manager:latest"
+            "${{ secrets.KAMAL_REGISTRY_USER }}/business-manager:${{ steps.tag.outputs.tag }}"
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
+
+      - name: Setup SSH Keys and known_hosts
+        env:
+            SSH_AUTH_SOCK: /tmp/ssh_agent.sock
+        run: |
+            mkdir -p ~/.ssh
+            echo "${{ secrets.WEB_SSH_KEY }}" > ~/.ssh/web_deploy_ed25519
+            echo "${{ secrets.ACCESSORIES_SSH_KEY }}" > ~/.ssh/accessories_deploy_ed25519
+            cat <<'EOF' >> ~/.ssh/config
+            Host web_deploy
+                HostName ${{ secrets.WEB_HOST }}
+                User ${{ secrets.USER_HOST }}
+                Port ${{ secrets.SSH_PORT }}
+                PreferredAuthentications publickey
+                StrictHostKeyChecking no
+                IdentityFile ~/.ssh/web_deploy_ed25519  
+            Host accessories_deploy
+                HostName ${{ secrets.ACCESSORIES_HOST }}
+                User ${{ secrets.USER_HOST }}
+                Port ${{ secrets.SSH_PORT }}
+                PreferredAuthentications publickey
+                IdentityFile ~/.ssh/accessories_deploy_ed25519
+                StrictHostKeyChecking no
+                ProxyJump web_deploy    
+            EOF
+            chmod 600 ~/.ssh/config            
+            chmod 600 ~/.ssh/web_deploy_ed25519
+            chmod 600 ~/.ssh/accessories_deploy_ed25519      
+
+      - name: Update kamal deploy file
+        run: |
+              sed -i -e 's/SSH_PORT/${{ secrets.SSH_PORT }}/g' config/deploy.yml
+              sed -i -e 's/WEB_HOST/${{ secrets.WEB_HOST }}/g' config/deploy.yml
+              sed -i -e 's/USER_HOST/${{ secrets.USER_HOST }}/g' config/deploy.yml
+              sed -i -e 's/KAMAL_REGISTRY_USER/${{ secrets.KAMAL_REGISTRY_USER }}/g' config/deploy.yml
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          bundler-cache: true
+        env:
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+      - name: Build Tag Number
+        uses: onyxmueller/build-tag-number@v1.0.3
+        id: buildnumber
+        with:
+          token: ${{secrets.github_token}}
+
+      - name: Setup Kamal
+        if: ${{ env.FIRST_RUN == 'true' }}
+        run: bundle exec kamal setup -d production --skip-push
+        env :
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }}
+          DOCKER_BUILDKIT: 1
+          APP_PATCH_VERSION: ${{ steps.buildnumber.outputs.build_number }}
+          POSTGRES_HOST: ${{ secrets.POSTGRES_HOST }} 
+          POSTGRES_USER: ${{ secrets.POSTGRES_USER }} 
+          POSTGRES_PASSWORD: ${{ secrets.POSTGRES_PASSWORD }} 
+          POSTGRES_DATABASE: ${{ secrets.POSTGRES_DATABASE }} 
+          S3_ACCESS_KEY_ID: ${{ secrets.S3_ACCESS_KEY_ID }} 
+          S3_SECRET_ACCESS_KEY: ${{ secrets.S3_SECRET_ACCESS_KEY }} 
+
+      - name: Deploy Kamal
+        run: |
+              bundle exec kamal proxy reboot -y
+              bundle exec kamal deploy -d production --skip-push
+        env :
+          DOCKER_BUILDKIT: 1
+          RAILS_MASTER_KEY: ${{ secrets.RAILS_MASTER_KEY }}
+          KAMAL_REGISTRY_PASSWORD: ${{ secrets.KAMAL_REGISTRY_PASSWORD }} 
+

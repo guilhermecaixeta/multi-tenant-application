@@ -1,0 +1,20 @@
+<%= render 'shared/backoffice/default_form' do |f| %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <div lass="col-12 mb-3">
+      <%= f.label :name, class: 'form-label' %>
+      <%= f.text_field :name, class: 'form-control' %>
+    </div>
+    <div class="col-12 mt-3 mb-3">
+      <%= f.check_box :admin, class: 'form-check-input', disabled: true %>
+      <%= f.label :admin %>
+    </div>
+    <div class="col-12 mb-3">
+      <%= f.label :permissions %>
+      <%= f.collection_check_boxes(:permission_ids, permission_options, :id, :scope)  do |b| %>
+        <div class="form-check">
+          <%= b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input') + b.text } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

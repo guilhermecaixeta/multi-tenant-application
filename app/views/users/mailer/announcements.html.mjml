@@ -1,0 +1,10 @@
+<!-- Body Start -->
+<mj-raw>
+  <% content_for :card_body do %>
+  <mj-text color="#525252" align="left">
+    <mj-raw> <%= @body.html_safe %> </mj-raw>
+  </mj-text>
+  <% end %>
+</mj-raw>
+<!-- Body End -->
+<%= render partial: 'users/mailer/email_layout', formats: [:html] %>

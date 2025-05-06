@@ -1,0 +1,229 @@
+:root,
+[data-coreui-theme="light"] {
+  // Note: Custom variable values only support SassScript inside `#{}`.
+
+  // Colors
+  //
+  // Generate palettes for full colors, grays, and theme colors
+
+  @each $color, $value in $colors {
+    --cui-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $grays {
+    --cui-gray-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $theme-colors {
+    --cui-#{$color}: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-rgb {
+    --cui-#{$color}-rgb: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-text {
+    --cui-#{$color}-text-emphasis: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-bg-subtle {
+    --cui-#{$color}-bg-subtle: #{$value};
+  }
+
+  @each $color, $value in $theme-colors-border-subtle {
+    --cui-#{$color}-border-subtle: #{$value};
+  }
+
+  --cui-white-rgb: #{to-rgb($white)};
+  --cui-black-rgb: #{to-rgb($black)};
+
+  // Fonts
+
+  // Note: Use `inspect` for lists so that quoted items keep the quotes.
+  // See https://github.com/sass/sass/issues/2383#issuecomment-336349172
+  --cui-font-sans-serif: #{inspect($font-family-sans-serif)};
+  --cui-font-monospace: #{inspect($font-family-monospace)};
+  --cui-gradient: #{$gradient};
+
+  // Root and body
+  // scss-docs-start root-body-variables
+  @if $font-size-root != null {
+    --cui-root-font-size: #{$font-size-root};
+  }
+  --cui-body-font-family: #{inspect($font-family-base)};
+  @include rfs($font-size-base, --cui-body-font-size);
+  --cui-body-font-weight: #{$font-weight-base};
+  --cui-body-line-height: #{$line-height-base};
+  @if $body-text-align != null {
+    --cui-body-text-align: #{$body-text-align};
+  }
+
+  --cui-body-color: #{$body-color};
+  --cui-body-color-rgb: #{to-rgb($body-color)};
+  --cui-body-bg: #{$body-bg};
+  --cui-body-bg-rgb: #{to-rgb($body-bg)};
+
+  --cui-emphasis-color: #{$body-emphasis-color};
+  --cui-emphasis-color-rgb: #{to-rgb($body-emphasis-color)};
+
+  --cui-secondary-color: #{$body-secondary-color};
+  --cui-secondary-color-rgb: #{to-rgb($body-secondary-color)};
+  --cui-secondary-bg: #{$body-secondary-bg};
+  --cui-secondary-bg-rgb: #{to-rgb($body-secondary-bg)};
+
+  --cui-tertiary-color: #{$body-tertiary-color};
+  --cui-tertiary-color-rgb: #{to-rgb($body-tertiary-color)};
+  --cui-tertiary-bg: #{$body-tertiary-bg};
+  --cui-tertiary-bg-rgb: #{to-rgb($body-tertiary-bg)};
+
+  --cui-body-color-dark: #{$body-color-dark};
+  --cui-body-color-rgb-dark: #{to-rgb($body-color-dark)};
+  --cui-body-bg-dark: #{$body-bg-dark};
+  --cui-body-bg-rgb-dark: #{to-rgb($body-bg-dark)};
+
+  --cui-emphasis-color-dark: #{$body-emphasis-color-dark};
+  --cui-emphasis-color-rgb-dark: #{to-rgb($body-emphasis-color-dark)};
+
+  --cui-secondary-color-dark: #{$body-secondary-color-dark};
+  --cui-secondary-color-rgb-dark: #{to-rgb($body-secondary-color-dark)};
+  --cui-secondary-bg-dark: #{$body-secondary-bg-dark};
+  --cui-secondary-bg-rgb-dark: #{to-rgb($body-secondary-bg-dark)};
+
+  --cui-tertiary-color-dark: #{$body-tertiary-color-dark};
+  --cui-tertiary-color-rgb-dark: #{to-rgb($body-tertiary-color-dark)};
+  --cui-tertiary-bg-dark: #{$body-tertiary-bg-dark};
+  --cui-tertiary-bg-rgb-dark: #{to-rgb($body-tertiary-bg-dark)};
+
+  --cui-high-emphasis: #{$high-emphasis}; // Deprecated in v5.0.0
+  --cui-medium-emphasis: #{$medium-emphasis}; // Deprecated in v5.0.0
+  --cui-disabled: #{$disabled}; // Deprecated in v5.0.0
+
+  --cui-high-emphasis-inverse: #{$high-emphasis-inverse}; // Deprecated in v5.0.0
+  --cui-medium-emphasis-inverse: #{$medium-emphasis-inverse}; // Deprecated in v5.0.0
+  --cui-disabled-inverse: #{$disabled-inverse}; // Deprecated in v5.0.0
+  // scss-docs-end root-body-variables
+
+  --cui-heading-color: #{$headings-color};
+
+  --cui-link-color: #{$link-color};
+  --cui-link-color-rgb: #{to-rgb($link-color)};
+  --cui-link-decoration: #{$link-decoration};
+
+  --cui-link-hover-color: #{$link-hover-color};
+  --cui-link-hover-color-rgb: #{to-rgb($link-hover-color)};
+
+  @if $link-hover-decoration != null {
+    --cui-link-hover-decoration: #{$link-hover-decoration};
+  }
+
+  --cui-code-color: #{$code-color};
+  --cui-highlight-color: #{$mark-color};
+  --cui-highlight-bg: #{$mark-bg};
+
+  // scss-docs-start root-border-var
+  --cui-border-width: #{$border-width};
+  --cui-border-style: #{$border-style};
+  --cui-border-color: #{$border-color};
+  --cui-border-color-translucent: #{$border-color-translucent};
+
+  --cui-border-radius: #{$border-radius};
+  --cui-border-radius-sm: #{$border-radius-sm};
+  --cui-border-radius-lg: #{$border-radius-lg};
+  --cui-border-radius-xl: #{$border-radius-xl};
+  --cui-border-radius-xxl: #{$border-radius-xxl};
+  --cui-border-radius-2xl: var(--cui-border-radius-xxl); // Deprecated in v5.0.0 for consistency
+  --cui-border-radius-pill: #{$border-radius-pill};
+  // scss-docs-end root-border-var
+
+  --cui-box-shadow: #{$box-shadow};
+  --cui-box-shadow-sm: #{$box-shadow-sm};
+  --cui-box-shadow-lg: #{$box-shadow-lg};
+  --cui-box-shadow-inset: #{$box-shadow-inset};
+
+  // Focus styles
+  // scss-docs-start root-focus-variables
+  --cui-focus-ring-width: #{$focus-ring-width};
+  --cui-focus-ring-opacity: #{$focus-ring-opacity};
+  --cui-focus-ring-color: #{$focus-ring-color};
+  // scss-docs-end root-focus-variables
+
+  // scss-docs-start root-form-validation-variables
+  --cui-form-valid-color: #{$form-valid-color};
+  --cui-form-valid-border-color: #{$form-valid-border-color};
+  --cui-form-invalid-color: #{$form-invalid-color};
+  --cui-form-invalid-border-color: #{$form-invalid-border-color};
+  // scss-docs-end root-form-validation-variables
+}
+
+@if $enable-dark-mode {
+  @include color-mode(dark, true) {
+    color-scheme: dark;
+
+    // scss-docs-start root-dark-mode-vars
+    --cui-body-color: #{$body-color-dark};
+    --cui-body-color-rgb: #{to-rgb($body-color-dark)};
+    --cui-body-bg: #{$body-bg-dark};
+    --cui-body-bg-rgb: #{to-rgb($body-bg-dark)};
+
+    --cui-emphasis-color: #{$body-emphasis-color-dark};
+    --cui-emphasis-color-rgb: #{to-rgb($body-emphasis-color-dark)};
+
+    --cui-secondary-color: #{$body-secondary-color-dark};
+    --cui-secondary-color-rgb: #{to-rgb($body-secondary-color-dark)};
+    --cui-secondary-bg: #{$body-secondary-bg-dark};
+    --cui-secondary-bg-rgb: #{to-rgb($body-secondary-bg-dark)};
+
+    --cui-tertiary-color: #{$body-tertiary-color-dark};
+    --cui-tertiary-color-rgb: #{to-rgb($body-tertiary-color-dark)};
+    --cui-tertiary-bg: #{$body-tertiary-bg-dark};
+    --cui-tertiary-bg-rgb: #{to-rgb($body-tertiary-bg-dark)};
+
+    --cui-high-emphasis: #{$high-emphasis-dark}; // Deprecated in v5.0.0
+    --cui-medium-emphasis: #{$medium-emphasis-dark}; // Deprecated in v5.0.0
+    --cui-disabled: #{$disabled-dark}; // Deprecated in v5.0.0
+
+    @each $color, $value in $theme-colors-dark {
+      --cui-#{$color}: #{$value};
+    }
+
+    @each $color, $value in $grays-dark {
+      --cui-gray-#{$color}: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-rgb-dark {
+      --cui-#{$color}-rgb: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-text-dark {
+      --cui-#{$color}-text-emphasis: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-bg-subtle-dark {
+      --cui-#{$color}-bg-subtle: #{$value};
+    }
+
+    @each $color, $value in $theme-colors-border-subtle-dark {
+      --cui-#{$color}-border-subtle: #{$value};
+    }
+
+    --cui-heading-color: #{$headings-color-dark};
+
+    --cui-link-color: #{$link-color-dark};
+    --cui-link-hover-color: #{$link-hover-color-dark};
+    --cui-link-color-rgb: #{to-rgb($link-color-dark)};
+    --cui-link-hover-color-rgb: #{to-rgb($link-hover-color-dark)};
+
+    --cui-code-color: #{$code-color-dark};
+    --cui-highlight-color: #{$mark-color-dark};
+    --cui-highlight-bg: #{$mark-bg-dark};
+
+    --cui-border-color: #{$border-color-dark};
+    --cui-border-color-translucent: #{$border-color-translucent-dark};
+
+    --cui-form-valid-color: #{$form-valid-color-dark};
+    --cui-form-valid-border-color: #{$form-valid-border-color-dark};
+    --cui-form-invalid-color: #{$form-invalid-color-dark};
+    --cui-form-invalid-border-color: #{$form-invalid-border-color-dark};
+    // scss-docs-end root-dark-mode-vars
+  }
+}

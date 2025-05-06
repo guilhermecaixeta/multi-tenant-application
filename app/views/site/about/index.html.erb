@@ -1,0 +1,5 @@
+<% if Rails.configuration.x.feature_flag.about[:enabled] %>
+  <!-- About Start -->
+  <%= render 'shared/site/about' %>
+  <!-- About End -->
+<% end %>

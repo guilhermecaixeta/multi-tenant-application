@@ -1,0 +1,19 @@
+<% no_defined_attachment = 'no_defined_image.jpg' unless local_assigns[:no_defined_attachment] %>
+<% attachment_field_size = 'col-12' unless local_assigns[:attachment_field_size] %>
+<% attachment_for = :picture unless local_assigns[:attachment_for] %>
+<% attachment = nil unless local_assigns[:attachment] %>
+<div class="text-center">
+  <div class="col-12 mb-3">
+    <figure class="figure">
+      <% if attachment.attached? && attachment.persisted? %>
+        <%= image_tag attachment, class: 'figure-img img-fluid rounded', width: '300', height: '400', alt: attachment.signed_id %>
+        <%= f.hidden_field attachment_for, multiple: true, value: attachment.signed_id %>
+      <% else %>
+        <%= image_tag no_defined_attachment, class: 'figure-img img-fluid rounded', alt: 'unknown' %>
+      <% end %>
+    </figure>
+    <div class='<%= attachment_field_size %>'>
+      <%= f.file_field attachment_for, direct_upload: true, class: 'form-control' %>
+    </div>
+  </div>
+</div>

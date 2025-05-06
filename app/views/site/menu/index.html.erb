@@ -1,0 +1,10 @@
+<% if Rails.configuration.x.feature_flag.product[:enabled] %>
+  <!-- Products Start -->
+  <%= render 'shared/site/product', categories: @categories, category: @category %>
+  <!-- Products End -->
+<% end %>
+<% if Rails.configuration.x.feature_flag.offer[:enabled] %>
+  <!-- Offer Start -->
+  <%= render 'shared/site/offer' %>
+  <!-- Offer End -->
+<% end %>

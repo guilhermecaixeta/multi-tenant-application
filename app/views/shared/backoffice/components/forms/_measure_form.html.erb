@@ -1,0 +1,24 @@
+<% unit_id_data = {} unless local_assigns[:unit_id_data] %>
+<% quantity_data = {} unless local_assigns[:quantity_data] %>
+<%= form.fields_for :measure do |nested_form| %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.hidden_field :id %>
+    <%= nested_form.label :unit, class: 'form-label' %>
+    <%= nested_form.collection_select :unit_id,
+                                      units_for_selection,
+                                      :id,
+                                      :long_name,
+                                      { prompt: t('backoffice.form.selection_prompt') },
+                                      data: unit_id_data,
+                                      class: 'form-control' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :quantity, class: 'form-label' %>
+    <%= nested_form.number_field :quantity_converted,
+                                 class: 'form-control',
+                                 data: quantity_data,
+                                 placeholder: t('backoffice.form.weight_volume'),
+                                 in: 0.01..9999.99,
+                                 step: 0.01 %>
+  </div>
+<% end %>

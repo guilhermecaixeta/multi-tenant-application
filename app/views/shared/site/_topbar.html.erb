@@ -1,0 +1,42 @@
+<header class="container-fluid px-0 d-none d-lg-block">
+  <div class="row gx-0">
+    <div class="col-lg-4 text-center bg-secondary py-3">
+      <div class="d-inline-flex align-items-center justify-content-center">
+        <i class="bi bi-instagram fs-1 text-primary me-3"></i>
+        <div class="text-start">
+          <h6 class="text-uppercase mb-1">
+            <%= t('site.topbar.contact_instagram') %>
+          </h6>
+          <a href="https://www.instagram.com/cidadoceria/" target="_blank" rel="noopener noreferrer">
+            @cidadoceria
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="col-lg-4 text-center bg-primary border-inner py-3">
+      <div class="d-inline-flex align-items-center justify-content-center">
+        <%= link_to home_index_path, class: 'navbar-brand' do %>
+          <h1 class="m-0 text-uppercase text-white">
+            <i class="fa fa-birthday-cake fs-1 text-dark me-3"></i>
+            <%= current_organization.name %>
+          </h1>
+        <% end %>
+      </div>
+    </div>
+    <div class="col-lg-4 text-center bg-secondary py-3">
+      <div class="d-inline-flex align-items-center justify-content-center">
+        <i class="bi bi-whatsapp fs-1 text-primary me-3"></i>
+        <div class="text-start">
+          <h6 class="text-uppercase mb-1">
+            <%= t('site.topbar.contact_phone') %>
+          </h6>
+          <span>
+            <a href="tel:61983197690">
+              (61) 98319-7690
+            </a>
+          </span>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>

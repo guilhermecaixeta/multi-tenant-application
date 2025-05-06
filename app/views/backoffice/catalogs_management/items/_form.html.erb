@@ -1,0 +1,47 @@
+<%= render 'shared/backoffice/default_nested_form',
+           nested_field_for: :items,
+           form: do |nested_form| %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :category, class: 'form-label' %>
+    <%= nested_form.collection_select :category_id,
+                                      categories_for_selection_for_products,
+                                      :id,
+                                      :name,
+                                      { prompt: t('backoffice.form.selection_prompt') },
+                                      class: 'form-control' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :stock, class: 'form-label' %>
+    <%= nested_form.collection_select :stock_id,
+                                      stocks_for_selection_for_products,
+                                      :id,
+                                      :name,
+                                      { prompt: t('backoffice.form.selection_prompt') },
+                                      data: { 'calculator-target': 'stockElement',
+                                              'drop-downs-target': 'ddlSourceElement',
+                                              'drop-downs-destination-id-param': nested_form.field_id(:measure, :attributes, :unit_id),
+                                              'drop-downs-destination-name-param': nested_form.field_name(:measure, :attributes, :unit_id),
+                                              action: 'change->drop-downs#turboStreamUpdate change->calculator#calculatePrices' },
+                                      class: 'form-control' %>
+  </div>
+  <%= render 'shared/backoffice/components/forms/measure_form',
+             form: nested_form,
+             unit_id_data: { 'calculator-target': 'unitElement',
+                             'drop-downs-target': 'ddlDestinationElement',
+                             action: 'change->calculator#calculatePrices' },
+             quantity_data: { 'calculator-target': 'quantityElement',
+                              action: 'change->calculator#calculatePrices' } %>
+  <div class="col-12 mt-3 clearfix">
+    <div class="float-end">
+      <%= form.button formaction: destroy_backoffice_catalogs_management_item_path(index: nested_form.index,
+                                                                                   id: nested_form.object.id),
+                      class: 'btn btn-danger rounded-pill',
+                      formmethod: :delete,
+                      formnovalidate: false,
+                      data: { turbo_stream: nested_form.index } do %>
+        <span class="cil-trash">
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

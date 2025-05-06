@@ -1,0 +1,37 @@
+en:
+  backoffice:
+    version: Version
+    button_profile: Profile
+    button_all: All
+    button_new: New
+    button_edit: Edit
+    button_select: Select
+    button_unselect: Unselect
+    button_recalculate: Recalc
+    button_delete: Delete
+    button_back: Back
+    button_save: Save
+    message_created: "%{model_name} created successfully!"
+    message_updated: "%{model_name} updated successfully!"
+    message_deleted: "%{model_name} deleted successfully!"
+    message_recalculated: "%{model_name} recalculated successfully!"
+    form:
+      selection_prompt: "Select an item"
+      weight_volume: "Weight(Kg/g) or Volume(Lt/ml)"
+    sections:
+      stock: Stocks Management
+      stock_in: Entries
+      stock_out: Outs
+      sales: Sales Management
+      catalogs_management: Product&Service Management
+      backoffice: Backoffice
+      settings: Settings
+    product:
+      price_update_warn: "The base price is updated according the last entries price."
+      price_value_warn: "In case of any value be informed the suggested price will be used."
+    organization:
+      selected: 'Organization selected successfully'
+      not_found: 'Organization not found'
+    user:
+      last_access: "Last access"
+

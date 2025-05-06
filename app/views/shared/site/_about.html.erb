@@ -1,0 +1,55 @@
+<div class="container-fluid pt-5">
+  <div class="container">
+    <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+      <h2 class="text-primary font-secondary">
+        <%= t('site.about.title') %>
+      </h2>
+      <h1 class="display-4 text-uppercase">
+        <%= t('site.about.greetings', organization: current_organization.name) %>
+      </h1>
+    </div>
+    <div class="row gx-5">
+      <div class="col-lg-5 mb-5 mb-lg-0" style="min-height: 400px;">
+        <div class="position-relative h-100">
+          <%= image_tag 'about.jpg', class: 'position-absolute w-100 h-100', style: 'object-fit: cover;' %>
+        </div>
+      </div>
+      <div class="col-lg-6 pb-5">
+        <!-- Richie Text Start -->
+        <% if current_organization.organization_profile %>
+          <h4 class="mb-4">
+            <%= current_organization.organization_profile.slogan %>
+          </h4>
+          <p class="mb-5">
+            <%= current_organization.organization_profile.about %>
+            <!--
+            Na Cida Doceria, cada doce é uma viagem de volta aos momentos mais gostosos da sua infância.
+                            Aqui, as receitas tradicionais ganham vida através de ingredientes selecionados e muito carinho em cada preparo.
+                            Delicie-se com nossos bombons abertos, recheados de sabores que derretem na boca e aquecem o coração.
+                            Experimente o inconfundível pão de mel, com aquela textura macia e aroma que desperta lembranças especiais.
+                            E não deixe de provar nossos bolos no pote, combinando cremosidade e sabor em camadas perfeitas para adoçar seu dia.
+                            Venha sentir o aconchego e a doçura de casa em cada mordida na Cida Doceria!
+            -->
+          </p>
+        <% end %>
+        <!-- <div class="row g-5">
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center bg-primary border-inner mb-4" style="width: 90px; height: 90px;">
+                                <i class="fa fa-heartbeat fa-2x text-white"></i>
+                            </div>
+                            <h4 class="text-uppercase">100% Healthy</h4>
+                            <p class="mb-0">Labore justo vero ipsum sit clita erat lorem magna clita nonumy dolor magna dolor vero</p>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="d-flex align-items-center justify-content-center bg-primary border-inner mb-4" style="width: 90px; height: 90px;">
+                                <i class="fa fa-award fa-2x text-white"></i>
+                            </div>
+                            <h4 class="text-uppercase">Award Winning</h4>
+                            <p class="mb-0">Labore justo vero ipsum sit clita erat lorem magna clita nonumy dolor magna dolor vero</p>
+                        </div>
+                    </div> -->
+        <!-- Richie Text End -->
+      </div>
+    </div>
+  </div>
+</div>

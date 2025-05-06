@@ -1,0 +1,171 @@
+//
+// Basic Bootstrap table
+//
+
+.table {
+  // Reset needed for nesting tables
+  --cui-table-color-type: initial;
+  --cui-table-bg-type: initial;
+  --cui-table-color-state: initial;
+  --cui-table-bg-state: initial;
+  // End of reset
+  --cui-table-color: #{$table-color};
+  --cui-table-bg: #{$table-bg};
+  --cui-table-border-color: #{$table-border-color};
+  --cui-table-accent-bg: #{$table-accent-bg};
+  --cui-table-striped-color: #{$table-striped-color};
+  --cui-table-striped-bg: #{$table-striped-bg};
+  --cui-table-active-color: #{$table-active-color};
+  --cui-table-active-bg: #{$table-active-bg};
+  --cui-table-hover-color: #{$table-hover-color};
+  --cui-table-hover-bg: #{$table-hover-bg};
+
+  width: 100%;
+  margin-bottom: $spacer;
+  vertical-align: $table-cell-vertical-align;
+  border-color: var(--cui-table-border-color);
+
+  // Target th & td
+  // We need the child combinator to prevent styles leaking to nested tables which doesn't have a `.table` class.
+  // We use the universal selectors here to simplify the selector (else we would need 6 different selectors).
+  // Another advantage is that this generates less code and makes the selector less specific making it easier to override.
+  // stylelint-disable-next-line selector-max-universal
+  > :not(caption) > * > * {
+    padding: $table-cell-padding-y $table-cell-padding-x;
+    // Following the precept of cascades: https://codepen.io/miriamsuzanne/full/vYNgodb
+    color: var(--cui-table-color-state, var(--cui-table-color-type, var(--cui-table-color)));
+    background-color: var(--cui-table-bg);
+    border-bottom-width: $table-border-width;
+    box-shadow: inset 0 0 0 9999px var(--cui-table-bg-state, var(--cui-table-bg-type, var(--cui-table-accent-bg)));
+  }
+
+  > tbody {
+    vertical-align: inherit;
+  }
+
+  > thead {
+    vertical-align: bottom;
+  }
+}
+
+.table-group-divider {
+  border-top: calc(#{$table-border-width} * 2) solid $table-group-separator-color; // stylelint-disable-line function-disallowed-list
+}
+
+//
+// Change placement of captions with a class
+//
+
+.caption-top {
+  caption-side: top;
+}
+
+
+//
+// Condensed table w/ half padding
+//
+
+.table-sm {
+  // stylelint-disable-next-line selector-max-universal
+  > :not(caption) > * > * {
+    padding: $table-cell-padding-y-sm $table-cell-padding-x-sm;
+  }
+}
+
+
+// Border versions
+//
+// Add or remove borders all around the table and between all the columns.
+//
+// When borders are added on all sides of the cells, the corners can render odd when
+// these borders do not have the same color or if they are semi-transparent.
+// Therefore we add top and border bottoms to the `tr`s and left and right borders
+// to the `td`s or `th`s
+
+.table-bordered {
+  > :not(caption) > * {
+    border-width: $table-border-width 0;
+
+    // stylelint-disable-next-line selector-max-universal
+    > * {
+      border-width: 0 $table-border-width;
+    }
+  }
+}
+
+.table-borderless {
+  // stylelint-disable-next-line selector-max-universal
+  > :not(caption) > * > * {
+    border-bottom-width: 0;
+  }
+
+  > :not(:first-child) {
+    border-top-width: 0;
+  }
+}
+
+// Zebra-striping
+//
+// Default zebra-stripe styles (alternating gray and transparent backgrounds)
+
+// For rows
+.table-striped {
+  > tbody > tr:nth-of-type(#{$table-striped-order}) > * {
+    --cui-table-color-type: var(--cui-table-striped-color);
+    --cui-table-bg-type: var(--cui-table-striped-bg);
+  }
+}
+
+// For columns
+.table-striped-columns {
+  > :not(caption) > tr > :nth-child(#{$table-striped-columns-order}) {
+    --cui-table-color-type: var(--cui-table-striped-color);
+    --cui-table-bg-type: var(--cui-table-striped-bg);
+  }
+}
+
+// Active table
+//
+// The `.table-active` class can be added to highlight rows or cells
+
+.table-active {
+  --cui-table-color-state: var(--cui-table-active-color);
+  --cui-table-bg-state: var(--cui-table-active-bg);
+}
+
+// Hover effect
+//
+// Placed here since it has to come after the potential zebra striping
+
+.table-hover {
+  > tbody > tr:hover > * {
+    --cui-table-color-state: var(--cui-table-hover-color);
+    --cui-table-bg-state: var(--cui-table-hover-bg);
+  }
+}
+
+
+// Table variants
+//
+// Table variants set the table cell backgrounds, border colors
+// and the colors of the striped, hovered & active tables
+
+@each $color, $value in $table-variants {
+  @include table-variant($color, $value);
+}
+
+// Responsive tables
+//
+// Generate series of `.table-responsive-*` classes for configuring the screen
+// size of where your table will overflow.
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $infix: breakpoint-infix($breakpoint, $grid-breakpoints);
+
+  @include media-breakpoint-down($breakpoint) {
+    .table-responsive#{$infix} {
+      overflow-x: auto;
+      -webkit-overflow-scrolling: touch;
+    }
+  }
+}

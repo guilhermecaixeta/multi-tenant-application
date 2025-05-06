@@ -1,0 +1,55 @@
+<nav class="navbar navbar-expand-lg bg-dark navbar-dark shadow-sm py-3 py-lg-0 px-3 px-lg-0">
+  <a href="#" class="navbar-brand d-block d-lg-none">
+    <h1 class="m-0 text-uppercase text-white">
+      <i class="fa fa-birthday-cake fs-1 text-primary me-3"></i>
+      <%= current_organization.name %>
+    </h1>
+  </a>
+  <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarCollapse">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarCollapse">
+    <div class="navbar-nav ms-auto mx-lg-auto py-0">
+      <%= link_to t('site.navbar.menu_item_home'),
+                  root_path,
+                  class: "nav-item nav-link #{controller_name == 'home' ? 'active' : ''}" %>
+      <% if Rails.configuration.x.feature_flag.about[:enabled] %>
+        <%= link_to t('site.navbar.menu_item_about'),
+                    about_index_path,
+                    class: "nav-item nav-link #{controller_name == 'about' ? 'active' : ''}" %>
+      <% end %>
+      <% if Rails.configuration.x.feature_flag.product[:enabled] %>
+        <%= link_to t('site.navbar.menu_item_menu'),
+                    menu_index_path,
+                    class: "nav-item nav-link #{controller_name == 'menu' ? 'active' : ''}" %>
+      <% end %>
+      <% if Rails.configuration.x.feature_flag.team[:enabled] %>
+        <a href="#" class="nav-item nav-link">
+          <%= t('site.navbar.menu_item_team') %>
+        </a>
+      <% end %>
+      <div class="nav-item dropdown">
+        <a href="#" class="nav-link dropdown-toggle <%= controller_name == 'service' ? 'active' : '' %>" data-bs-toggle="dropdown">
+          <%= t('site.navbar.menu_item_pages') %>
+        </a>
+        <div class="dropdown-menu m-0">
+          <% if Rails.configuration.x.feature_flag.service[:enabled] %>
+            <%= link_to t('site.navbar.menu_item_service'),
+                        service_index_path,
+                        class: "dropdown-item #{controller_name == 'service' ? 'active' : ''}" %>
+          <% end %>
+          <% if Rails.configuration.x.feature_flag.testimonial[:enabled] %>
+            <a href="#" class="dropdown-item">
+              <%= t('site.navbar.menu_item_testimonial') %>
+            </a>
+          <% end %>
+        </div>
+      </div>
+      <% if Rails.configuration.x.feature_flag.contact[:enabled] %>
+        <%= link_to t('site.navbar.menu_item_contacts'),
+                    contacts_path,
+                    class: "nav-item nav-link #{controller_name == 'contacts' ? 'active' : ''}" %>
+      <% end %>
+    </div>
+  </div>
+</nav>

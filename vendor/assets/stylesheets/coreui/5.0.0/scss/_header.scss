@@ -1,0 +1,186 @@
+.header {
+  // scss-docs-start header-css-vars
+  --cui-header-min-height: #{$header-min-height};
+  --cui-header-padding-x: #{$header-padding-x};
+  --cui-header-padding-y: #{$header-padding-y};
+  --cui-header-bg: #{$header-bg};
+  --cui-header-color: #{$header-color};
+  --cui-header-border-color: #{$header-border-color};
+  --cui-header-border: #{$header-border-width} solid var(--cui-header-border-color);
+  --cui-header-hover-color: #{$header-hover-color};
+  --cui-header-disabled-color: #{$header-disabled-color};
+  --cui-header-active-color: #{$header-active-color};
+  --cui-header-transition: #{$header-transition};
+  --cui-header-brand-padding-y: #{$header-brand-padding-y};
+  --cui-header-brand-color: #{$header-brand-color};
+  --cui-header-brand-hover-color: #{$header-brand-hover-color};
+  --cui-header-toggler-padding-x: #{$header-toggler-padding-x};
+  --cui-header-toggler-padding-y: #{$header-toggler-padding-y};
+  --cui-header-toggler-bg: #{$header-toggler-bg};
+  --cui-header-toggler-color: #{$header-toggler-color};
+  --cui-header-toggler-border-radius: #{$header-toggler-border-radius};
+  --cui-header-toggler-hover-color: #{$header-toggler-hover-color};
+  --cui-header-toggler-icon-bg: #{escape-svg($header-toggler-icon-bg)};
+  --cui-header-toggler-hover-icon-bg: #{escape-svg($header-toggler-hover-icon-bg)};
+  --cui-header-nav-link-padding-x: #{$header-nav-link-padding-x};
+  --cui-header-nav-link-padding-y: #{$header-nav-link-padding-y};
+  --cui-header-divider-border-color: #{$header-divider-border-color};
+  --cui-header-divider-border: #{$header-divider-border-width} solid var(--cui-header-divider-border-color);
+  // scss-docs-end header-css-vars
+
+  position: relative;
+  display: flex;
+  flex-wrap: wrap; // allow us to do the line break for collapsing content
+  align-items: center;
+  justify-content: space-between; // space out brand from logo
+  // min-height: var(--cui-header-min-height);
+  padding: var(--cui-header-padding-y) var(--cui-header-padding-x);
+  background: var(--cui-header-bg);
+  border-bottom: var(--cui-header-border);
+  @include transition(var(--cui-header-transition));
+
+  // Because flex properties aren't inherited, we need to redeclare these first
+  // few properties so that content nested within behave properly.
+  // The `flex-wrap` property is inherited to simplify the expanded navbars
+  %container-flex-properties {
+    display: flex;
+    flex-wrap: inherit;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  > .container,
+  > .container-fluid {
+    @extend %container-flex-properties;
+  }
+
+  @each $breakpoint, $container-max-width in $container-max-widths {
+    > .container#{breakpoint-infix($breakpoint, $container-max-widths)} {
+      @extend %container-flex-properties;
+    }
+  }
+
+  &.header-sticky {
+    position: sticky;
+    top: 0;
+    z-index: $zindex-sticky;
+  }
+}
+
+.header-divider {
+  flex-basis: calc(100% + (2 * var(--cui-header-padding-x))); // stylelint-disable-line function-disallowed-list
+  height: 0;
+  margin: var(--cui-header-padding-y) calc(var(--cui-header-padding-x) * -1); // stylelint-disable-line function-disallowed-list
+  border-top: var(--cui-header-divider-border);
+}
+
+// Header brand
+//
+// Used for brand, project, or site names.
+
+.header-brand {
+  padding-top: var(--cui-header-brand-padding-y);
+  padding-bottom: var(--cui-header-brand-padding-y);
+  @include ltr-rtl("margin-right", $header-brand-margin-end);
+  @include font-size($header-brand-font-size);
+  color: var(--cui-header-brand-color);
+  text-decoration: if($link-decoration == none, null, none);
+  white-space: nowrap;
+
+  &:hover,
+  &:focus {
+    color: var(--cui-header-brand-hover-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+  }
+}
+
+// Header nav
+//
+// Custom navbar navigation (doesn't require `.nav`, but does make use of `.nav-link`).
+
+.header-nav {
+  display: flex;
+  flex-direction: row; // cannot use `inherit` to get the `.header`s value
+  @include ltr-rtl("padding-left", 0);
+  margin-bottom: 0;
+  list-style: none;
+
+  .nav-link {
+    padding: var(--cui-header-nav-link-padding-y) var(--cui-header-nav-link-padding-x);
+    color: var(--cui-header-color);
+
+    &:hover,
+    &:focus {
+      color: var(--cui-header-hover-color);
+    }
+
+    &.disabled {
+      color: var(--cui-header-disabled-color);
+    }
+  }
+
+  .show > .nav-link,
+  .nav-link.active {
+    color: var(--cui-header-active-color);
+  }
+
+  .dropdown-menu {
+    position: absolute;
+  }
+}
+
+
+// Header text
+//
+//
+
+.header-text {
+  padding-top: var(--cui-header-nav-link-padding-y);
+  padding-bottom: var(--cui-header-nav-link-padding-y);
+  color: var(--cui-header-color);
+
+  a {
+    color: var(--cui-header-active-color);
+
+    &:hover,
+    &:focus {
+      color: var(--cui-header-active-color);
+    }
+  }
+}
+
+.header-toggler {
+  padding: var(--cui-header-toggler-padding-y) var(--cui-header-toggler-padding-x);
+  @include font-size($header-toggler-font-size);
+  color: var(--cui-header-toggler-color);
+  background-color: var(--cui-header-toggler-bg);
+  border: 0; // remove default button style
+  @include border-radius(var(--cui-header-toggler-border-radius));
+
+  &:hover {
+    color: var(--cui-header-toggler-hover-color);
+    text-decoration: none;
+  }
+
+  &:focus {
+    outline: 0;
+  }
+
+  // Opinionated: add "hand" cursor to non-disabled .navbar-toggler elements
+  &:not(:disabled) {
+    cursor: pointer;
+  }
+}
+
+.header-toggler-icon {
+  display: block;
+  height: $header-toggler-font-size * 1.25;
+  background-image: var(--cui-header-toggler-icon-bg);
+  background-repeat: no-repeat;
+  background-position: center center;
+  background-size: 100% 100%;
+
+  &:hover {
+    background-image: var(--cui-header-toggler-hover-icon-bg);
+  }
+}

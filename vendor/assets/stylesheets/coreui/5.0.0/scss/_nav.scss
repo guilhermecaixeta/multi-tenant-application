@@ -1,0 +1,239 @@
+// Base class
+//
+// Kickstart any navigation component with a set of style resets. Works with
+// `<nav>`s, `<ul>`s or `<ol>`s.
+
+.nav {
+  // scss-docs-start nav-css-vars
+  --cui-nav-link-padding-x: #{$nav-link-padding-x};
+  --cui-nav-link-padding-y: #{$nav-link-padding-y};
+  @include rfs($nav-link-font-size, --cui-nav-link-font-size);
+  --cui-nav-link-font-weight: #{$nav-link-font-weight};
+  --cui-nav-link-color: #{$nav-link-color};
+  --cui-nav-link-hover-color: #{$nav-link-hover-color};
+  --cui-nav-link-disabled-color: #{$nav-link-disabled-color};
+  // scss-docs-end nav-css-vars
+
+  display: flex;
+  flex-wrap: wrap;
+  @include ltr-rtl("padding-left", 0);
+  margin-bottom: 0;
+  list-style: none;
+}
+
+.nav-link {
+  display: block;
+  padding: var(--cui-nav-link-padding-y) var(--cui-nav-link-padding-x);
+  @include font-size(var(--cui-nav-link-font-size));
+  font-weight: var(--cui-nav-link-font-weight);
+  color: var(--cui-nav-link-color);
+  text-decoration: if($link-decoration == none, null, none);
+  background: none;
+  border: 0;
+  @include transition($nav-link-transition);
+
+  &:hover,
+  &:focus {
+    color: var(--cui-nav-link-hover-color);
+    text-decoration: if($link-hover-decoration == underline, none, null);
+  }
+
+  &:focus-visible {
+    outline: 0;
+    box-shadow: $nav-link-focus-box-shadow;
+  }
+
+  // Disabled state lightens text
+  &.disabled,
+  &:disabled {
+    color: var(--cui-nav-link-disabled-color);
+    pointer-events: none;
+    cursor: default;
+  }
+}
+
+//
+// Tabs
+//
+
+.nav-tabs {
+  // scss-docs-start nav-tabs-css-vars
+  --cui-nav-tabs-border-width: #{$nav-tabs-border-width};
+  --cui-nav-tabs-border-color: #{$nav-tabs-border-color};
+  --cui-nav-tabs-border-radius: #{$nav-tabs-border-radius};
+  --cui-nav-tabs-link-hover-border-color: #{$nav-tabs-link-hover-border-color};
+  --cui-nav-tabs-link-active-color: #{$nav-tabs-link-active-color};
+  --cui-nav-tabs-link-active-bg: #{$nav-tabs-link-active-bg};
+  --cui-nav-tabs-link-active-border-color: #{$nav-tabs-link-active-border-color};
+  // scss-docs-end nav-tabs-css-vars
+
+  border-bottom: var(--cui-nav-tabs-border-width) solid var(--cui-nav-tabs-border-color);
+
+  .nav-link {
+    margin-bottom: calc(-1 * var(--cui-nav-tabs-border-width)); // stylelint-disable-line function-disallowed-list
+    border: var(--cui-nav-tabs-border-width) solid transparent;
+    @include border-top-radius(var(--cui-nav-tabs-border-radius));
+
+    &:hover,
+    &:focus {
+      // Prevents active .nav-link tab overlapping focus outline of previous/next .nav-link
+      isolation: isolate;
+      border-color: var(--cui-nav-tabs-link-hover-border-color);
+    }
+  }
+
+  .nav-link.active,
+  .nav-item.show .nav-link {
+    color: var(--cui-nav-tabs-link-active-color);
+    background-color: var(--cui-nav-tabs-link-active-bg);
+    border-color: var(--cui-nav-tabs-link-active-border-color);
+  }
+
+  .dropdown-menu {
+    // Make dropdown border overlap tab border
+    margin-top: calc(-1 * var(--cui-nav-tabs-border-width)); // stylelint-disable-line function-disallowed-list
+    // Remove the top rounded corners here since there is a hard edge above the menu
+    @include border-top-radius(0);
+  }
+}
+
+
+//
+// Pills
+//
+
+.nav-pills {
+  // scss-docs-start nav-pills-css-vars
+  --cui-nav-pills-border-radius: #{$nav-pills-border-radius};
+  --cui-nav-pills-link-active-color: #{$nav-pills-link-active-color};
+  --cui-nav-pills-link-active-bg: #{$nav-pills-link-active-bg};
+  // scss-docs-end nav-pills-css-vars
+
+  .nav-link {
+    @include border-radius(var(--cui-nav-pills-border-radius));
+  }
+
+  .nav-link.active,
+  .show > .nav-link {
+    color: var(--cui-nav-pills-link-active-color);
+    @include gradient-bg(var(--cui-nav-pills-link-active-bg));
+  }
+}
+
+
+//
+// Underline
+//
+
+.nav-underline {
+  // scss-docs-start nav-underline-css-vars
+  --cui-nav-underline-gap: #{$nav-underline-gap};
+  --cui-nav-underline-border-width: #{$nav-underline-border-width};
+  --cui-nav-underline-link-active-color: #{$nav-underline-link-active-color};
+  // scss-docs-end nav-underline-css-vars
+
+  gap: var(--cui-nav-underline-gap);
+
+  .nav-link {
+    padding-right: 0;
+    padding-left: 0;
+    border-bottom: var(--cui-nav-underline-border-width) solid transparent;
+
+    &:hover,
+    &:focus {
+      border-bottom-color: currentcolor;
+    }
+  }
+
+  .nav-link.active,
+  .show > .nav-link {
+    font-weight: $font-weight-bold;
+    color: var(--cui-nav-underline-link-active-color);
+    border-bottom-color: currentcolor;
+  }
+}
+
+
+//
+// Underline border
+//
+
+.nav-underline-border {
+  // scss-docs-start nav-underline-css-vars
+  --cui-nav-underline-border-gap: #{$nav-underline-border-gap};
+  --cui-nav-underline-border-border-color: #{$nav-underline-border-border-color};
+  --cui-nav-underline-border-border-width: #{$nav-underline-border-border-width};
+  --cui-nav-underline-border-link-padding-x: #{$nav-underline-border-link-padding-x};
+  --cui-nav-underline-border-link-padding-y: #{$nav-underline-border-link-padding-y};
+  --cui-nav-underline-border-link-color: #{$nav-underline-border-link-color};
+  --cui-nav-underline-border-link-active-color: #{$nav-underline-border-link-active-color};
+  --cui-nav-underline-border-link-disabled-color: #{$nav-underline-border-link-disabled-color};
+  // scss-docs-end nav-underline-css-vars
+
+  --cui-nav-link-color: var(--cui-nav-underline-border-link-color);
+  --cui-nav-link-disabled-color: var(--cui-nav-underline-border-link-disabled-color);
+
+  gap: var(--cui-nav-underline-border-gap);
+  border-bottom: var(--cui-nav-underline-border-border-width) solid var(--cui-nav-underline-border-border-color);
+
+  .nav-link {
+    padding: var(--cui-nav-underline-border-link-padding-y) var(--cui-nav-underline-border-link-padding-x);
+    margin-bottom: calc(-1 * var(--cui-nav-underline-border-border-width)); // stylelint-disable-line function-disallowed-list
+    border-bottom: var(--cui-nav-underline-border-border-width) solid transparent;
+
+    &:hover,
+    &:focus {
+      border-bottom-color: currentcolor;
+    }
+  }
+
+  .nav-link.active,
+  .show > .nav-link {
+    font-weight: $font-weight-bold;
+    color: var(--cui-nav-underline-border-link-active-color);
+    border-bottom-color: currentcolor;
+  }
+}
+
+
+//
+// Justified variants
+//
+
+.nav-fill {
+  > .nav-link,
+  .nav-item {
+    flex: 1 1 auto;
+    text-align: center;
+  }
+}
+
+.nav-justified {
+  > .nav-link,
+  .nav-item {
+    flex-basis: 0;
+    flex-grow: 1;
+    text-align: center;
+  }
+}
+
+.nav-fill,
+.nav-justified {
+  .nav-item .nav-link {
+    width: 100%; // Make sure button will grow
+  }
+}
+
+
+// Tabbable tabs
+//
+// Hide tabbable panes to start, show them when `.active`
+
+.tab-content {
+  > .tab-pane {
+    display: none;
+  }
+  > .active {
+    display: block;
+  }
+}

@@ -1,0 +1,38 @@
+<section class="container-fluid service position-relative px-5 mt-5" style="margin-bottom: 135px;">
+  <div class="container">
+    <% unless categories.blank? %>
+      <div class="row g-5">
+        <% categories.each do |item| %>
+          <div class="col-lg-4 col-md-6">
+            <div class="bg-primary border-inner text-center text-white p-5">
+              <h4 class="text-uppercase mb-3">
+                <%= item.title %>
+              </h4>
+              <p>
+                <%= item.description %>
+              </p>
+              <% params = {} and params[t('routes.site.params.menu.category').to_sym] = item.title.parameterize %>
+              <%= link_to menu_index_path(params:), class: 'text-uppercase text-dark' do %>
+                <%= t('site.service.read_more') %><i class="bi bi-arrow-right"></i>
+              <% end %>
+            </div>
+          </div>
+        <% end %>
+        <% if Rails.configuration.x.feature_flag.service[:sales][:enabled] %>
+          <div class="col-lg-12 col-md-6 text-center">
+            <h1 class="text-uppercase text-light mb-4">30% Discount For This Summer</h1>
+            <a href="" class="btn btn-primary border-inner py-3 px-5">
+              <%= t('site.service.shop_now') %>
+            </a>
+          </div>
+        <% end %>
+      </div>
+    <% else %>
+      <div class="section-title position-relative text-center mx-auto mb-5 pb-3" style="max-width: 600px;">
+        <h1 class="display-4 text-uppercase">
+          <%= t 'site.service.wip' %>
+        </h1>
+      </div>
+    <% end %>
+  </div>
+</section>

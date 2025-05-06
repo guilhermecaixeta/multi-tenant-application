@@ -1,0 +1,28 @@
+en:
+  email:
+    global:
+      greetings: "Hello %{name},"
+      instruction_message: "If you not requested this action, please contact immediatelly the system administrator."
+    reset_password_instructions:
+      button: "Alterar minha senha"
+      advise_message: "Foi solicitado um link para alteração de senha. Isso pode ser feito através do link abaixo."
+      optional_acceptance_message: "Se você não solicitou esse email, por favor ignorar."
+      instruction_message: "Sua senha não será alterada até que você acesso o link informado e altere sua senha."
+    email_change:
+      advise_message: "Seu email foi alterado!"
+    password_change:
+      advise_message: "Sua senha foi alterada!"
+    welcome:
+      greetings: "Quase lá %{name}"
+      advise_message: "Para completar seu acesso, siga as instruções abaixo!"
+      body: "Use a senha abaixo para acessar sua conta"
+      alert: "Essa senha é de uso pessoal e não deve ser compartilhada com ninguém"
+      instruction_message: "Ao acessar pela primeira vez o sistema você será solicitado para alterar sua senha para uma mais confiável."
+    warning:
+      pepper_migration:
+        subject: "Melhorias no sistema"
+        instruction_message: |
+          Devido a melhorias no sistema, sua senha irá parar de funcionar. 
+          Para poder aceder novamente ao sistema deverá solicitar uma nova senha pelo link: 
+          <hr>
+          <a href="%{link}">Solicitar nova senha!</a>

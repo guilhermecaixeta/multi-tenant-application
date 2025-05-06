@@ -1,0 +1,49 @@
+<aside class="sidebar sidebar-fixed border-end" id="sidebar" data-turbo="false">
+  <div class="sidebar-header border-bottom">
+    <div class="sidebar-brand mx-auto">
+      <% unless current_organization %>
+        <svg class="sidebar-brand-full" width="88" height="32" alt="CoreUI Logo">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/coreui.svg' %>#full"></use>
+        </svg>
+      <% else %>
+        <div class="avatar avatar-xl">
+          <% if current_organization.logo.attached? %>
+            <%= image_tag current_organization.logo,
+                          class: 'avatar-img',
+                          alt: current_organization.name %>
+          <% else %>
+            <%= image_tag 'no_defined_image.jpg', class: 'avatar-img', alt: 'unknown' %>
+          <% end %>
+        </div>
+      <% end %>
+      <svg class="sidebar-brand-narrow" width="32" height="32" alt="CoreUI Logo">
+        <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/coreui.svg' %>#signet"></use>
+      </svg>
+    </div>
+    <button class="btn-close d-lg-none"
+            type="button"
+            data-coreui-theme="dark"
+            aria-label="Close"
+            data-coreui-close="sidebar"
+            data-coreui-target="#sidebar"
+            aria-expanded="false"
+            aria-controls="sidebar"></button>
+  </div>
+  <nav class="sidebar-nav" data-coreui="navigation" data-simplebar>
+    <% if current_user.organizations? || session[:organization_id] %>
+      <%= render 'shared/backoffice/components/sidebar/stock_management' %>
+      <%= render 'shared/backoffice/components/sidebar/catalogs_management' %>
+      <%= render 'shared/backoffice/components/sidebar/sale_management' %>
+    <% end %>
+    <%= render 'shared/backoffice/components/sidebar/organization_management' %>
+    <%= render 'shared/backoffice/components/sidebar/settings' %>
+  </nav>
+  <div class="sidebar-footer border-top d-none d-md-flex">
+    <button class="sidebar-toggler"
+            type="button"
+            data-coreui-toggle="unfoldable"
+            data-coreui-target="#sidebar"
+            aria-expanded="true"
+            aria-controls="sidebar"></button>
+  </div>
+</aside>

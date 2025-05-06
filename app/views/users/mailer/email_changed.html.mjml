@@ -1,0 +1,19 @@
+<!-- Body Start -->
+<mj-raw>
+  <% content_for :card_body do %>
+  <mj-text color="#525252" align="left">
+    <mj-raw>
+      <%= t 'email.email_change.advise_message' %>
+    </mj-raw>
+  </mj-text>
+  <% end %>
+  <% content_for :card_footer do %>
+    <mj-text font-style="oblique" color="#525252" align="left">
+      <mj-raw>
+        * <%= t 'email.global.instruction_message' %>
+      </mj-raw>
+    </mj-text>
+  <% end %>
+</mj-raw>
+<!-- Body End -->
+<%= render partial: 'users/mailer/email_layout', formats: [:html] %>

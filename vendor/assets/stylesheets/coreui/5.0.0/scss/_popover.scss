@@ -1,0 +1,196 @@
+.popover {
+  // scss-docs-start popover-css-vars
+  --cui-popover-zindex: #{$zindex-popover};
+  --cui-popover-max-width: #{$popover-max-width};
+  @include rfs($popover-font-size, --cui-popover-font-size);
+  --cui-popover-bg: #{$popover-bg};
+  --cui-popover-border-width: #{$popover-border-width};
+  --cui-popover-border-color: #{$popover-border-color};
+  --cui-popover-border-radius: #{$popover-border-radius};
+  --cui-popover-inner-border-radius: #{$popover-inner-border-radius};
+  --cui-popover-box-shadow: #{$popover-box-shadow};
+  --cui-popover-header-padding-x: #{$popover-header-padding-x};
+  --cui-popover-header-padding-y: #{$popover-header-padding-y};
+  @include rfs($popover-header-font-size, --cui-popover-header-font-size);
+  --cui-popover-header-color: #{$popover-header-color};
+  --cui-popover-header-bg: #{$popover-header-bg};
+  --cui-popover-body-padding-x: #{$popover-body-padding-x};
+  --cui-popover-body-padding-y: #{$popover-body-padding-y};
+  --cui-popover-body-color: #{$popover-body-color};
+  --cui-popover-arrow-width: #{$popover-arrow-width};
+  --cui-popover-arrow-height: #{$popover-arrow-height};
+  --cui-popover-arrow-border: var(--cui-popover-border-color);
+  // scss-docs-end popover-css-vars
+
+  z-index: var(--cui-popover-zindex);
+  display: block;
+  max-width: var(--cui-popover-max-width);
+  // Our parent element can be arbitrary since tooltips are by default inserted as a sibling of their target element.
+  // So reset our font and text properties to avoid inheriting weird values.
+  @include reset-text();
+  @include font-size(var(--cui-popover-font-size));
+  // Allow breaking very long words so they don't overflow the popover's bounds
+  word-wrap: break-word;
+  background-color: var(--cui-popover-bg);
+  background-clip: padding-box;
+  border: var(--cui-popover-border-width) solid var(--cui-popover-border-color);
+  @include border-radius(var(--cui-popover-border-radius));
+  @include box-shadow(var(--cui-popover-box-shadow));
+
+  .popover-arrow {
+    display: block;
+    width: var(--cui-popover-arrow-width);
+    height: var(--cui-popover-arrow-height);
+
+    &::before,
+    &::after {
+      position: absolute;
+      display: block;
+      content: "";
+      border-color: transparent;
+      border-style: solid;
+      border-width: 0;
+    }
+  }
+}
+
+.bs-popover-top {
+  > .popover-arrow {
+    bottom: calc(-1 * (var(--cui-popover-arrow-height)) - var(--cui-popover-border-width)); // stylelint-disable-line function-disallowed-list
+
+    &::before,
+    &::after {
+      border-width: var(--cui-popover-arrow-height) calc(var(--cui-popover-arrow-width) * .5) 0; // stylelint-disable-line function-disallowed-list
+    }
+
+    &::before {
+      bottom: 0;
+      border-top-color: var(--cui-popover-arrow-border);
+    }
+
+    &::after {
+      bottom: var(--cui-popover-border-width);
+      border-top-color: var(--cui-popover-bg);
+    }
+  }
+}
+
+/* rtl:begin:ignore */
+.bs-popover-end {
+  > .popover-arrow {
+    left: calc(-1 * (var(--cui-popover-arrow-height)) - var(--cui-popover-border-width)); // stylelint-disable-line function-disallowed-list
+    width: var(--cui-popover-arrow-height);
+    height: var(--cui-popover-arrow-width);
+
+    &::before,
+    &::after {
+      border-width: calc(var(--cui-popover-arrow-width) * .5) var(--cui-popover-arrow-height) calc(var(--cui-popover-arrow-width) * .5) 0; // stylelint-disable-line function-disallowed-list
+    }
+
+    &::before {
+      left: 0;
+      border-right-color: var(--cui-popover-arrow-border);
+    }
+
+    &::after {
+      left: var(--cui-popover-border-width);
+      border-right-color: var(--cui-popover-bg);
+    }
+  }
+}
+
+/* rtl:end:ignore */
+
+.bs-popover-bottom {
+  > .popover-arrow {
+    top: calc(-1 * (var(--cui-popover-arrow-height)) - var(--cui-popover-border-width)); // stylelint-disable-line function-disallowed-list
+
+    &::before,
+    &::after {
+      border-width: 0 calc(var(--cui-popover-arrow-width) * .5) var(--cui-popover-arrow-height); // stylelint-disable-line function-disallowed-list
+    }
+
+    &::before {
+      top: 0;
+      border-bottom-color: var(--cui-popover-arrow-border);
+    }
+
+    &::after {
+      top: var(--cui-popover-border-width);
+      border-bottom-color: var(--cui-popover-bg);
+    }
+  }
+
+  // This will remove the popover-header's border just below the arrow
+  .popover-header::before {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    display: block;
+    width: var(--cui-popover-arrow-width);
+    margin-left: calc(-.5 * var(--cui-popover-arrow-width)); // stylelint-disable-line function-disallowed-list
+    content: "";
+    border-bottom: var(--cui-popover-border-width) solid var(--cui-popover-header-bg);
+  }
+}
+
+/* rtl:begin:ignore */
+.bs-popover-start {
+  > .popover-arrow {
+    right: calc(-1 * (var(--cui-popover-arrow-height)) - var(--cui-popover-border-width)); // stylelint-disable-line function-disallowed-list
+    width: var(--cui-popover-arrow-height);
+    height: var(--cui-popover-arrow-width);
+
+    &::before,
+    &::after {
+      border-width: calc(var(--cui-popover-arrow-width) * .5) 0 calc(var(--cui-popover-arrow-width) * .5) var(--cui-popover-arrow-height); // stylelint-disable-line function-disallowed-list
+    }
+
+    &::before {
+      right: 0;
+      border-left-color: var(--cui-popover-arrow-border);
+    }
+
+    &::after {
+      right: var(--cui-popover-border-width);
+      border-left-color: var(--cui-popover-bg);
+    }
+  }
+}
+
+/* rtl:end:ignore */
+
+.bs-popover-auto {
+  &[data-popper-placement^="top"] {
+    @extend .bs-popover-top;
+  }
+  &[data-popper-placement^="right"] {
+    @extend .bs-popover-end;
+  }
+  &[data-popper-placement^="bottom"] {
+    @extend .bs-popover-bottom;
+  }
+  &[data-popper-placement^="left"] {
+    @extend .bs-popover-start;
+  }
+}
+
+// Offset the popover to account for the popover arrow
+.popover-header {
+  padding: var(--cui-popover-header-padding-y) var(--cui-popover-header-padding-x);
+  margin-bottom: 0; // Reset the default from Reboot
+  @include font-size(var(--cui-popover-header-font-size));
+  color: var(--cui-popover-header-color);
+  background-color: var(--cui-popover-header-bg);
+  border-bottom: var(--cui-popover-border-width) solid var(--cui-popover-border-color);
+  @include border-top-radius(var(--cui-popover-inner-border-radius));
+
+  &:empty {
+    display: none;
+  }
+}
+
+.popover-body {
+  padding: var(--cui-popover-body-padding-y) var(--cui-popover-body-padding-x);
+  color: var(--cui-popover-body-color);
+}

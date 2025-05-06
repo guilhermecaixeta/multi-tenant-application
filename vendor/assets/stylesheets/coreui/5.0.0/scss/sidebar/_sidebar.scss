@@ -1,0 +1,303 @@
+// stylelint-disable function-disallowed-list
+
+.sidebar {
+  // scss-docs-start sidebar-css-vars
+  --cui-sidebar-zindex: #{$zindex-sidebar};
+  --cui-sidebar-width: #{$sidebar-width};
+  --cui-sidebar-bg: #{$sidebar-bg};
+  --cui-sidebar-padding-x: #{$sidebar-padding-x};
+  --cui-sidebar-padding-y: #{$sidebar-padding-y};
+  --cui-sidebar-color: #{$sidebar-color};
+  --cui-sidebar-brand-color: #{$sidebar-brand-color};
+  --cui-sidebar-brand-bg: #{$sidebar-brand-bg};
+  // scss-docs-end sidebar-css-vars
+
+  position: relative;
+  display: flex;
+  flex: 0 0 var(--cui-sidebar-width);
+  flex-direction: column;
+  // put the nav on the left
+  order: -1;
+  width: var(--cui-sidebar-width);
+  color: var(--cui-sidebar-color);
+  background: var(--cui-sidebar-bg);
+  box-shadow: none;
+  @include transition($sidebar-transition);
+
+  &.sidebar-fixed,
+  &.sidebar-narrow,
+  &.sidebar-narrow-unfoldable,
+  &.sidebar-overlaid {
+    z-index: var(--cui-sidebar-zindex);
+  }
+
+  &:not(.sidebar-end){
+    @include ltr-rtl("margin-left", 0);
+    ~ * {
+      --cui-sidebar-occupy-start: #{$sidebar-width};
+    }
+  }
+
+  &.sidebar-end {
+    order: 99;
+    @include ltr-rtl("margin-right", 0);
+    ~ * {
+      --cui-sidebar-occupy-end: #{$sidebar-width};
+    }
+  }
+
+  @each $width, $value in $sidebar-widths {
+    &.sidebar-#{$width} {
+      --cui-sidebar-width: #{$value};
+      @include media-breakpoint-up($mobile-breakpoint) {
+        &:not(.sidebar-end):not(.hide) {
+          ~ * {
+            --cui-sidebar-occupy-start: #{$value};
+          }
+        }
+        &.sidebar-end:not(.hide) {
+          ~ * {
+            --cui-sidebar-occupy-end: #{$value};
+          }
+        }
+      }
+    }
+  }
+
+  @include media-breakpoint-up($mobile-breakpoint) {
+    &.hide {
+      &:not(.sidebar-end){
+        @include ltr-rtl("margin-left", calc(-1 * var(--cui-sidebar-width)));
+        ~ * {
+          --cui-sidebar-occupy-start: 0;
+        }
+      }
+      &.sidebar-end {
+        @include ltr-rtl("margin-right", calc(-1 * var(--cui-sidebar-width)));
+        ~ * {
+          --cui-sidebar-occupy-end: 0;
+        }
+      }
+    }
+  }
+
+  &.sidebar-fixed {
+    @include media-breakpoint-up($mobile-breakpoint) {
+      position: fixed;
+      top: 0;
+      bottom: 0;
+
+      &:not(.sidebar-end) {
+        @include ltr-rtl("left", 0);
+      }
+
+      &.sidebar-end {
+        @include ltr-rtl("right", 0);
+      }
+    }
+  }
+
+  &.sidebar-sticky {
+    @include media-breakpoint-up($mobile-breakpoint) {
+      position: sticky;
+      top: 0;
+      height: 100vh;
+    }
+  }
+
+  &.sidebar-overlaid {
+    // scss-docs-start sidebar-overlaid-css-vars
+    --cui-sidebar-overlaid-box-shadow: #{$sidebar-overlaid-box-shadow};
+    // scss-docs-end sidebar-overlaid-css-vars
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+
+    &:not(.sidebar-end){
+      @include ltr-rtl("left", 0);
+      @include ltr-rtl("margin-left", calc(-1 * var(--cui-sidebar-width)));
+      ~ * {
+        --cui-sidebar-occupy-start: 0 !important;  // stylelint-disable-line
+      }
+    }
+
+    &.sidebar-end {
+      @include ltr-rtl("right", 0);
+      @include ltr-rtl("margin-right", calc(-1 * var(--cui-sidebar-width)));
+      ~ * {
+        --cui-sidebar-occupy-end: 0 !important;  // stylelint-disable-line
+      }
+    }
+
+    &.show {
+      box-shadow: var(--cui-sidebar-overlaid-box-shadow);
+
+      &:not(.sidebar-end) {
+        @include ltr-rtl("margin-left", 0);
+      }
+
+      &.sidebar-end {
+        @include ltr-rtl("margin-right", 0);
+      }
+    }
+  }
+
+  @include media-breakpoint-down($mobile-breakpoint) {
+    // Some of our components use this property to detect if the sidebar has mobile behavior.
+    --cui-is-mobile: true;
+
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    z-index: var(--cui-sidebar-zindex);
+
+    &:not(.sidebar-end) {
+      @include ltr-rtl("left", 0);
+      ~ * {
+        --cui-sidebar-occupy-start: 0 !important; // stylelint-disable-line
+      }
+
+      &:not(.show) {
+        @include ltr-rtl("margin-left", calc(-1 * var(--cui-sidebar-width)));
+      }
+    }
+    &.sidebar-end {
+      @include ltr-rtl("right", 0);
+      ~ * {
+        --cui-sidebar-occupy-end: 0 !important; // stylelint-disable-line
+      }
+
+      &:not(.show) {
+        @include ltr-rtl("margin-right", calc(-1 * var(--cui-sidebar-width)));
+      }
+    }
+  }
+}
+
+.sidebar-brand {
+  color: var(--cui-sidebar-brand-color);
+  white-space: nowrap;
+
+  .sidebar-brand-narrow {
+    display: none;
+  }
+}
+
+.sidebar-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--cui-sidebar-padding-y) var(--cui-sidebar-padding-x);
+
+  .btn-close {
+    padding: calc(var(--cui-sidebar-padding-y) * .5) calc(var(--cui-sidebar-padding-x) * .5);
+    margin-top: calc(-.5 * var(--cui-sidebar-padding-y));
+    @include ltr-rtl("margin-right", calc(-.5 * var(--cui-sidebar-padding-x)));
+    margin-bottom: calc(-.5 * var(--cui-sidebar-padding-y));
+  }
+}
+
+.sidebar-body {
+  padding: var(--cui-sidebar-padding-y) var(--cui-sidebar-padding-x);
+}
+
+.sidebar-footer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: var(--cui-sidebar-padding-y) var(--cui-sidebar-padding-x);
+}
+
+.sidebar-toggler {
+  // scss-docs-start sidebar-toggler-css-vars
+  --cui-sidebar-toggler-width: #{$sidebar-toggler-width};
+  --cui-sidebar-toggler-height: #{$sidebar-toggler-height};
+  --cui-sidebar-toggler-color: #{$sidebar-toggler-color};
+  --cui-sidebar-toggler-bg: #{escape-svg($sidebar-toggler-bg)};
+  --cui-sidebar-toggler-hover-color: #{$sidebar-toggler-hover-color};
+  --cui-sidebar-toggler-focus-shadow: #{$sidebar-toggler-focus-shadow};
+  --cui-sidebar-toggler-focus-color: #{$sidebar-toggler-focus-color};
+  --cui-sidebar-toggler-transition: #{$sidebar-toggler-transition};
+  // scss-docs-end sidebar-toggler-css-vars
+
+  position: relative;
+  box-sizing: content-box;
+  width: var(--cui-sidebar-toggler-width);
+  height: var(--cui-sidebar-toggler-height);
+  padding: $sidebar-toggler-padding-y $sidebar-toggler-padding-x;
+  background-color: transparent;
+  border: 0;
+  @include border-radius();
+
+  &::before {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    content: "";
+    background-color: var(--cui-sidebar-toggler-color);
+    mask: var(--cui-sidebar-toggler-bg) no-repeat center;
+    @include transition(var(--cui-sidebar-toggler-transition));
+    @include rtl() {
+      transform: rotate(-180deg);
+    }
+  }
+
+  // Override <a>'s hover style
+  &:hover {
+    text-decoration: none;
+    &::before {
+      background-color: var(--cui-sidebar-toggler-hover-color);
+    }
+  }
+
+  &:focus {
+    position: relative;
+    outline: 0;
+    box-shadow: var(--cui-sidebar-toggler-focus-shadow);
+
+    &::before {
+      background-color: var(--cui-sidebar-toggler-focus-color);
+    }
+  }
+
+  @include media-breakpoint-down($mobile-breakpoint) {
+    display: none;
+  }
+}
+
+
+// Backdrop background
+
+.sidebar-backdrop {
+  // scss-docs-start sidebar-backdrop-css-vars
+  --cui-backdrop-zindex: #{$zindex-sidebar-backdrop};
+  --cui-backdrop-bg: #{$sidebar-backdrop-bg};
+  --cui-backdrop-opacity: #{$sidebar-backdrop-opacity};
+  // scss-docs-end sidebar-backdrop-css-vars
+
+  @include media-breakpoint-down($mobile-breakpoint) {
+    @include overlay-backdrop(var(--cui-backdrop-zindex), var(--cui-backdrop-bg), var(--cui-backdrop-opacity));
+  }
+}
+
+.sidebar-dark {
+  --cui-body-color: #{$body-color-dark};
+  --cui-body-bg: #{$body-bg-dark};
+
+  --cui-emphasis-color: #{$body-emphasis-color-dark};
+
+  --cui-secondary-color: #{$body-secondary-color-dark};
+  --cui-secondary-bg: #{$body-secondary-bg-dark};
+
+  --cui-tertiary-color: #{$body-tertiary-color-dark};
+  --cui-tertiary-bg: #{$body-tertiary-bg-dark};
+
+  --cui-border-color: #{$border-color-dark};
+
+  .sidebar-toggler {
+    filter: var(--cui-sidebar-toggler-white-filter);
+  }
+}

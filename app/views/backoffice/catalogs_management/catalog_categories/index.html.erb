@@ -1,0 +1,31 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary">
+  </th>
+  <th class="bg-body-secondary">
+    <%= CatalogCategory.human_attribute_name 'title' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= CatalogCategory.human_attribute_name 'description' %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true do |obj| %>
+  <td class="text-center">
+    <div class="avatar avatar-md mb-2 mt-2">
+      <% if obj.default_picture && obj.default_picture.attached? %>
+        <%= image_tag obj.default_picture.variant(resize_to_limit: [100, 100], format: :jpeg), class: 'avatar-img', alt: obj.title %>
+      <% else %>
+        <%= image_tag 'missing_image.png', class: 'avatar-img', alt: 'unknown' %>
+      <% end %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.title %>
+    </div>
+  </td>
+  <td>
+    <div class="text-break">
+      <%= obj.description %>
+    </div>
+  </td>
+<% end %>

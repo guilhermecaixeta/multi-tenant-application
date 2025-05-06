@@ -1,0 +1,17 @@
+<% stimulus_controller = nil if local_assigns[:stimulus_controller].nil? %>
+<%= form.fields_for nested_field_for, child_index: -> { Process.clock_gettime(Process::CLOCK_REALTIME, :microsecond) } do |nested_form| %>
+  <%= turbo_frame_tag nested_form.index do %>
+    <div class="row p-3 mb-3 bg-body-tertiary rounded-3">
+      <% if nested_form.object.present? && nested_form.object.id.present? %>
+        <%= nested_form.hidden_field :id, value: nested_form.object.id %>
+      <% end %>
+      <% if stimulus_controller %>
+        <section class="row" data-controller='<%= stimulus_controller %>'>
+          <%= yield nested_form %>
+        </section>
+      <% else %>
+        <%= yield nested_form %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>

@@ -1,0 +1,61 @@
+<section class="container">
+  <div class="row justify-content-center">
+    <div class="col-lg-8">
+      <div class="card-group d-block d-md-flex row">
+        <div class="card col-md-7 p-4 mb-0">
+          <div class="card-body">
+            <h1>
+              <%= t 'devise.sessions.login' %>
+            </h1>
+            <p class="text-body-secondary">
+              <%= t 'devise.sessions.sign_in_to' %>
+            </p>
+            <%= render partial: 'shared/backoffice/alerts' %>
+            <%= form_with(model: resource, url: session_path(resource_name, format: 'html'), local: true) do |f| %>
+              <div class="input-group mb-3">
+                <span class="input-group-text">
+                  <svg class="icon">
+                    <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-at"></use>
+                  </svg>
+                </span>
+                <%= f.email_field :email, class: 'form-control', placeholder: 'Email', type: 'email', autofocus: 'autofocus' %>
+              </div>
+              <div class="input-group mb-4">
+                <span class="input-group-text">
+                  <svg class="icon">
+                    <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-lock-locked"></use>
+                  </svg>
+                </span>
+                <%= f.password_field :password, class: 'form-control', placeholder: 'Password', type: 'password', autofocus: 'autofocus' %>
+              </div>
+              <% if devise_mapping.rememberable? %>
+                <div class="form-check mb-3">
+                  <%= f.check_box :remember_me, class: 'form-check-input' %>
+                  <%= f.label :remember_me, class: 'form-check-label' %>
+                </div>
+              <% end %>
+              <div class="row">
+                <div class="col-6">
+                  <%= f.submit t('devise.sessions.login'), class: 'btn btn-primary px-4' %>
+                </div>
+              </div>
+            <% end %>
+          </div>
+        </div>
+        <div class="card col-md-5 text-white bg-primary py-5">
+          <div class="card-body text-center">
+            <div>
+              <h2>
+                <%= t 'devise.sessions.forgot_password' %>
+              </h2>
+              <p>
+                <%= t 'devise.passwords.forgot_password_message' %>
+              </p>
+              <%= link_to t('devise.sessions.reset_password'), new_user_password_path, class: 'btn btn-lg btn-outline-light mt-3' %>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

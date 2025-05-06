@@ -1,0 +1,43 @@
+en:
+  errors:
+    messages:
+      can_not_be_attached: "Attaching items to the text is not allowed"
+      missing_item: "One or more items were not found"
+      units_not_found: "No units were found for the selected stock item"
+      not_found:
+        title: "Oops. Looks like you're lost."
+        message: "The page you're looking for was not found."
+      unauthorized: 
+        title: "Hmm, looks like you shouldn't be here."
+        message: "Your user is inactive or does not have the necessary permissions. Please contact the administrator for more information."
+      internal_server_error:
+        title: "In all my years in this vital industry, this is the first time this has happened!"
+        message: "The page you're looking for is currently unavailable."
+      domain_errors:
+        force_password_change: "You must update your password before proceeding!"
+        missing_klass: "Class type not found"
+        missing_params: "Params cannot be null or empty"
+      array_min_size: "the list must contain at least %{count} item(s)"
+      self_destroy: "you cannot delete yourself"
+      can_not_be_deleted: "%{attribute} cannot be removed, %{reason}"
+      stock_insufficient_quantity: "insufficient balance"
+      reasons:
+        has_items: "the item is linked to one or more products"
+        has_sales: "has associated sales"
+        has_entries: "the item has entries"
+        has_users: "the item is being used by users"
+        role_admin: "the current role is an administrator"
+      password:  
+        invalid: "invalid password"        
+        password_strength: "does not meet requirements (Minimum 1 uppercase letter, 1 lowercase letter, number, and special character)"        
+        equals_last_password: "cannot be the same as the last password"
+        unmatched: "passwords do not match"
+        weak: "password is too weak"
+      already_confirmed: "already confirmed, please try logging in again"
+      confirmation_period_expired: "must be confirmed within %{period}, please request a new confirmation"
+      expired: "has expired, please request a new one"
+      not_found: "not found"
+      not_locked: "is not locked"
+      not_saved:
+        one: "1 error prevented %{resource} from being saved:"
+        other: "%{count} errors prevented %{resource} from being saved:"

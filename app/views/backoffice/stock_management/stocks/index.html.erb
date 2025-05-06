@@ -1,0 +1,28 @@
+<% content_for :thead do %>
+  <th class="bg-body-secondary">
+    <%= Stock.human_attribute_name 'name' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Stock.human_attribute_name 'quantity_available' %>
+  </th>
+  <th class="bg-body-secondary">
+    <%= Measure.model_name.human %>
+  </th>
+<% end %>
+<%= render 'shared/backoffice/default_index', cached: true do |obj| %>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.name %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.quantity_available.to_s %>
+    </div>
+  </td>
+  <td>
+    <div class="text-nowrap">
+      <%= obj.measure.to_s %>
+    </div>
+  </td>
+<% end %>

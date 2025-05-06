@@ -1,0 +1,71 @@
+<%= render 'shared/backoffice/default_nested_form',
+           stimulus_controller: 'productSaleItems',
+           nested_field_for: :product_sale_items,
+           form: do |nested_form| %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :category, class: 'form-label' %>
+    <%= nested_form.collection_select :category,
+                                      categories_for_selection,
+                                      :id,
+                                      :name,
+                                      { prompt: t('backoffice.form.selection_prompt') },
+                                      class: 'form-control' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :product, class: 'form-label' %>
+    <%= nested_form.collection_select :product_id,
+                                      products_for_selection,
+                                      :id,
+                                      :name,
+                                      { prompt: t('backoffice.form.selection_prompt') },
+                                      data: { 'calculator-target': 'productElement',
+                                              action: 'change->calculator#calculateProfitPrice' },
+                                      class: 'form-control' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :total_items, class: 'form-label' %>
+    <%= nested_form.number_field :total_items, class: 'form-control' %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :use_default_price %>
+    <%= nested_form.check_box :use_default_price,
+                              class: 'mp-3 form-check-input',
+                              data: { 'productSaleItems-target': 'checkBox',
+                                      'calculator-target': 'checkbox',
+                                      action: 'change->productSaleItems#onCheckBoxChange' } %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= nested_form.label :profit_rate, class: 'form-label', data: { 'productSaleItems-target': 'element' } %>
+    <div class="input-group">
+      <div class="input-group-text" data-productSaleItems-target="element">%</div>
+      <%= nested_form.number_field :profit_rate,
+                                   class: 'form-control',
+                                   data: {
+                                     'productSaleItems-target': 'element',
+                                     'calculator-target': 'profitRate',
+                                     action: 'change->calculator#calculateProfitPrice'
+                                   } %>
+    </div>
+  </div>
+  <%= render 'shared/backoffice/components/forms/price_form',
+             form: nested_form,
+             field_for: :price,
+             label_data: { 'productSaleItems-target': 'element' },
+             field_data: { 'productSaleItems-target': 'element',
+                           'calculator-target': 'suggestedPrice' } %>
+  <div class="col-12 mt-3 clearfix">
+    <div class="float-end">
+      <%= form.button formaction: url_for(controller: Backoffice::SalesManagement::ProductSaleItemsController.controller_name,
+                                          action: :destroy,
+                                          index: nested_form.index,
+                                          id: nested_form.object.id),
+                      class: 'btn btn-danger rounded-pill',
+                      formmethod: :delete,
+                      formnovalidate: false,
+                      data: { turbo_stream: nested_form.index } do %>
+        <span class="cil-trash">
+        </span>
+      <% end %>
+    </div>
+  </div>
+<% end %>

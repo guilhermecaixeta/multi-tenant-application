@@ -1,0 +1,80 @@
+<% can_edit = policy_for(current_user, self).can_access?('edit') %>
+<% can_delete = policy_for(current_user, self).can_access?('destroy') %>
+<% custom_actions_options = {} unless local_assigns[:custom_actions_options] %>
+<% use_custom_actions = false unless local_assigns[:use_custom_actions] %>
+<% unless content_for?(:navbar) %>
+  <% if policy_for(current_user, self).can_access?('new') %>
+    <ul class="nav justify-content-end mb-3 mt-3">
+      <li class="nav-item">
+        <%= link_to url_for(controller: controller_name, action: :new), class: 'btn btn-primary rounded-pill' do %>
+          <span class="cil-plus">
+          </span>
+          <%= t 'backoffice.button_new' %>
+        <% end %>
+      </li>
+    </ul>
+  <% end %>
+<% else %>
+  <%= yield :navbar %>
+<% end %>
+<div class="table-responsive">
+  <table class="table border mb-0">
+    <thead class="fw-semibold text-nowrap">
+      <tr class="align-middle">
+        <%= yield :thead %>
+        <% if can_delete || can_edit %>
+          <th class="bg-body-secondary">
+          </th>
+        <% end %>
+      </tr>
+    </thead>
+    <tbody class="align-middle">
+      <% if @objects&.any? %>
+        <% @objects.each do |item| %>
+          <tr class="align-middle">
+            <fieldset>
+              <%= yield item %>
+            </fieldset>
+            <% if can_edit || can_delete || use_custom_actions %>
+              <td>
+                <div class="dropdown">
+                  <button class="btn btn-transparent p-0" type="button" data-coreui-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <svg class="icon">
+                      <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-options"></use>
+                    </svg>
+                  </button>
+                  <div class="dropdown-menu dropdown-menu-end">
+                    <% if use_custom_actions %>
+                      <%= yield content: :custom_actions, options: { item_id: item.id } %>
+                    <% end %>
+                    <% if can_edit %>
+                      <%= link_to t('backoffice.button_edit'),
+                                  url_for(controller: controller_name,
+                                          action: :edit,
+                                          id: item.id),
+                                  class: 'dropdown-item' %>
+                    <% end %>
+                    <% if can_delete %>
+                      <%= link_to t('backoffice.button_delete'),
+                                  url_for(controller: controller_name,
+                                          action: :destroy, id: item.id),
+                                  data: { 'turbo-method': :delete },
+                                  class: 'dropdown-item text-danger' %>
+                    <% end %>
+                  </div>
+                </div>
+              </td>
+            <% else %>
+              <td></td>
+            <% end %>
+          </tr>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <div class="pag-bar mt-3 pt-3">
+    <% if @pagy %>
+      <%== pagy_bootstrap_nav(@pagy) %>
+    <% end %>
+  </div>
+</div>

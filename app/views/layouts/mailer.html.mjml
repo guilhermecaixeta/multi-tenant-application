@@ -1,0 +1,8 @@
+<mjml>
+  <mj-head>
+    <mj-font name="PlayfairDisplay" href="https://fonts.googleapis.com/css?family=Playfair+Display" />
+  </mj-head>
+  <mj-body background-color="white">
+    <%= yield %>
+  </mj-body>
+</mjml>

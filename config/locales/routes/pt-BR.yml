@@ -1,0 +1,10 @@
+pt-BR:
+  routes:
+    site:
+      contacts: contatos
+      service: servicos
+      menu: menu
+      about: sobre
+      params:
+        menu: 
+          category: categoria

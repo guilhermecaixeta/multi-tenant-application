@@ -1,0 +1,143 @@
+pt-BR:
+  activerecord:
+    models:
+      catalog:
+        one: Catalógo
+        other: Catalógos
+      sale:
+        one: Venda
+        other: Vendas
+      product:
+        one: Produto
+        other: Produtos
+      product_sale:
+        one: Venda
+        other: Vendas
+      product_sale_item:
+        one: Item de Venda do Produto
+        other: Item de Venda dos Produtos
+      stock:
+        one: Estoque
+        other: Estoque
+      entry:
+        one: Entrada de Estoque
+        other: Entradas de Estoque
+      item:
+        one: Item
+        other: Itens
+      catalog_category:
+        one: Categoria de Produto
+        other: Categorias de Produto
+      category:
+        one: Categoria
+        other: Categorias
+      measure:
+        one: Medida por Unidade
+        other: Medidas por Unidades
+      organization:
+        one: Organização
+        other: Organizações
+      organization_profile:
+        one: Perfil da Organização
+      user:
+        one: Usuário
+        other: Usuários
+      role:
+        one: Acesso
+        other: Acessos
+      permission:
+        one: Permissão
+        other: Permissões
+    attributes:
+      catalog:
+        name: Nome
+        description: Descrição
+        profit_rate: "Margem de lucro"
+        show: Exibir Produto
+        catalog_categories: Categorias de Produto
+      product:
+        total_items: "Nº total de produtos"
+        measure: "Peso/Volume por unidade"
+      item:
+        stock: Item do Estoque
+        category: Categoria
+      catalog_category:
+        title: Título
+        description: Descrição
+        default_picture: Imagem Padrão
+      category:
+        name: Nome
+      sale:
+        worked_hours: "Horas trabalhadas"
+        loss: Perdas
+        profit: Lucros
+        revenue: Receitas
+        expenses: Despesas
+      stock:
+        name: Nome
+        quantity_available: "Quantidade disponível"
+        measure: "Quantidade por Unidade"
+        minimum_stock_level: "Estoque minímo permitido"
+        maximum_stock_level: "Estoque maxímo permitido"
+      entry:
+        quantity_available: "Quantidade disponível"
+        total_items: "Nº total de produtos"
+        validity: "Prazo de Validade"
+        total_price: "Preço Total"
+        stock: "Item do Estoque"
+      measure:
+        quantity: Quantidade
+        unit: "Unidade de Medida"
+        base_unit: "Unidade Base"
+      price:
+        category: Categoria
+        price: "Preço"
+      price/category:
+        price: Preço Unitário
+        base: Preço base
+        unit_cost: Custo unitário
+        expenses: Despesas
+        suggested: Preço sugerido
+        other: Outros Gastos
+        unpredictable: Despesas não previstas
+        eletricity: Despesas de energia
+        cooking_gas: Despesas com gás
+        marketing: Despesas com marketing\propaganda
+      product_sale_item/category:
+        sale: Venda
+        reimburse: Reembolso
+        waste: Desperdício
+      product_sale_item:
+        profit_rate: "Margem de lucro"
+        category: "Categoria"
+        product: "Produto"
+        total_items: "Nº total de produtos"
+        use_default_price: "Usar valor padrão do produto"
+      access_control:
+        active: Ativo
+        active_from: Ativo a partir
+        active_until: Ativo até
+      organization:
+        name: Nome
+        domain: Domínio
+        email: Email
+        tenant_name: Nome do Tenant
+      organization_profile:
+        slogan: Slogan
+        about: Sobre
+      profile:
+        first_name: Nome
+        last_name: Sobrenome
+        middle_name: "Nome do meio"
+        birthdate: "Data de nascimento"
+      user:
+        email: Email
+        password: Nova Senha
+        password_confirmation: "Confirmação de senha"
+        organization: Organização
+        profile: Perfil
+      role:
+        name: Nome
+        permissions: Permissões
+        admin: Administrador
+

@@ -1,0 +1,157 @@
+{
+    // See https://go.microsoft.com/fwlink/?LinkId=733558
+    // for the documentation about the tasks.json format
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "[debugger] foreman",
+            "type": "shell",
+            "command": "bin/dev",
+            "isBackground": true,
+            "problemMatcher": {
+                "owner": "application",
+                "pattern": {
+                    "regexp": "^(DEBUGGER: wait for debugger connection\\.\\.\\.)$"
+                },
+                "background": {
+                    "activeOnStart": false,
+                    "beginsPattern": "^(ok: down:).*$",
+                    "endsPattern": "^(DEBUGGER: wait for debugger connection\\.\\.\\.)$"
+                }
+            }
+        },
+        // Build Start
+        {
+            "label": "[build] app",
+            "type": "shell",
+            "command": "bin/build",
+            "dependsOn": [
+                "[build] clean pids"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[build] clean pids",
+            "type": "shell",
+            "command": "rm -rf tmp/pids/*",
+            "dependsOn": [
+                "[build] remove debbugers"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[build] remove debbugers",
+            "type": "shell",
+            "command": "rm -rf /tmp/user/0/rdbg-*",
+            "dependsOn": [
+                "[build] clean gems"
+            ],
+            "group": "build"
+        },
+        {
+            "label": "[build] clean gems",
+            "type": "shell",
+            "command": "bundle clean --force",
+            "group": "build",
+            "promptOnClose": false,
+            "dependsOn": [
+                "[build] stopping port apps"
+            ],
+        },
+        {
+            "label": "[build] stopping port apps",
+            "type": "shell",
+            "command": "lsof -i:3000 && fuser -k 3000/tcp || echo \"stop to listening on application port\"",
+            "group": "build",
+            "promptOnClose": false,
+        },
+        // Build End
+        // Lint Start
+        {
+            "label": "[lint] app",
+            "type": "shell",
+            "command": "echo \"Linting and autocorrecting files\"",
+            "group": "none",
+            "dependsOn": [
+                "[lint] rubocop",
+                "[lint] erb"
+            ]
+        },
+        {
+            "label": "[lint] rubocop",
+            "type": "shell",
+            "command": "bundle exec rubocop --autocorrect-all",
+            "group": "none"
+        },
+        {
+            "label": "[lint] erb",
+            "type": "shell",
+            "command": "bundle exec erblint --lint-all --autocorrect",
+            "group": "none"
+        },
+        // Lint End
+        // Whenever & Crontab Start
+        {
+            "label": "[crontab] start",
+            "type": "shell",
+            "command": "service cron start",
+            "isBackground": true
+        },
+        {
+            "label": "[crontab] stop",
+            "type": "shell",
+            "command": "service cron stop",
+            "isBackground": true
+        },
+        {
+            "label": "[crontab] clean",
+            "type": "shell",
+            "command": "crontab -r",
+            "isBackground": true
+        },
+        {
+            "label": "[crontab] register",
+            "type": "shell",
+            "command": "whenever --update-crontab --set environment='development' && crontab -l",
+            "isBackground": true
+        },
+        // Whenever & Crontab End
+        // Credentials Start
+        {
+            "label": "[credentials] dev",
+            "type": "shell",
+            "command": "VISUAL=\"code --wait\" rails credentials:edit --environment development"
+        },
+        {
+            "label": "[credentials] test",
+            "type": "shell",
+            "command": "VISUAL=\"code --wait\" rails credentials:edit --environment test"
+        },
+        {
+            "label": "[credentials] prod",
+            "type": "shell",
+            "command": "RAILS_ENV=production VISUAL=\"code --wait\" rails credentials:edit"
+        },
+        // Credentials End
+        // Utils Start
+        {
+            "label": "[utils] remove autoattach",
+            "type": "shell",
+            "command": "rm -rf /app/.vscode/rdbg_autoattach.*"
+        },
+        // Utils End
+        // Post Debug Task Start
+        {
+            "label": "[post debugger] cleaning",
+            "type": "shell",
+            "command": "echo \"Post Debug Task\"",
+            "dependsOn": [
+                "[build] clean pids",
+                "[build] remove debbugers",
+                "[utils] remove autoattach"
+            ],
+            "group": "none"
+        },
+        // Post Debug Task End
+    ]
+}

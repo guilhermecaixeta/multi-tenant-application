@@ -1,0 +1,131 @@
+// header (required)
+erdiagram BusinessManager
+
+// notation (optional)
+notation=crowsfoot
+
+// Support
+entity Units {
+    id key
+    long_name: VARCHAR(50)
+    short_name: VARCHAR(2)
+}
+
+entity Measures {
+    id key
+    quantity: NUMERIC(18,2)
+}
+
+entity Prices {
+    id key
+    price_cents: NUMERIC
+    currency: VARCHAR(3)
+}
+
+entity Attachments {
+    id key
+    image_name: VARCHAR
+    image_path: VARCHAR
+}
+
+// StockManagement Management
+
+entity Stocks {
+    id key
+    product_name: VARCHAR(255)
+    observations: VARCHAR(2048)
+    quantity_available: NUMERIC(18,2)
+    minimum_stock_level: NUMERIC
+    maximum_stock_level: NUMERIC
+}
+
+entity Entries {
+    id key
+    brand: VARCHAR(255)
+    quantity_available: NUMERIC(18,2)
+    total_items: NUMERIC
+    validity: DATE
+}
+
+// Catalogs
+entity Catalogs {
+    id key
+    type: VARCHAR(64) // enum: Service Product
+    name: VARCHAR(255)
+    description: VARCHAR(800)
+}
+
+entity Products extends Catalogs {
+    id key
+    total_items: NUMBER
+}
+
+// TODO: Add services
+// entity Services extends Catalogs {
+//     id key
+// }
+
+entity Items {
+    id key
+}
+
+entity Categories {
+    id key
+    string name: VARCHAR(255)
+}
+
+// Sales
+entity Sales {
+    id key
+    profit_rate: NUMERIC(18,2)
+}
+
+// TODO: Add service sale model
+// entity ServiceSales extends Sales {
+//     id key
+// }
+
+entity ProductSales extends Sales {
+    id key
+}
+
+
+entity ProductSaleItems {
+    id key
+    total_items: NUMBER
+}
+
+// entity ServiceSaleItems extends SaleItems {
+//     id key
+// }
+
+// Relationships
+
+// Support
+relationship Measures_Units { Measures[1] -> Units[1] }
+
+// Relationship Support - StockManagement
+relationship Entries_Prices { Entries[1] -> Prices[1] }
+
+relationship Items_Measures { Items[1] -> Measures[1]}
+relationship Stocks_Measures { Stocks[1] -> Measures[1] }
+
+// Relationship StockManagement
+relationship Stocks_Entries { Stocks[1] -> Entries[N]}
+relationship Stocks_Items { Stocks[1] -> Items[1]}
+
+relationship Items_Categories {Items[1] -> Categories[N] }
+
+// Catalogs
+relationship Catalogs_Attachements { Catalogs[1] -> Attachments[N] }
+relationship Catalogs_Prices { Catalogs[1] -> Prices[N] }
+relationship Catalogs_Measures { Catalogs[1] -> Measures[1] }
+relationship Catalogs_Items { Catalogs[N] -> Items[N] }
+
+// Sales Products
+relationship ProductSales_ProductSaleItems { ProductSales[1] -> ProductSaleItems[N] }
+relationship ProductSaleItems_Products { ProductSaleItems[1] -> Products[1] }
+ 
+relationship Sales_Prices { Sales[1] -> Prices[N] }
+
+// Sales Services

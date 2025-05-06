@@ -1,0 +1,115 @@
+# Name of your application. Used to uniquely configure containers.
+service: business-manager
+
+image: KAMAL_REGISTRY_USER/business-manager
+
+servers:
+  web:
+    hosts:
+      - web_deploy 
+    labels:
+      app.type: web application
+      
+  workers:
+    hosts:
+      - web_deploy
+    cmd: "bundle exec sidekiq -e production"
+    labels:
+      workers.service: sidekiq
+      app.type: worker
+    
+# Credentials for your image host.
+registry:
+  username: KAMAL_REGISTRY_USER
+  password:
+    - KAMAL_REGISTRY_PASSWORD
+
+env:
+  clear:
+    RAILS_MAX_THREADS: 5
+    WEB_CONCURRENCY: 5
+    APPLICATION_HOST: web
+    RACK_ENV: production
+    RAILS_ENV: production
+    RAILS_SERVE_STATIC_FILES: true
+  secret:
+    - APP_PATCH_VERSION
+    - POSTGRES_HOST
+    - POSTGRES_DATABASE
+    - POSTGRES_USER
+    - POSTGRES_PASSWORD
+    - RAILS_MASTER_KEY
+    - S3_ACCESS_KEY_ID
+    - S3_SECRET_ACCESS_KEY
+
+ssh:
+  user: USER_HOST
+  port: SSH_PORT
+
+# Configure builder setup.
+builder:
+  arch: amd64
+  remote: ssh://USER_HOST@WEB_HOST:SSH_PORT
+  cache:
+    options: --no-cache
+  args:
+    GIT_REV: <%= `git rev-parse --short HEAD` %>
+    BUILD_DATE: <%= `date -u +"%Y-%m-%dT%H:%M:%S %Z"` %>
+
+accessories:
+  db:
+    image: postgres:16
+    host: accessories_deploy
+    port: 5432
+    env:
+      secret:
+        - POSTGRES_DATABASE 
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+    directories:
+      - data/postgres:/var/lib/postgresql/data
+    files:
+      - infrastructure/postgres/postgresql.conf:/usr/local/share/postgresql/postgresql.conf.sample    
+
+  redis:
+      image: redis:7-alpine
+      host: accessories_deploy
+      port: 6379
+      directories:
+        - data/redis:/data
+      files:
+        - infrastructure/redis/redis.conf:/etc/redis/redis.conf
+        - infrastructure/redis/redis-sysctl.conf:/etc/sysctl.conf
+      cmd: redis-server /etc/redis/redis.conf
+
+  backups:
+    image: eeshugerman/postgres-backup-s3:16
+    host: accessories_deploy
+    env:
+      clear:
+        SCHEDULE: "@daily" # optional
+        BACKUP_KEEP_DAYS: 14 # optional
+        S3_BUCKET: hetzner-backup-sandbox
+        S3_PREFIX: acessory-db-backup
+      secret:
+        - POSTGRES_HOST 
+        - POSTGRES_DATABASE 
+        - POSTGRES_USER
+        - POSTGRES_PASSWORD
+        - S3_ACCESS_KEY_ID
+        - S3_SECRET_ACCESS_KEY
+
+proxy:
+  ssl: true
+  hosts: 
+    - cida-doceria.com.br
+    - www.cida-doceria.com.br
+  app_port: 3000
+  healthcheck:
+    path: /up
+    interval: 7
+    timeout: 60
+  
+asset_path: /rails/public/assets
+
+primary_role: web

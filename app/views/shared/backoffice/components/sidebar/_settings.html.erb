@@ -1,0 +1,34 @@
+<% can_read_roles = policy_for(current_user, Backoffice::ApplicationManagement::RolesController).can_access?('index') %>
+<% can_read_users = policy_for(current_user, Backoffice::UserSettings::UsersController).can_access?('index') %>
+<% if can_read_users || can_read_roles %>
+  <li class="nav-group">
+    <a class="nav-link nav-group-toggle" data-coreui="navigation" href="#">
+      <svg class="nav-icon">
+        <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-settings"></use>
+      </svg>
+      <%= t 'backoffice.sections.settings' %>
+    </a>
+    <ul class="nav-group-items compact">
+      <% if can_read_users %>
+        <li class="nav-item">
+          <%= link_to backoffice_user_settings_users_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <span class="nav-icon-bullet"></span>
+            </span>
+            <%= User.model_name.human(count: 2) %>
+          <% end %>
+        </li>
+      <% end %>
+      <% if can_read_roles %>
+        <li class="nav-item">
+          <%= link_to backoffice_application_management_roles_path, class: 'nav-link' do %>
+            <span class="nav-icon">
+              <span class="nav-icon-bullet"></span>
+            </span>
+            <%= Role.model_name.human(count: 2) %>
+          <% end %>
+        </li>
+      <% end %>
+    </ul>
+  </li>
+<% end %>

@@ -1,0 +1,8 @@
+<%= fields model: @object do |f| %>
+  <%= turbo_stream.replace params[:index] do %>
+    <%= f.fields_for fields_for_form, child_index: "#{params[:index]}"  do |nested_form| %>
+      <%= nested_form.hidden_field :id, value: params[:id] %>
+      <%= nested_form.hidden_field :_destroy, value: true %>
+    <% end %>
+  <% end %>
+<% end %>

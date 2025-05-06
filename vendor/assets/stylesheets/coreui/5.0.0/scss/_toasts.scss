@@ -1,0 +1,73 @@
+.toast {
+  // scss-docs-start toast-css-vars
+  --cui-toast-zindex: #{$zindex-toast};
+  --cui-toast-padding-x: #{$toast-padding-x};
+  --cui-toast-padding-y: #{$toast-padding-y};
+  --cui-toast-spacing: #{$toast-spacing};
+  --cui-toast-max-width: #{$toast-max-width};
+  @include rfs($toast-font-size, --cui-toast-font-size);
+  --cui-toast-color: #{$toast-color};
+  --cui-toast-bg: #{$toast-background-color};
+  --cui-toast-border-width: #{$toast-border-width};
+  --cui-toast-border-color: #{$toast-border-color};
+  --cui-toast-border-radius: #{$toast-border-radius};
+  --cui-toast-box-shadow: #{$toast-box-shadow};
+  --cui-toast-header-color: #{$toast-header-color};
+  --cui-toast-header-bg: #{$toast-header-background-color};
+  --cui-toast-header-border-color: #{$toast-header-border-color};
+  // scss-docs-end toast-css-vars
+
+  width: var(--cui-toast-max-width);
+  max-width: 100%;
+  @include font-size(var(--cui-toast-font-size));
+  color: var(--cui-toast-color);
+  pointer-events: auto;
+  background-color: var(--cui-toast-bg);
+  background-clip: padding-box;
+  border: var(--cui-toast-border-width) solid var(--cui-toast-border-color);
+  box-shadow: var(--cui-toast-box-shadow);
+  @include border-radius(var(--cui-toast-border-radius));
+
+  &.showing {
+    opacity: 0;
+  }
+
+  &:not(.show) {
+    display: none;
+  }
+}
+
+.toast-container {
+  --cui-toast-zindex: #{$zindex-toast};
+
+  position: absolute;
+  z-index: var(--cui-toast-zindex);
+  width: max-content;
+  max-width: 100%;
+  pointer-events: none;
+
+  > :not(:last-child) {
+    margin-bottom: var(--cui-toast-spacing);
+  }
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  padding: var(--cui-toast-padding-y) var(--cui-toast-padding-x);
+  color: var(--cui-toast-header-color);
+  background-color: var(--cui-toast-header-bg);
+  background-clip: padding-box;
+  border-bottom: var(--cui-toast-border-width) solid var(--cui-toast-header-border-color);
+  @include border-top-radius(calc(var(--cui-toast-border-radius) - var(--cui-toast-border-width)));
+
+  .btn-close {
+    @include ltr-rtl("margin-right", calc(-.5 * var(--cui-toast-padding-x)));
+    @include ltr-rtl("margin-left", var(--cui-toast-padding-x));
+  }
+}
+
+.toast-body {
+  padding: var(--cui-toast-padding-x);
+  word-wrap: break-word;
+}

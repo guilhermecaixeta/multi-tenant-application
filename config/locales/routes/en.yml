@@ -1,0 +1,6 @@
+en:
+  routes:
+    site:
+      menu:
+        params:
+          category:

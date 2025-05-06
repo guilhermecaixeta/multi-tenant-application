@@ -1,0 +1,15 @@
+<% if flash[:error].present? %>
+  <%= render_turbo_stream_flash_messages %>
+<% else %>
+  <%= turbo_stream.replace @destination_id do %>
+    <%= select_tag :unit_id,
+                   options_from_collection_for_select(@items, "id", "long_name", @destination_value),
+                   prompt: t('backoffice.form.selection_prompt'),
+                   class: "form-select",
+                   data: { 'calculator-target': 'unitElement',
+                            'drop-downs-target': 'ddlDestinationElement',
+                            action: 'change->calculator#calculatePrices' },
+                   name: @destination_name,
+                   id: @destination_id %>
+  <% end %>
+<% end %>

@@ -1,0 +1,16 @@
+<%= render 'shared/backoffice/default_form', custom_form_url: update_security_backoffice_user_settings_users_path do |f| %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <div class="col-12">
+      <%= f.label :current_password, class: 'form-label' %>
+      <%= f.password_field :current_password, class: 'form-control' %>
+    </div>
+    <div class="col-12">
+      <%= f.label :password, class: 'form-label' %>
+      <%= f.password_field :password, class: 'form-control' %>
+    </div>
+    <div class="col-12">
+      <%= f.label :password_confirmation, class: 'form-label' %>
+      <%= f.password_field :password_confirmation, class: 'form-control' %>
+    </div>
+  </div>
+<% end %>

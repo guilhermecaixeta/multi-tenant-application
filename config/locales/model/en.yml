@@ -1,0 +1,26 @@
+en:
+  activerecord:
+    attributes:
+      catalog:
+        show: Show Product
+      product:
+        measure: "Weight/Volume unit"
+      item:
+        stock: Stock Item
+      entry:
+        stock: "Stock Item"
+      measure:
+        quantity: "Weight/Volume"
+        unit: "Unit of Measure"
+        base_unit: "Base Unit"
+      price/category:
+        price: Price
+        base: Base price
+        expenses: Expenses
+        suggested: Suggested Price
+        other: Others
+        unpredictable: Unpredictable
+        eletricity: Eletricity bill
+        cooking_gas: Cooking gas bill
+        marketing: Marketing Expenses
+

@@ -1,0 +1,15 @@
+<%= render 'shared/backoffice/default_form', use_multiple: true do |f| %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= f.label :name, class: 'form-label' %>
+    <%= f.text_field :name, class: 'form-control' %>
+  </div>
+  <%= render 'shared/backoffice/components/forms/measure_form', form: f %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= f.label :minimum_stock_level, class: 'form-label' %>
+    <%= f.number_field :minimum_stock_level, class: 'form-control', in: 0..100, step: 1 %>
+  </div>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= f.label :maximum_stock_level, class: 'form-label' %>
+    <%= f.number_field :maximum_stock_level, class: 'form-control', in: 0..10_000, step: 1 %>
+  </div>
+<% end %>

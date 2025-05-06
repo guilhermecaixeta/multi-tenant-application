@@ -1,0 +1,32 @@
+<%= render 'shared/backoffice/default_form',
+           stimulus_controller: 'calculator',
+           custom_form_url: if action_name == 'new' || action_name == 'create'
+                              backoffice_sales_management_product_sales_path
+                            else
+                              backoffice_sales_management_product_sale_path(@object)
+                            end do |f| %>
+  <%= f.fields_for :sale, @object.sale do |sale_form| %>
+    <%= sale_form.hidden_field :saleable_id, value: @object.sale.saleable_id %>
+    <%= sale_form.hidden_field :saleable_type, value: @object.sale.saleable_type %>
+    <%= render 'shared/backoffice/components/forms/price_form',
+               form: sale_form,
+               field_for: :expenses %>
+  <% end %>
+  <% if f.object.present? && f.object.expenses.present? %>
+    <%= render 'shared/backoffice/components/forms/price_form',
+               form: f,
+               field_for: f.object.expenses,
+               readonly: true %>
+  <% end %>
+  <% content_for :title do %>
+    <%= ProductSaleItem.model_name.human(count: 2) %>
+  <% end %>
+  <% content_for :form do %>
+    <%= render 'backoffice/sales_management/product_sale_items/form',
+               form: f %>
+  <% end %>
+  <%= render 'shared/backoffice/components/forms/nested',
+             nested_path: new_backoffice_sales_management_product_sale_item_path(f.field_id(:product_sale_items)),
+             nested_symbol: :product_sale_items,
+             form: f %>
+<% end %>

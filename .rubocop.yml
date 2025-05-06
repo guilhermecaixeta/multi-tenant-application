@@ -1,0 +1,90 @@
+inherit_from: .rubocop_todo.yml
+
+AllCops:
+  TargetRubyVersion: 3.3
+  NewCops: enable
+  Exclude:
+    - 'db/schema.rb'
+    - 'bin/**/*'
+    - 'sorbet/**/*'
+    - 'log/**'
+    - 'tmp/**'
+
+plugins:
+  - rubocop-capybara
+  - rubocop-factory_bot
+  - rubocop-performance
+  - rubocop-rake
+  - rubocop-rails
+  - rubocop-rspec
+  - rubocop-rspec_rails
+
+Layout/LineLength:
+  Max: 120
+
+Layout/TrailingWhitespace:
+  Enabled: true
+
+Layout/EmptyLines:
+  Enabled: true  
+
+Layout/IndentationWidth:
+  Width: 2
+
+Lint/AmbiguousAssignment:
+  Enabled: true 
+
+Lint/BigDecimalNew:
+  Enabled: true
+
+Lint/CircularArgumentReference:
+  Enabled: true
+
+Lint/ConstantDefinitionInBlock:
+  Enabled: true  
+
+Metrics/BlockLength:
+  Exclude:
+    - 'spec/**/*'
+    - 'test/**/*'
+  Max: 25
+
+Metrics/MethodLength:
+  Max: 10
+
+Metrics/ClassLength:
+  Max: 100
+
+Style/Documentation:
+  Enabled: true
+
+Style/FrozenStringLiteralComment:
+  Enabled: true
+  EnforcedStyle: always
+
+Style/ClassAndModuleChildren:
+  Enabled: true
+
+Style/GuardClause:
+  Enabled: true
+
+Style/RedundantReturn:
+  Enabled: true
+
+Style/SingleLineMethods:
+  Enabled: true  
+
+Rails/HasManyOrHasOneDependent:
+  Enabled: true
+
+Rails/NotNullColumn:
+  Enabled: true
+
+Rails/ActionControllerFlashBeforeRender:
+  Enabled: true
+
+Rails/ActiveRecordOverride:
+  Enabled: true
+
+Rails/ActiveSupportOnLoad:
+  Enabled: true

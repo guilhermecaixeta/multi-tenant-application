@@ -1,0 +1,31 @@
+  <%= render 'shared/backoffice/default_form' do |f| %>
+  <div class="col-sm-12 col-md-9 col-lg-6 offset-lg-3">
+    <%= render 'backoffice/user_settings/users/profile_form', form: f %>
+    <div class="col-12">
+      <%= f.label :email, class: 'form-label' %>
+      <%= f.email_field :email,
+                        class: 'form-control',
+                        disabled: !policy_for(current_user, Backoffice::UserSettings::UsersController).can_access?('create') %>
+    </div>
+    <%= render 'shared/backoffice/components/forms/access_control_form', form: f %>
+    <div class="col-sm-12 col-md-6 col-lg-4">
+      <%= f.label :organization, class: 'form-label' %>
+      <%= f.collection_select :organization_ids,
+                              organization_for_selection,
+                              :id,
+                              :name,
+                              { prompt: t('backoffice.form.selection_prompt') },
+                              class: 'form-control',
+                              disabled: !policy_for(current_user,
+                                                    Backoffice::OrganizationManagement::OrganizationsController).can_access?('create') %>
+    </div>
+    <div class="col-12">
+      <%= f.label :roles %>
+      <%= f.collection_check_boxes(:role_ids, role_for_selection, :id, :name)  do |b| %>
+        <div class="form-check">
+          <%= b.label(class: 'form-check-label') { b.check_box(class: 'form-check-input', disabled: !current_user.admin?) + b.text } %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+<% end %>

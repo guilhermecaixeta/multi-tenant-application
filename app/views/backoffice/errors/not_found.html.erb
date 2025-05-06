@@ -1,0 +1,15 @@
+<%= render partial: 'backoffice/errors/default_error',
+           locals: { status_code: 404,
+                     title: t('errors.messages.not_found.title'),
+                     message: t('errors.messages.not_found.message') } %>
+<% if false %>
+  <div class="input-group">
+    <span class="input-group-text">
+      <svg class="icon">
+        <use xlink:href="node_modules/@coreui/icons/sprites/free.svg#cil-magnifying-glass"></use>
+      </svg>
+    </span>
+    <input class="form-control" id="prependedInput" size="16" type="text" placeholder="What are you looking for?" autocomplete="false">
+    <button class="btn btn-info" type="button">Search</button>
+  </div>
+<% end %>

@@ -1,0 +1,72 @@
+version: "3.5"
+name: multi_tenant_app_devcontainer
+
+services:
+  # Primary application service
+  app:
+    user: "vscode:vscode"
+    build:
+      context: ..
+      dockerfile: .devcontainer/Dockerfile
+      args:
+        - PORT=${APP_MAIN_PORT}
+        - RUBY_VERSION=${RUBY_VERSION}
+        - NODE_JS_VERSION=${NODE_JS_VERSION}
+        - BUNDLE_VERSION=${BUNDLE_VERSION}
+    ports:
+      - ${APP_MAIN_PORT}:${APP_MAIN_PORT}
+    environment:
+      - POSTGRES_HOST=postgres
+    volumes:
+      - ..:/app:cached
+      - $HOME/.ssh/:/home/vscode/.ssh/
+      - $HOME/.ssh/:/root/.ssh/
+      - $HOME/.aws/:/root/.aws/
+      - /var/run/docker.sock:/var/run/docker.sock
+    command: sleep infinity
+    networks:
+      - multi_tenant_app_network_shared
+
+  # PostgreSQL database service
+  postgres:
+    image: postgres:12-alpine
+    env_file:
+      - path: ./postgres_devcontainer.env
+        required: true
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    ports:
+      - ${POSTGRES_PORT}:5432
+    networks:
+      - multi_tenant_app_network_shared
+
+  # Redis service
+  redis:
+    image: redis:6-alpine
+    ports:
+      - ${REDIS_PORT}:6379
+    volumes:
+      - redis_data:/data
+    networks:
+      - multi_tenant_app_network_shared
+
+  # Mailcatcher service
+  mailcatcher:
+    image: schickling/mailcatcher
+    ports:
+      - ${MAIL_CATCHER_PORT}:1080
+    networks:
+      - multi_tenant_app_network_shared
+
+volumes:
+  postgres_data:
+    driver: local
+  redis_data:
+    driver: local
+  opensearch_data:
+    driver: local
+
+networks:
+  multi_tenant_app_network_shared:
+    name: multi_tenant_app_network_shared
+    external: false

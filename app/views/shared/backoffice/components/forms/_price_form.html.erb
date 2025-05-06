@@ -1,0 +1,27 @@
+<% field_for = :prices unless local_assigns[:field_for] %>
+<% use_addon = false unless local_assigns[:use_addon] %>
+<%= form.fields_for field_for do |price_form| %>
+  <% label_for_prices = :price unless local_assigns[:label_for_prices] %>
+  <% readonly = false unless local_assigns[:readonly] %>
+  <% field_data = {} unless local_assigns[:field_data] %>
+  <% label_data = {} unless local_assigns[:label_data] %>
+  <div class="col-sm-12 col-md-6 col-lg-4">
+    <%= price_form.hidden_field :category, value: price_form.object.category %>
+    <%= price_form.hidden_field :id, value: price_form.object.id %>
+    <% if price_form.object && price_form.object.category %>
+      <%= price_form.label Price.human_attribute_name("category.#{price_form.object.category}").to_sym, class: 'form-label', data: label_data %>
+    <% else %>
+      <%= price_form.label label_for_prices, class: 'form-label', data: label_data %>
+    <% end %>
+    <div class="input-group">
+      <div class="input-group-text" data-productSaleItems-target="element"><%= currency_symbol %></div>
+      <%= price_form.text_field :price,
+                                class: 'form-control',
+                                readonly: price_form.object.category == Price.categories[:suggested] ? true : readonly,
+                                data: field_data %>
+      <% if use_addon %>
+        <%= yield :add_ons %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

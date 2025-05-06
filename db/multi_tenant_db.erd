@@ -1,0 +1,44 @@
+// header (required)
+erdiagram BusinessManager
+
+// notation (optional)
+notation=crowsfoot
+
+// Global
+entity Organizations {
+    id key
+    name: VARCHAR(255)
+    domain: VARCHAR(128)
+    email: VARCHAR(128)
+    code: VARCHAR(64)
+    description: VARCHAR(400)
+}
+
+entity Users {
+    id key
+    name: VARCHAR(255)
+    email: VARCHAR(255)
+    password: VARCHAR(1024)
+    
+}
+
+weak entity UserOrganization {
+    id partial-key
+}
+
+// Support
+entity Attachments {
+    id key
+    image_name: VARCHAR
+    image_path: VARCHAR
+}
+
+entity AccessControl {
+    id key
+    active: BOOLEAN
+    active_from: DATETIME
+    active_until: DATETIME
+}
+
+relationship has_many_users { Users[N] -> UserOrganization[1] }
+relationship has_many_organizations { Organizations[N] -> UserOrganization[1] }

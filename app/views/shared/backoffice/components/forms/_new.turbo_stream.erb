@@ -1,0 +1,19 @@
+<% model = local_assigns[:model] ? local_assigns[:model] : @object %>
+<%= fields model: model do |f| %>
+  <%= f.fields_for fields_for_form do |nested_form| %>
+    <%= turbo_stream.replace "add-#{fields_for_form}" do %>
+      <%= f.button formaction: url_for(controller: controller_name, action: :new, index: f.field_id(fields_for_form)),
+          class: "btn btn-info rounded-pill",
+          formmethod: :post,
+          formnovalidate: true,
+          id: "add-#{fields_for_form}",
+          data: { turbo_stream:  f.field_id(fields_for_form) } do %>
+        <span class="cil-plus">
+        </span>
+      <% end %>
+    <% end %>
+    <%= turbo_stream.append f.field_id(fields_for_form) do %>
+      <%= render path_for_form, form: f %>
+    <% end %>
+  <% end %>
+<% end %>

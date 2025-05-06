@@ -1,0 +1,24 @@
+<% if notice %>
+  <div class="alert alert-success alert-dismissible fade show" role="alert">
+    <%= notice %>
+    <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+<% if alert %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <%= alert %>
+    <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>
+<% if @object && @object.errors[:base] && @object.errors[:base].count > 0 %>
+  <div class="alert alert-danger alert-dismissible fade show" role="alert">
+    <ul>
+      <% for item in @object.errors[:base] %>
+        <li>
+          <%= item %>
+        </li>
+      <% end %>
+    </ul>
+    <button type="button" class="btn-close" data-coreui-dismiss="alert" aria-label="Close"></button>
+  </div>
+<% end %>

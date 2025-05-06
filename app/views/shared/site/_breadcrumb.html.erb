@@ -1,0 +1,14 @@
+<!-- Page Header Start -->
+<div class="container-fluid bg-dark bg-img p-5 mb-5">
+  <div class="row">
+    <div class="col-12 text-center">
+      <h1 class="display-4 text-uppercase text-white">
+        <%= t("site.navbar.menu_item_#{controller_name}") %>
+      </h1>
+      <%= link_to Site::HomeController.controller_name.humanize, home_index_path %>
+      <i class="far fa-square text-primary px-2"></i>
+      <%= link_to t("routes.site.#{controller_name}").humanize, url_for(controller: controller_name, action: :index) %>
+    </div>
+  </div>
+</div>
+<!-- Page Header End -->

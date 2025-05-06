@@ -1,0 +1,19 @@
+<div class="col-12">
+  <p class="lead">
+    <%= yield :title %>
+  </p>
+  <div class="mb-3">
+    <%= turbo_frame_tag form.field_id(nested_symbol) do %>
+      <%= yield :form %>
+    <% end %>
+    <%= form.button formaction: nested_path,
+                    class: 'btn btn-info rounded-pill',
+                    formmethod: :post,
+                    formnovalidate: true,
+                    id: "add-#{nested_path}",
+                    data: { turbo_stream: form.field_id(nested_symbol) } do %>
+      <span class="cil-plus">
+      </span>
+    <% end %>
+  </div>
+</div>

@@ -1,0 +1,38 @@
+<% can_read_stocks = policy_for(current_user, Backoffice::StockManagement::StocksController).can_access?('index') %>
+<% can_read_entries = policy_for(current_user, Backoffice::StockManagement::EntriesController).can_access?('index') %>
+<% can_read_outputs = policy_for(current_user, Backoffice::StockManagement::OutputsController).can_access?('index') %>
+<% if can_read_stocks || can_read_entries || can_read_outputs %>
+  <li class="nav-title">
+    <%= t 'backoffice.sections.stock' %>
+  </li>
+  <% if can_read_stocks %>
+    <li class="nav-item">
+      <%= link_to backoffice_stock_management_stocks_path, class: 'nav-link' do %>
+        <svg class="nav-icon">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-barcode"></use>
+        </svg>
+        <%= Stock.model_name.human(count: 2) %>
+      <% end %>
+    </li>
+  <% end %>
+  <% if can_read_entries %>
+    <li class="nav-item">
+      <%= link_to backoffice_stock_management_entries_path, class: 'nav-link' do %>
+        <svg class="nav-icon">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-arrow-thick-from-top"></use>
+        </svg>
+        <%= t 'backoffice.sections.stock_in' %>
+      <% end %>
+    </li>
+  <% end %>
+  <% if can_read_outputs %>
+    <li class="nav-item">
+      <%= link_to backoffice_stock_management_outputs_path, class: 'nav-link' do %>
+        <svg class="nav-icon">
+          <use xlink:href="<%= asset_path '/assets/coreui/icons-2/sprites/free.svg' %>#cil-arrow-thick-from-bottom"></use>
+        </svg>
+        <%= t 'backoffice.sections.stock_out' %>
+      <% end %>
+    </li>
+  <% end %>
+<% end %>

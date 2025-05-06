@@ -1,0 +1,48 @@
+pt-BR:
+  site:
+    organization_place: Luziânia, Go
+    about:
+      greetings: Bem-vindo à %{organization}
+      title: Sobre Nós
+    facts:
+      client: Clientes Felizes
+      experience: Experiência
+      project: Projetos Completos
+      specialist: Especialista em Bolos
+    footer:
+      all_rights_reserved: Todos os direitos reservados
+      get_in_touch: Entre Em Contato
+      newsletter: Acompanhe Nossas Novidades
+      newsletter_text: Se inscreva na nossa lista e fique por dentro das novidades e mais
+      quick_links: Accesso Rápido
+      sign_up: Inscreve-se
+    hero:
+      play_video: Assistir o vídeo
+      primary_text: Super Delicioso
+      read_more: Leia Mais
+      slogan: O sabor doce da infância em cada mordida!
+    navbar:
+      menu_item_contacts: Contate-nos
+      menu_item_about: Sobre
+      menu_item_team: Chefes
+      menu_item_home: Home
+      menu_item_menu: Menu & Preço
+      menu_item_pages: Páginas
+      menu_item_service: Nossos Serviços
+      menu_item_testimonial: Testemunhos
+    products:
+      subtitle: Veja Nossos Produtos
+      title: Menu & Preços
+      wip: Estamos trabalhando para melhor atender você!
+    review:
+      subtitle: O que nossos cliente dizem!!!
+      title: Reviews
+    service:
+      read_more: Leia Mais
+      shop_now: Comprar Agora
+      wip: Estamos a preparar tudo...
+    contacts:
+      where_find_us: Onde Nos Encontrar
+    topbar:
+      contact_instagram: Nosso Instagram
+      contact_phone: Nosso Telefone

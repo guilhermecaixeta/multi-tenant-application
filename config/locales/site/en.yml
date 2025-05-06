@@ -1,0 +1,45 @@
+en:
+  site:
+    organization_place: Luziânia, Go
+    about:
+      greetings: Welcome to %{organization}
+      title: About Us
+    facts:
+      client: Happy Clients
+      experience: Experience
+      project: Complete Projects
+      specialist: Cake Specialist
+    footer:
+      get_in_touch: Get In Touch
+      newsletter: Newsletter
+      newsletter_text: Subscribe to our newsletter to get updated with the latest news and more
+      quick_links: Quick Links
+      sign_up: Sign Up
+    hero:
+      play_video: Play Video
+      primary_text: Super Crispy
+      read_more: Read More
+      slogan: The sweet taste of childhood in every bite!
+    navbar:
+      contact: Contact Us
+      menu_item_about: About
+      menu_item_team: Chefs
+      menu_item_home: Home
+      menu_item_menu: Menu & Pricing
+      menu_item_pages: Pages
+      menu_item_service: Our Service
+      menu_item_testimonial: Testimonials
+    products:
+      subtitle: Explore Our Cakes
+      title: Menu & Pricing
+      wip: We are working to better serve you!
+    review:
+      subtitle: Our Clients Say!!!
+      title: Testimonial
+    service:
+      read_more: Read More
+      shop_now: Shop Now
+    contacts: 
+    topbar:
+      contact_instagram: Our Instagram
+      contact_phone: Call Us

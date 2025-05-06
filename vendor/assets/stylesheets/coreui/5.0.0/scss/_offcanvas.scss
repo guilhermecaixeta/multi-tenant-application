@@ -1,0 +1,145 @@
+// stylelint-disable function-disallowed-list
+
+%offcanvas-css-vars {
+  // scss-docs-start offcanvas-css-vars
+  --cui-offcanvas-zindex: #{$zindex-offcanvas};
+  --cui-offcanvas-width: #{$offcanvas-horizontal-width};
+  --cui-offcanvas-height: #{$offcanvas-vertical-height};
+  --cui-offcanvas-padding-x: #{$offcanvas-padding-x};
+  --cui-offcanvas-padding-y: #{$offcanvas-padding-y};
+  --cui-offcanvas-color: #{$offcanvas-color};
+  --cui-offcanvas-bg: #{$offcanvas-bg-color};
+  --cui-offcanvas-border-width: #{$offcanvas-border-width};
+  --cui-offcanvas-border-color: #{$offcanvas-border-color};
+  --cui-offcanvas-box-shadow: #{$offcanvas-box-shadow};
+  --cui-offcanvas-transition: #{transform $offcanvas-transition-duration ease-in-out};
+  --cui-offcanvas-title-line-height: #{$offcanvas-title-line-height};
+  // scss-docs-end offcanvas-css-vars
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $next: breakpoint-next($breakpoint, $grid-breakpoints);
+  $infix: breakpoint-infix($next, $grid-breakpoints);
+
+  .offcanvas#{$infix} {
+    @extend %offcanvas-css-vars;
+  }
+}
+
+@each $breakpoint in map-keys($grid-breakpoints) {
+  $next: breakpoint-next($breakpoint, $grid-breakpoints);
+  $infix: breakpoint-infix($next, $grid-breakpoints);
+
+  .offcanvas#{$infix} {
+    @include media-breakpoint-down($next) {
+      position: fixed;
+      bottom: 0;
+      z-index: var(--cui-offcanvas-zindex);
+      display: flex;
+      flex-direction: column;
+      max-width: 100%;
+      color: var(--cui-offcanvas-color);
+      visibility: hidden;
+      background-color: var(--cui-offcanvas-bg);
+      background-clip: padding-box;
+      outline: 0;
+      @include box-shadow(var(--cui-offcanvas-box-shadow));
+      @include transition(var(--cui-offcanvas-transition));
+
+      &.offcanvas-start {
+        top: 0;
+        @include ltr-rtl("left", 0);
+        width: var(--cui-offcanvas-width);
+        @include ltr-rtl("border-right", var(--cui-offcanvas-border-width) solid var(--cui-offcanvas-border-color));
+        @include ltr-rtl-value-only("transform", translateX(-100%), translateX(100%));
+      }
+
+      &.offcanvas-end {
+        top: 0;
+        @include ltr-rtl("right", 0);
+        width: var(--cui-offcanvas-width);
+        @include ltr-rtl("border-left", var(--cui-offcanvas-border-width) solid var(--cui-offcanvas-border-color));
+        transform: translateX(100%);
+      }
+
+      &.offcanvas-top {
+        top: 0;
+        right: 0;
+        left: 0;
+        height: var(--cui-offcanvas-height);
+        max-height: 100%;
+        border-bottom: var(--cui-offcanvas-border-width) solid var(--cui-offcanvas-border-color);
+        transform: translateY(-100%);
+      }
+
+      &.offcanvas-bottom {
+        right: 0;
+        left: 0;
+        height: var(--cui-offcanvas-height);
+        max-height: 100%;
+        border-top: var(--cui-offcanvas-border-width) solid var(--cui-offcanvas-border-color);
+        transform: translateY(100%);
+      }
+
+      &.showing,
+      &.show:not(.hiding) {
+        transform: none !important; // stylelint-disable-line declaration-no-important
+      }
+
+      &.showing,
+      &.hiding,
+      &.show {
+        visibility: visible;
+      }
+    }
+
+    @if not ($infix == "") {
+      @include media-breakpoint-up($next) {
+        --cui-offcanvas-height: auto;
+        --cui-offcanvas-border-width: 0;
+        background-color: transparent !important; // stylelint-disable-line declaration-no-important
+
+        .offcanvas-header {
+          display: none;
+        }
+
+        .offcanvas-body {
+          display: flex;
+          flex-grow: 0;
+          padding: 0;
+          overflow-y: visible;
+          // Reset `background-color` in case `.bg-*` classes are used in offcanvas
+          background-color: transparent !important; // stylelint-disable-line declaration-no-important
+        }
+      }
+    }
+  }
+}
+
+.offcanvas-backdrop {
+  @include overlay-backdrop($zindex-offcanvas-backdrop, var(--cui-offcanvas-backdrop-bg, $offcanvas-backdrop-bg), $offcanvas-backdrop-opacity);
+}
+
+.offcanvas-header {
+  display: flex;
+  align-items: center;
+  padding: var(--cui-offcanvas-padding-y) var(--cui-offcanvas-padding-x);
+
+  .btn-close {
+    padding: calc(var(--cui-offcanvas-padding-y) * .5) calc(var(--cui-offcanvas-padding-x) * .5);
+    margin-top: calc(-.5 * var(--cui-offcanvas-padding-y));
+    @include ltr-rtl("margin-right", calc(-.5 * var(--cui-offcanvas-padding-x)));
+    margin-bottom: calc(-.5 * var(--cui-offcanvas-padding-y));
+  }
+}
+
+.offcanvas-title {
+  margin-bottom: 0;
+  line-height: var(--cui-offcanvas-title-line-height);
+}
+
+.offcanvas-body {
+  flex-grow: 1;
+  padding: var(--cui-offcanvas-padding-y) var(--cui-offcanvas-padding-x);
+  overflow-y: auto;
+}
