@@ -45,6 +45,8 @@ Always use unix-style endigns, so if you're running the project in a Windows mac
 git config --global core.autocrlf true
 ```
 
+> ⚠️ It is required that all files inside `.devcontainers` folder should has the EOL in LF format instead of CRLF otherwise unix based machine cannot run them.
+
 ### Requirements
 
 - Docker\Podman
