@@ -30,7 +30,6 @@
         "karunamurti.rspec-snippets",
         "Fooo.ruby-spec-runner",
         "mhutchie.git-graph",
-        "BIGModelingTools.erdiagram",
         "GitHub.vscode-pull-request-github",
         "GitHub.remotehub",
         "github.vscode-github-actions",
@@ -38,8 +37,7 @@
         "donjayamanne.githistory",
         "codezombiech.gitignore",
         "redhat.vscode-xml",
-        "mikestead.dotenv",
-        "rebornix.Ruby"
+        "mikestead.dotenv"
       ]
     }
   },
